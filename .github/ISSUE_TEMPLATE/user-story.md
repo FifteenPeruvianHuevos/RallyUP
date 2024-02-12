@@ -10,3 +10,4 @@ assignees: ''
 As a ____, I ____
 
 ## Acceptance criteria
+- UI is implemented as per storyboard
