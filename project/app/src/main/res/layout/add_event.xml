@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/decorationButton"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/pageSwitcher2"
+        android:layout_width="162dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="32dp"
+        android:clickable="true"
+        android:text="Back to QR Code page"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/newEventText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053"
+        android:focusable="true" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="388dp"
+        android:layout_height="608dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="1dp"
+        android:backgroundTint="#1DE9B6"
+        android:backgroundTintMode="multiply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pageSwitcher2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/uploadPosterView"
+                    android:layout_width="375dp"
+                    android:layout_height="137dp"
+                    android:layout_marginEnd="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/posterUploadButton"
+                    android:layout_width="61dp"
+                    android:layout_height="58dp"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/uploadPosterView"
+                    app:layout_constraintHorizontal_bias="0.99"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.202"
+                    app:srcCompat="@android:drawable/stat_sys_upload" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/eventNameInput"
+                android:layout_width="326dp"
+                android:layout_height="71dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="73dp"
+                android:layout_marginBottom="15dp"
+                android:ems="10"
+                android:hint="Please Enter The Event Name"
+                android:inputType="text"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/eventLocationInput"
+                android:layout_width="326dp"
+                android:layout_height="69dp"
+                android:layout_marginStart="37dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="82dp"
+                android:layout_marginBottom="18dp"
+                android:ems="10"
+                android:hint="Please Enter The Location Of the Event"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/eventDateInput"
+                android:layout_width="326dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="37dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="71dp"
+                android:layout_marginBottom="15dp"
+                android:clickable="true"
+                android:fontFamily="@font/inter_medium"
+                android:hint="Select Date"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/eventTimeInput"
+                android:layout_width="323dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="39dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="71dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/inter_medium"
+                android:hint="Select Time"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <CheckBox
+                android:id="@+id/attendeeInfoInput"
+                android:layout_width="322dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="39dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="74dp"
+                android:layout_marginBottom="7dp"
+                android:backgroundTint="#EEFFFFFF"
+                android:fontFamily="@font/inter_medium"
+                android:text="Collect Attendee Information?"
+                android:textSize="16sp" />
+
+            <CheckBox
+                android:id="@+id/geolocationInput"
+                android:layout_width="323dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="39dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="74dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/inter_medium"
+                android:text="Enable Geolocation?"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/eventDetailsInput"
+                android:layout_width="324dp"
+                android:layout_height="129dp"
+                android:layout_marginStart="39dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="79dp"
+                android:layout_marginBottom="123dp"
+                android:ems="10"
+                android:hint="Please Enter Any Specific Event Information"
+                android:inputType="text" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/decorativeButton"
+                    android:layout_width="370dp"
+                    android:layout_height="142dp"
+                    android:text="  "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.513"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/newQrCodeSelect"
+                    android:layout_width="335dp"
+                    android:layout_height="56dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Generate New Qr Code"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.304"
+                    app:layout_constraintStart_toStartOf="@+id/decorativeButton"
+                    app:layout_constraintTop_toTopOf="@+id/decorativeText"
+                    app:layout_constraintVertical_bias="0.447" />
+
+                <TextView
+                    android:id="@+id/decorativeText"
+                    android:layout_width="121dp"
+                    android:layout_height="34dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="QR CODE"
+                    android:textColor="#F6F4F4"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.535"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.142" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/qrCodeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/createEventButton"
+                android:layout_width="191dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="176dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="27dp"
+                android:clickable="true"
+                android:text="Create Event"
+                android:focusable="true" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/newEventText"
+        android:layout_width="185dp"
+        android:layout_height="53dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="NEW EVENT"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.733"
+        app:layout_constraintStart_toEndOf="@+id/pageSwitcher2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
