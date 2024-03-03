@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">RallyUP</string>
     <string name="event_name"><u>EVENT NAME</u></string>
+
+    <!-- Notification channel IDs -->
+    <string name="notification_channel_ID_milestone">notification_channel_ID_Milestone</string>
+    <string name="notification_channel_ID_announcements">
+        notification_channel_ID_announcements
+    </string>
+    <!-- Notification Name -->
+    <string name="notification_name_milestone">Milestone Notifications</string>
+    <string name="notification_name_announcements">Announcements Notifications</string>
+    <!-- Notification Description -->
+    <string name="notification_description_milestone">
+        Notifications for Organizers when achieved certain milestones
+    </string>
+    <string name="notification_description_announcements">
+        Notifications that Organizers get to send out as announcements
+    </string>
+
 </resources>
