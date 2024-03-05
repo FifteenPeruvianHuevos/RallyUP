@@ -7,11 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.rallyup.MainActivity;
-import com.example.rallyup.R;
 
 /**
  * Class that creates notifications and notification channels
@@ -65,7 +62,7 @@ public class NotificationObject{
      * @param notifID An int for what the notification ID should be
      * @param visibility use NotificationCompat.VISIBILITY_* to determine how visible you
      *                   want the notifications
-     * @param priority use NotificationCompat.PRIORITY_* to determine the initial priority of notifcations,
+     * @param priority use NotificationCompat.PRIORITY_* to determine the initial priority of notifications,
      *                 whether it makes sounds and shows or not, etc.
      * */
     public void createNotification(boolean onlySmallNotification,
