@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/attendeeUpdateInfo_MainConstraint"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/darkColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/attendeeUpdateInfo_PictureConstraint"
@@ -18,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/attendeeUpdateInfoImageViewXML"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -29,7 +30,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
+            android:id="@+id/attendeeUpdateInfoPictureFABXML"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="108dp"
@@ -45,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/rounded_corner_top"
+        android:background="@drawable/rounded_corner_bottom"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,11 +55,11 @@
         app:layout_constraintTop_toBottomOf="@+id/attendeeUpdateInfo_PictureConstraint">
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/editFirstNameXML"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_border"
             android:ems="10"
             android:hint="@string/hint_first_name"
@@ -70,11 +71,11 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/editLastNameXML"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_border"
             android:ems="10"
             android:hint="@string/hint_last_name"
@@ -86,11 +87,11 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/editEmailAddressXML"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_border"
             android:ems="10"
             android:hint="@string/hint_email"
@@ -102,11 +103,11 @@
             android:textSize="25sp" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/editPhoneNumberXML"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_border"
             android:ems="10"
             android:hint="@string/hint_phone_number"
@@ -118,22 +119,22 @@
             android:textSize="25sp" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxGeolocXML"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:button="@drawable/rounded_border"
             android:text="@string/enable_geolocation_string"
             android:textColor="@color/accentColorGreen"
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/attendeeUpdateInfoConfirmXML"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_button"
             android:gravity="center"
             android:text="@string/confirm"
