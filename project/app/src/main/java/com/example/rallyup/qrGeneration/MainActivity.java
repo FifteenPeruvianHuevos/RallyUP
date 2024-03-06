@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -47,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(a);
         });
 
-
+        LocalStorageController lc = LocalStorageController.getInstance();
+        Log.d("MainActivity", lc.getUserID(this));
     }
 
     private void generateQR() {
