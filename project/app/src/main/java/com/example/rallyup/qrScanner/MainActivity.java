@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 if(result.getContents() == null) {
                     Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(MainActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                     Intent testAct = new Intent(MainActivity.this, TestActivity.class);
                     testAct.putExtra("scannedText", result.getContents() );
                     startActivity(testAct);
