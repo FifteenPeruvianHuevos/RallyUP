@@ -16,6 +16,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.rallyup.R;
 
+import java.util.Locale;
+
 /**
  * Class that is an Activity to show your ProgressBar
  * @author Chih-Hung Wu
@@ -63,11 +65,16 @@ public class ProgressBarActivity extends AppCompatActivity {
                 progressBar.setProgress(progress);
 
 
-                String test_msg = String.format("This is a test message for notification body text\n" +
-                        "We have: %d participants", progressBar.getProgress());
+                String test_msg = String.format(
+                        Locale.getDefault(),
+                        "We have %d participants!",
+                        progressBar.getProgress());
+                // Locale.getDefault() allows us to set the string so that it converts the message
+                // properly into the user's local language settings
+                // for example: some languages i != I, since "capitalization" may actual
+                // have different grammatical/semantic meanings
 
                 notificationObject.createNotification(
-                        true,
                         ProgressBarActivity.class,
                         getString(R.string.notification_channel_ID_milestone),
                         getString(R.string.notification_title_milestone),
@@ -76,7 +83,9 @@ public class ProgressBarActivity extends AppCompatActivity {
                         0,
                         NotificationCompat.VISIBILITY_PUBLIC,
                         NotificationCompat.PRIORITY_DEFAULT,
-                        true);
+                        true,
+                        false,
+                        null);
             }
         });
 
