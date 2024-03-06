@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -46,26 +47,26 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 public class AddEvent extends AppCompatActivity {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
-    private TextView eventDateInput, eventTimeInput;
+    private TextView eventDateInput, eventTimeInput, uploadPosterText;
 
     private Button createButton;
 
-    private FloatingActionButton eventImageInput;
+    // b2 is the back button
+    private FloatingActionButton eventImageInput, b2;
 
-    private CheckBox attendeeInfoInput, geoInput, newQRSelect;
+    private CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput;
 
-    // Only for navigating between pages for now
-    private Button b2;
+    private NumberPicker attendeeLimitPicker;
 
     private String eventName, eventLocation, eventDescription, eventID;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private Integer eventDate, eventTime;
-    private Boolean geolocation, attendeeInfo;
+    private Integer signupLimit = 0;
+    private Boolean geolocation, signupLimitInput;
 
     private ImageView qrView, posterImage;
-
 
     private FirebaseStorage storage;
     // Create a storage reference from our app
@@ -76,10 +77,6 @@ public class AddEvent extends AppCompatActivity {
     private FirestoreController controller = new FirestoreController();
 
     private Uri image;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +111,29 @@ public class AddEvent extends AppCompatActivity {
                 getEventTime();
             }
         });
+
+        attendeeSignUpLimitInput.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    setAttendeeLimit();
+                } else {
+                    resetAttendeeLimit();
+                }
+            }
+        });
+
+        attendeeLimitPicker.setOnScrollListener(new NumberPicker.OnScrollListener() {
+            @Override
+            public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
+                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
+                    //We get the different between oldValue and the new value
+                    signupLimit = numberPicker.getValue();
+                }
+            }
+        });
+
 
         // Generating the new QR Code that is encoded with the event name when the user checks the
         // "Generate new QR Code" box
@@ -150,11 +170,13 @@ public class AddEvent extends AppCompatActivity {
         b2 = findViewById(R.id.pageSwitcher2);
 
         eventNameInput = findViewById(R.id.eventNameInput);
+        uploadPosterText = findViewById(R.id.uploadPosterText);
         eventLocationInput = findViewById(R.id.eventLocationInput);
         eventDateInput = findViewById(R.id.eventDateInput);
         eventTimeInput = findViewById(R.id.eventTimeInput);
         eventDescriptionInput = findViewById(R.id.eventDetailsInput);
-        attendeeInfoInput = findViewById(R.id.attendeeInfoInput);
+        attendeeSignUpLimitInput = findViewById(R.id.attendeeSignUpLimitInput);
+        attendeeLimitPicker = findViewById(R.id.attendeeLimitPicker);
         geoInput = findViewById(R.id.geolocationInput);
         createButton = findViewById(R.id.createEventButton);
         eventImageInput = findViewById(R.id.posterUploadButton);
@@ -270,6 +292,17 @@ public class AddEvent extends AppCompatActivity {
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
+
+    public void setAttendeeLimit() {
+        attendeeLimitPicker.setVisibility(attendeeLimitPicker.VISIBLE);
+        attendeeLimitPicker.setMaxValue(1000);
+        attendeeLimitPicker.setMinValue(1);
+    }
+
+    public void resetAttendeeLimit() {
+        attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
+    }
+
 
     public void switchPage() {
         Intent a = new Intent(AddEvent.this, com.example.rallyup.qrGeneration.MainActivity.class);
@@ -409,8 +442,8 @@ public class AddEvent extends AppCompatActivity {
         eventName = String.valueOf(eventNameInput.getText());
         eventLocation = String.valueOf(eventLocationInput.getText());
         geolocation = geoInput.isChecked();
-        attendeeInfo = attendeeInfoInput.isChecked();
         eventDescription = String.valueOf(eventDescriptionInput.getText());
+        signupLimitInput = attendeeSignUpLimitInput.isChecked();
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
@@ -423,8 +456,9 @@ public class AddEvent extends AppCompatActivity {
             eventDateInput.setText("");
             eventTimeInput.setText("");
             geoInput.setChecked(false);
-            attendeeInfoInput.setChecked(false);
             newQRSelect.setChecked(false);
+            attendeeSignUpLimitInput.setChecked(false);
+            attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
 
             // send values to fb
             Event newEvent = new Event(eventName, eventLocation, eventDescription);
