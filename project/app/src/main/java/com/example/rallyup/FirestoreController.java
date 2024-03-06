@@ -3,7 +3,10 @@ package com.example.rallyup;
 import android.util.Log;
 
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -38,9 +41,9 @@ public class FirestoreController {
     }
 
     // Create a new user in the Firestore and return its userID
-    public String createUserID() {
-        // TODO
-        return "hulaballoo";
+    public void createUserID(final OnCompleteListener<DocumentReference> onCompleteListener) {
+        usersRef.add(new User())
+                .addOnCompleteListener(onCompleteListener);
     }
 
     public void examplePrintAllAttendance() {

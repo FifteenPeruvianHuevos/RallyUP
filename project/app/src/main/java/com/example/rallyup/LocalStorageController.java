@@ -2,6 +2,13 @@ package com.example.rallyup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 
 public class LocalStorageController {
     private static final LocalStorageController instance = new LocalStorageController();
@@ -32,16 +39,25 @@ public class LocalStorageController {
     // Method to create userID and save it to SharedPreferences
     public void createNewUserID(Context context) {
         FirestoreController fc = FirestoreController.getInstance();
-        String newID = fc.createUserID();
-
-        {
-            // Firestore ID generation completed
-            SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(KEY_USER_ID, newID);
-            editor.apply();
-            idInitialized = true;
-        }
+        fc.createUserID(task -> {
+            if (task.isSuccessful()) {
+                // Document created successfully
+                DocumentReference document = task.getResult();
+                String userId = document.getId();
+                // Save the userID to local storage
+                SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(KEY_USER_ID, userId);
+                editor.apply();
+                idInitialized = true;
+            } else {
+                // Handle failure
+                Exception e = task.getException();
+                if (e != null) {
+                    Log.e("LocalStorageController", "Error adding document: " + e.getMessage());
+                }
+            }
+        });
     }
 
     // Method to check if userID exists in SharedPreferences
