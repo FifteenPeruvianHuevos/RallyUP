@@ -1,13 +1,30 @@
 package com.example.rallyup;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
 
 import com.example.rallyup.firestoreObjects.Event;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.net.URI;
 import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class FirestoreController {
     private static final FirestoreController instance = new FirestoreController();
@@ -16,6 +33,7 @@ public class FirestoreController {
     private final CollectionReference usersRef;
     private final CollectionReference eventsRef;
     private final CollectionReference eventAttendanceRef;
+
 
     public FirestoreController() {
         dbRef = FirebaseFirestore.getInstance();
@@ -55,6 +73,49 @@ public class FirestoreController {
                 }
             } else {
                 Log.d("FirestoreController", "Error getting documents: " + task.getException());
+            }
+        });
+    }
+
+    public void uploadImage(Uri image, StorageReference reference) {
+        //final StorageReference posters = reference.child("images/" + "eventPosters/" + reference);
+
+        reference.putFile(image)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+        })
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                    }
+                });
+    }
+
+    public void uploadImageBitmap(ImageView image, StorageReference sReference) {
+        // Get the data from an ImageView as bytes
+        image.setDrawingCacheEnabled(true);
+        image.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = sReference.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
             }
         });
     }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -27,41 +28,56 @@ import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class AddEvent extends AppCompatActivity {
-    EditText eventLocationInput, eventNameInput, eventDescriptionInput;
+    private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
-    TextView eventDateInput, eventTimeInput;
+    private TextView eventDateInput, eventTimeInput;
 
-    Button createButton;
+    private Button createButton;
 
-    FloatingActionButton eventImageInput;
+    private FloatingActionButton eventImageInput;
 
-    CheckBox attendeeInfoInput, geoInput, newQRSelect;
+    private CheckBox attendeeInfoInput, geoInput, newQRSelect;
 
     // Only for navigating between pages for now
-    Button b2;
+    private Button b2;
 
-    String eventName, eventLocation, eventDescription, eventID;
+    private String eventName, eventLocation, eventDescription, eventID;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
-    Integer eventDate, eventTime;
-    Boolean geolocation, attendeeInfo;
+    private Integer eventDate, eventTime;
+    private Boolean geolocation, attendeeInfo;
 
-    ImageView qrView, posterImage;
+    private ImageView qrView, posterImage;
 
-    // constant to compare
-    // the activity result code
-    int SELECT_PICTURE = 200;
+
+    private FirebaseStorage storage;
+    // Create a storage reference from our app
+    private StorageReference storageRef;
+
+    // Create a child reference
+    // imagesRef now points to "images"
+    private FirestoreController controller = new FirestoreController();
+
+    private Uri image;
+
+
 
 
 
@@ -106,7 +122,7 @@ public class AddEvent extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    generateQR();
+                    generateShareQR();
                 } else {
                     resetQR();
                 }
@@ -175,6 +191,7 @@ public class AddEvent extends AppCompatActivity {
                     if (data != null
                             && data.getData() != null) {
                         Uri selectedImageUri = data.getData();
+                        image = selectedImageUri;
                         Bitmap selectedImageBitmap = null;
                         try {
                             selectedImageBitmap
@@ -314,11 +331,7 @@ public class AddEvent extends AppCompatActivity {
      * Generates a QR Code that contains the name of the event
      * This method does not take in any parameters, or return any variables
      */
-    private void generateQR() {
-        // throws an error for now if the "Generate New QR Code" Checkbox is
-        // checked and there has not been an event name inputted yet. Isn't important for
-        // the actual app part 3 as we are setting the data stored in the QR Code to be the unique event ID,
-        // so Chidinma is not input validating to deal with that error right now
+    private void generateShareQR() {
         String text = eventNameInput.getText().toString();
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix matrix;
@@ -332,6 +345,7 @@ public class AddEvent extends AppCompatActivity {
         qrView.setVisibility(qrView.VISIBLE);
         qrView.setImageBitmap(bitmap);
     }
+
 
 
     /**
@@ -365,6 +379,27 @@ public class AddEvent extends AppCompatActivity {
         }
     }
 
+    public void uploadPoster() {
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        StorageReference eventRef = storageRef.child("images/Posters/"+ eventName);
+        controller.uploadImage(image, eventRef);
+    }
+
+    public void uploadShareQR() {
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        StorageReference eventRef = storageRef.child("images/ShareQR/"+ eventName);
+        controller.uploadImageBitmap(qrView, eventRef);
+    }
+
+    public void uploadCheckInQR() {
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        StorageReference eventRef = storageRef.child("images/CheckInQR/"+ eventName);
+        controller.uploadImageBitmap(qrView, eventRef);
+    }
+
     /**
      * This method saves all the input fields in new variables, resets the views of all the input fields on the screen,
      * and passes the saved variables to firebase as an instance of the Event Class.
@@ -379,6 +414,9 @@ public class AddEvent extends AppCompatActivity {
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
+            uploadPoster();
+            uploadCheckInQR();
+            uploadShareQR();
             eventNameInput.getText().clear();
             eventLocationInput.getText().clear();
             eventDescriptionInput.getText().clear();

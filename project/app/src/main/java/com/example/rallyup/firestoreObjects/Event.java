@@ -7,6 +7,9 @@ public class Event {
     private String eventName;
     private String eventLocation;
     private String eventDescription;
+    private int eventDate;
+    private int eventTime;
+
 
     /**
      * Constructs a new Event object with the given name, location, and description.
