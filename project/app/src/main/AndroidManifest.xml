@@ -13,6 +13,9 @@
         android:theme="@style/Theme.RallyUP"
         tools:targetApi="31">
         <activity
+            android:name=".uiReference.AttendeeRegisteredEvent"
+            android:exported="false" />
+        <activity
             android:name=".uiReference.AttendeeEventDetails"
             android:exported="false" />
         <activity
