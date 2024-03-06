@@ -8,36 +8,44 @@ public class LocalStorageController {
 
     private static final String PREF_NAME = "RallyUpPreferences";
     private static final String KEY_USER_ID = "userID";
+    private boolean idInitialized = false;
+
     public static LocalStorageController getInstance() {
         return instance;
     }
 
-    // Method to retrieve userID from SharedPreferences
-    public static String getUserID(Context context) {
+    public void initialization(Context context) {
         if (existsUserID(context)) {
-            // User has used the app before: return existing ID
-            SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-            return sharedPreferences.getString(KEY_USER_ID, null);
+            idInitialized = true;
         } else {
-            // New user: create new ID for them
-            return createNewUserID(context);
+            createNewUserID(context);
         }
     }
 
+    // Method to retrieve userID from SharedPreferences
+    public String getUserID(Context context) {
+        assert idInitialized;
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_USER_ID, null);
+    }
+
     // Method to create userID and save it to SharedPreferences
-    public static String createNewUserID(Context context) {
+    public void createNewUserID(Context context) {
         FirestoreController fc = FirestoreController.getInstance();
         String newID = fc.createUserID();
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USER_ID, newID);
-        editor.apply();
-        return newID;
+        {
+            // Firestore ID generation completed
+            SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(KEY_USER_ID, newID);
+            editor.apply();
+            idInitialized = true;
+        }
     }
 
     // Method to check if userID exists in SharedPreferences
-    public static boolean existsUserID(Context context) {
+    public boolean existsUserID(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.contains(KEY_USER_ID);
     }
