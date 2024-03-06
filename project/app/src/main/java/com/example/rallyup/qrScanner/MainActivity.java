@@ -4,9 +4,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rallyup.R;
@@ -15,6 +17,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 public class MainActivity extends AppCompatActivity {
 
+
     // Register the launcher and result handler
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
@@ -22,14 +25,19 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(MainActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Intent testAct = new Intent(MainActivity.this, TestActivity.class);
+                    testAct.putExtra("scannedText", result.getContents() );
+                    startActivity(testAct);
                 }
             });
+
 
     // Launch
 //    public void onButtonClick(View view) {
 //        barcodeLauncher.launch(new ScanOptions());
 //    }
     Button scanButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,5 @@ public class MainActivity extends AppCompatActivity {
                 barcodeLauncher.launch(options);
             }
         });
-
     }
 }
