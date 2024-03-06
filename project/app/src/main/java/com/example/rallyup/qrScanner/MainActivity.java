@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ScanOptions options = new ScanOptions();
-                options.setPrompt("Scan QR Code / Check into Event");
                 options.setOrientationLocked(false);
                 options.setBeepEnabled(false);
                 options.setCaptureActivity(ScannerActivity.class);

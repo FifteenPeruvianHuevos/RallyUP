@@ -21,12 +21,29 @@
         app:zxing_viewfinder_mask="@color/zxing_custom_viewfinder_mask" />
 
     <TextView
-        android:id="@+id/zxing_status_view"
+        android:id="@+id/QR_scan_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="150dp"
         android:background="@color/zxing_transparent"
-        android:text="@string/zxing_msg_default_status"
-        android:textColor="@color/zxing_status_text" />
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/qr_hint"
+        android:textAlignment="center"
+        android:textColor="@color/accentColorYellow"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/QR_scan_hint_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="180dp"
+        android:background="@color/zxing_transparent"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/qr_hint_2"
+        android:textAlignment="center"
+        android:textColor="@color/accentColorYellow"
+        android:textSize="20sp" />
 
 </merge>

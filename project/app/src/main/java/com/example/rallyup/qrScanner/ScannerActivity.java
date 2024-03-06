@@ -26,6 +26,8 @@ public class ScannerActivity extends Activity {
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.setShowMissingCameraPermissionDialog(false);
         capture.decode();
+
+        changeLaserVisibility(false);
     }
     @Override
     protected void onResume() {
@@ -49,5 +51,9 @@ public class ScannerActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         capture.onSaveInstanceState(outState);
+    }
+
+    public void changeLaserVisibility(boolean visible) {
+        viewfinderView.setLaserVisibility(visible);
     }
 }
