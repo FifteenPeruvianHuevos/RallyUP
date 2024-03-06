@@ -16,6 +16,9 @@
             android:name=".uiReference.AttendeeEventDetails"
             android:exported="false" />
         <activity
+            android:name=".uiReference.AttendeeHomepageActivity"
+            android:exported="false" />
+        <activity
             android:name=".uiReference.AttendeeMyEventsActivity"
             android:exported="false" />
         <activity
