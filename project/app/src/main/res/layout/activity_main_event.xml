@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/my_gradient"
-    tools:context=".uiReference.MainActivity">>
+    android:background="@drawable/organizer_gradient"
+    tools:context=".uiReference.OrganizerEventList">>
 
     <ScrollView
         android:id="@+id/scrollView2"

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.uiReference.MainActivity.class);
+                                com.example.rallyup.uiReference.splashScreen.class);
                 startActivity(intent);
             }
         });
