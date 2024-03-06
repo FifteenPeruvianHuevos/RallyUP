@@ -54,17 +54,18 @@ public class AddEvent extends AppCompatActivity {
     // b2 is the back button
     private FloatingActionButton eventImageInput, b2;
 
-    private CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput;
+    private CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput, reUseQRSelect;
 
     private NumberPicker attendeeLimitPicker;
 
     private String eventName, eventLocation, eventDescription, eventID;
+    private StorageReference posterRef, shareQRRef, checkInQRRef;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private Integer eventDate, eventTime;
     private Integer signupLimit = 0;
-    private Boolean geolocation, signupLimitInput;
+    private Boolean geolocation, signupLimitInput, reUseQR, newQR;
 
     private ImageView qrView, posterImage;
 
@@ -182,7 +183,9 @@ public class AddEvent extends AppCompatActivity {
         eventImageInput = findViewById(R.id.posterUploadButton);
         qrView = findViewById(R.id.qrCodeView);
         newQRSelect = findViewById(R.id.newQrCodeSelect);
+        reUseQRSelect = findViewById(R.id.reuseQRCodeSelect);
         posterImage = findViewById(R.id.uploadPosterView);
+
     }
 
 
@@ -226,6 +229,7 @@ public class AddEvent extends AppCompatActivity {
                         }
                         posterImage.setImageBitmap(
                                 selectedImageBitmap);
+                        uploadPosterText.setVisibility(uploadPosterText.GONE);
                     }
                 }
             });
@@ -413,24 +417,15 @@ public class AddEvent extends AppCompatActivity {
     }
 
     public void uploadPoster() {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        StorageReference eventRef = storageRef.child("images/Posters/"+ eventName);
-        controller.uploadImage(image, eventRef);
+        controller.uploadImage(image, posterRef);
     }
 
     public void uploadShareQR() {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        StorageReference eventRef = storageRef.child("images/ShareQR/"+ eventName);
-        controller.uploadImageBitmap(qrView, eventRef);
+        controller.uploadImageBitmap(qrView, shareQRRef);
     }
 
     public void uploadCheckInQR() {
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-        StorageReference eventRef = storageRef.child("images/CheckInQR/"+ eventName);
-        controller.uploadImageBitmap(qrView, eventRef);
+        controller.uploadImageBitmap(qrView, checkInQRRef);
     }
 
     /**
@@ -444,9 +439,17 @@ public class AddEvent extends AppCompatActivity {
         geolocation = geoInput.isChecked();
         eventDescription = String.valueOf(eventDescriptionInput.getText());
         signupLimitInput = attendeeSignUpLimitInput.isChecked();
+        newQR = newQRSelect.isChecked();
+        reUseQR = reUseQRSelect.isChecked();
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
+            storage = FirebaseStorage.getInstance();
+            storageRef = storage.getReference();
+            posterRef = storageRef.child("images/Posters/"+ eventName);
+            shareQRRef = storageRef.child("images/ShareQR/"+ eventName);
+            checkInQRRef = storageRef.child("images/CheckInQR/"+ eventName);
+
             uploadPoster();
             uploadCheckInQR();
             uploadShareQR();
@@ -461,7 +464,8 @@ public class AddEvent extends AppCompatActivity {
             attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
 
             // send values to fb
-            Event newEvent = new Event(eventName, eventLocation, eventDescription);
+            Event newEvent = new Event(eventName, eventLocation, eventDescription, eventDate, eventTime, signupLimit, signupLimitInput, geolocation, reUseQR, newQR,
+                    posterRef, shareQRRef, checkInQRRef);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
         }
