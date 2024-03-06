@@ -44,7 +44,5 @@ public class OrganizerEventList extends AppCompatActivity {
                 startActivity(appInfo);
             }
         });
-
-
     }
 }
