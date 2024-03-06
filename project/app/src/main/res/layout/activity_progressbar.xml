@@ -50,24 +50,25 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="236dp"
             android:layout_height="38dp"
+            android:layout_marginTop="112dp"
             android:indeterminateOnly="false"
             android:max="100"
             android:progressDrawable="@drawable/milestone_check"
-            android:progressTint="@color/accentColorYellow"
             android:progressTintMode="add"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editProgressNumberXML"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:ems="10"
             android:hint="Participants"
             android:inputType="number"
-            android:textSize="36sp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/progressBar" />
@@ -94,7 +95,7 @@
             android:id="@+id/ProgressBarAnnouncementsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="350dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,16 +117,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/rounded_border"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnouncementTitle">
 
-                <Button
-                    android:id="@+id/button2"
+                <EditText
+                    android:id="@+id/ProgressBarAnnoucenementTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_border"
+                    android:ems="10"
+                    android:hint="@string/notification_edit_title"
+                    android:inputType="text"
+                    android:paddingStart="6dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="6dp"
+                    android:textColorHint="@color/accentColorGreen"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_border"
+                    app:layout_constraintBottom_toTopOf="@+id/ProgressBarAnnouncementSendButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnoucenementTitle">
+
+                    <EditText
+                        android:id="@+id/ProgressBarAnnouncementBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@null"
+                        android:ems="15"
+                        android:hint="@string/notification_edit_body"
+                        android:inputType="text"
+                        android:textColorHint="@color/accentColorGreen"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/ProgressBarAnnouncementSendButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/accentColorGreen"
+                    android:text="@string/send"
+                    android:textColor="@color/darkColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     <!-- Generic Strings -->
     <string name="confirm">CONFIRM</string>
     <string name="close">CLOSE</string>
-
+    <string name="send">SEND</string>
 
     <!-- Firebase Firestore fields -->
     <string name="user_field_firstName">firstName</string>
@@ -25,6 +25,9 @@
     <string name="delete_photo">DELETE PHOTO</string>
     <string name="generated_username">\@ GENERATED USERNAME</string>
 
+    <!-- Notification Edit Box -->
+    <string name="notification_edit_title">TITLE OF NOTIFICATION</string>
+    <string name="notification_edit_body">Send message to attendees...</string>
     <!-- Notification Titles in Notification Popups -->
     <string name="notification_title_milestone">Milestone</string>
     <string name="notification_title_announcement">Announcement</string>
