@@ -119,7 +119,6 @@ public class NotificationObject{
 
         // This is to show the notification
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        //manager.notify("TEST", notifID, builder.build());
         manager.notify(notifID, builder.build());
     }
 
@@ -176,7 +175,6 @@ public class NotificationObject{
 
         // This is to show the notification
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        //manager.notify("TEST", notifID, builder.build());
         manager.notify(notifID, builder.build());
 
     }
