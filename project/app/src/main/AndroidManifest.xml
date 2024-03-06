@@ -13,6 +13,9 @@
         android:theme="@style/Theme.RallyUP"
         tools:targetApi="31">
         <activity
+            android:name=".uiReference.AttendeeEventDetails"
+            android:exported="false" />
+        <activity
             android:name=".uiReference.AttendeeMyEventsActivity"
             android:exported="false" />
         <activity
@@ -34,7 +37,7 @@
         <activity android:name=".qrGeneration.AddEvent" />
         <activity android:name=".qrScanner.MainActivity" />
         <activity android:name=".qrScanner.QRCodeScannerActivity" />
-        <activity android:name=".uiReference.MainActivity" />
+        <activity android:name=".uiReference.OrganizerEventList" />
         <activity android:name=".uiReference.MainEvent" />
     </application>
 
