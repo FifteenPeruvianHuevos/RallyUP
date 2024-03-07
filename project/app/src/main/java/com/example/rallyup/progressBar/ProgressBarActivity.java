@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.example.rallyup.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
@@ -49,6 +50,7 @@ public class ProgressBarActivity extends AppCompatActivity {
         ImageView backToMain = findViewById(R.id.backToMainButtonXML);
         TextView eventView = findViewById(R.id.ProgressBarEventNameTextView);
         ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
+        FloatingActionButton editPosterButton = findViewById(R.id.ProgressBarEditEventPosterButton);
         // Event Details
         TextView eventTime = findViewById(R.id.ProgressBarEventDateView);
         TextView eventLocation = findViewById(R.id.ProgressBarEventLocationView);
@@ -66,13 +68,15 @@ public class ProgressBarActivity extends AppCompatActivity {
         // I would need to access Firebase for the event details, such as its:
         // Name, Date/Time of Event, Location, # of Verified Attendees, # of Total Attendees
         // And these values should be Strings
+        // I would also need to access the Event's Poster Image
 
         eventTime.setText("Month (in letters) Day, Year @ hh:mm");
         eventLocation.setText("Location");
         eventVerifiedAttendeesView.setText("Number from Firebase" + " of Verified Attendees");
         eventTotalAttendees.setText("Number from Firebase" + "of Total Attendees");
         eventDescription.setText("Description");
-
+        // Somehow set the bitmap image of the
+        // eventPoster.setImageBitmap();
 
         // Here we would get the Firebase controller to do the following:
         // I want to receive the current number of attendees of this event
@@ -123,6 +127,12 @@ public class ProgressBarActivity extends AppCompatActivity {
             }
         });
 
+        editPosterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Something Something
+            }
+        });
 
         editMilestonesDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override

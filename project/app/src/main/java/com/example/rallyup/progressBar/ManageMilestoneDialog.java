@@ -28,7 +28,8 @@ public class ManageMilestoneDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_managemilestones, container, false);
-
+        // Sets the background to transparent so our layout background can be applicable and
+        // not have awkward white square corners poking out of the rounded corners
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         RadioButton manageMilestoneOne = view.findViewById(R.id.ManageMilestonesRadioButtonOne);
