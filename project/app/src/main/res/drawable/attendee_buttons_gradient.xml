@@ -8,6 +8,6 @@ android:shape="rectangle">
         android:centerY="0"
         android:startColor="@color/accentColorRed"
         android:endColor="@color/accentColorYellow"
-        android:centerColor="@color/accentColorYellow"
-        android:gradientRadius="250%p"/>
+        android:gradientRadius="250%p"
+        android:angle="280"/>
 </shape>

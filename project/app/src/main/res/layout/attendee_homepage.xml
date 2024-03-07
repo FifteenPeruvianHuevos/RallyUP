@@ -126,6 +126,7 @@
                             android:text="Last Name"
                             android:textAlignment="center"
                             android:textColor="@color/darkColor" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -146,7 +147,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,26 +158,48 @@
 
                 <Button
                     android:id="@+id/attendee_my_events_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="30dp"
-                    android:background="@drawable/attendee_gradient"
+                    android:layout_marginHorizontal="60dp"
+                    android:background="@drawable/attendee_buttons_gradient"
                     android:fontFamily="@font/inter_extrabold"
                     android:text="My Registered Events"
                     android:textColor="@color/lightColor"
-                    app:backgroundTint="@null"></Button>
+                    app:backgroundTint="@null"
+                    android:textAllCaps="true"
+                    android:textSize="30dp"
+                    android:layout_marginVertical="30dp"
+                    android:padding="20dp"></Button>
 
                 <Button
                     android:id="@+id/attendee_browse_events_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="30dp"
-                    android:background="@drawable/attendee_gradient"
+                    android:layout_marginHorizontal="60dp"
+                    android:layout_marginVertical="30dp"
+                    android:background="@drawable/attendee_buttons_gradient"
                     android:fontFamily="@font/inter_extrabold"
                     android:text="Browse Events"
                     android:textColor="@color/lightColor"
-                    app:backgroundTint="@null"></Button>
+                    app:backgroundTint="@null"
+                    android:textAllCaps="true"
+                    android:textSize="30dp"
+                    android:padding="15dp"></Button>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp">
+                    ">
 
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="40px"
+                        android:clickable="true"
+                        ></com.google.android.material.floatingactionbutton.FloatingActionButton>
+                </RelativeLayout>
             </LinearLayout>
 
         </FrameLayout>
