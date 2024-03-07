@@ -21,6 +21,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_organizer_event_details);
 
         orgEventDetailsBackBtn = findViewById(R.id.organizer_details_back_button);
+        viewEventAttendeesList = findViewById(R.id.event_attendees_button);
         orgEventDetailsBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,8 +30,7 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity {
             }
         });
 
-        viewEventAttendeesList = findViewById(R.id.event_attendees_button);
-        orgEventDetailsBackBtn.setOnClickListener(new View.OnClickListener() {
+        viewEventAttendeesList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);

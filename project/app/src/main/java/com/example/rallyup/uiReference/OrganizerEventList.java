@@ -41,7 +41,7 @@ public class OrganizerEventList extends AppCompatActivity {
 
                 Integer poster = (Integer) adapterView.getItemAtPosition(i);
 
-                Intent appInfo = new Intent(getBaseContext(), MainEvent.class);
+                Intent appInfo = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
 //                appInfo.putExtra("poster", poster);
                 startActivity(appInfo);
             }

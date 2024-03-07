@@ -22,7 +22,7 @@ public class EventAttendeesInfoActivity extends AppCompatActivity {
         eventAttBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OrganizerEventListActivity.class);
+                Intent intent = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
                 startActivity(intent);
             }
         });
