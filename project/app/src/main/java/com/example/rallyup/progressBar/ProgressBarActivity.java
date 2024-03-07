@@ -127,7 +127,8 @@ public class ProgressBarActivity extends AppCompatActivity {
         editMilestonesDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ManageMilestoneDialog manageMilestoneDialog = new ManageMilestoneDialog();
+                manageMilestoneDialog.show(getSupportFragmentManager(), "ManageMilestonesDialog");
             }
         });
 
