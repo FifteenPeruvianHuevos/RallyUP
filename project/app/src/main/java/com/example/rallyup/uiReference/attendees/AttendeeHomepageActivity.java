@@ -1,5 +1,6 @@
 package com.example.rallyup.uiReference.attendees;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,10 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.rallyup.R;
+import com.example.rallyup.qrScanner.ScannerActivity;
+import com.example.rallyup.qrScanner.TestActivity;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import kotlin.ranges.ClosedFloatingPointRange;
 
@@ -24,6 +30,20 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
     // String attFirstName = findViewById(R.id.att_first_name)
     // String attLastName = findViewById(R.id.att_last_name)
     FloatingActionButton QRCodeScannerBtn;
+
+    private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
+            result -> {
+                // If nothing was scanned
+                if(result.getContents() == null) {
+                    Toast.makeText(AttendeeHomepageActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
+                } else {
+                    // function calls for when an id has been scanned go here
+                    Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Intent eventAct = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class); // temporary activity, replace with event activity
+                    eventAct.putExtra("scannedText", result.getContents() ); // sending string
+                    startActivity(eventAct); // replace
+                }
+            });
 
 
     @Override
@@ -63,5 +83,18 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        QRCodeScannerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // options for the scanner
+                ScanOptions options = new ScanOptions();
+                options.setOrientationLocked(false);
+                options.setBeepEnabled(false);
+                options.setCaptureActivity(ScannerActivity.class);
+                barcodeLauncher.launch(options);
+            }
+        });
+
     }
 }

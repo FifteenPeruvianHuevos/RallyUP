@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.rallyup.progressBar.ProgressBarActivity;
+import com.example.rallyup.qrScanner.QRBaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.qrScanner.MainActivity.class);
+                                QRBaseActivity.class);
                 startActivity(intent);
             }
         });
@@ -40,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        attendeeListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.attendeeList.MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        attendeeListButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent =
+//                        new Intent(com.example.rallyup.MainActivity.this,
+//                                com.example.rallyup.attendeeList.MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

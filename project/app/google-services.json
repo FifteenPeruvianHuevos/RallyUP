@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "976207794099",
+    "project_id": "cmput301-rallyup",
+    "storage_bucket": "cmput301-rallyup.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976207794099:android:2ab0c14eac87151cf705c6",
+        "android_client_info": {
+          "package_name": "com.example.qrgeneration"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr75I-ex8-p4Xc9fc_IV8eBcK1kyqEINI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976207794099:android:e4a3c38b74faf60ef705c6",
+        "android_client_info": {
+          "package_name": "com.example.rallyup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr75I-ex8-p4Xc9fc_IV8eBcK1kyqEINI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976207794099:android:0447a4523202f231f705c6",
+        "android_client_info": {
+          "package_name": "com.ualberta.rally_up_experimental"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr75I-ex8-p4Xc9fc_IV8eBcK1kyqEINI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
