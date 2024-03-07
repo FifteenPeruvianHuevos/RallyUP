@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.rallyup.R;
 
 public class MainEvent extends AppCompatActivity {
-
+    // previous ui trial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
