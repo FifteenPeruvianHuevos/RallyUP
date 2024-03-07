@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 // To access methods from different packages, need to import it like so
 import com.example.rallyup.notification.NotificationObject;
@@ -42,23 +43,28 @@ public class ProgressBarActivity extends AppCompatActivity {
                 NotificationCompat.PRIORITY_DEFAULT);
 
         // Initialize your XML items here
-        ProgressBar progressBar = findViewById(R.id.progressBar);
+        // To delete once not needed anymore
         EditText progressEditText = findViewById(R.id.editProgressNumberXML);
-        ImageView backToMain = findViewById(R.id.backToMainButtonXML);
         Button confirmButton = findViewById(R.id.confirmNumberButtonXML);
 
-        /*for (int i = 0; i < progressBar.getMax(); i++){
-            // Below should THEORETICALLY be the equivalent of progressBar.progress = currentProgress + i;
-            progressBar.setProgress(progressBar.getProgress() + i);
-            // Show a toast message of what our progress is
-            Toast toasty = Toast.makeText
-                    (ProgressBarActivity.this,
-                            String.format("progress max at %d",progressBar.getMax())
-                            ,Toast.LENGTH_SHORT);
-            toasty.show();
-        }
-        */
+        // To stay for final product
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        ImageView backToMain = findViewById(R.id.backToMainButtonXML);
+        TextView eventView = findViewById(R.id.ProgressBarEventNameTextView);
+        EditText editAnnouncementTitle = findViewById(R.id.ProgressBarAnnouncementEditTitle);
+        EditText editAnnouncementBody = findViewById(R.id.ProgressBarAnnouncementBody);
+        Button sendAnnouncementButton = findViewById(R.id.ProgressBarAnnouncementSendButton);
 
+
+        // Here we would get the Firebase controller to do the following:
+        // I want to receive the current number of attendees of this event
+        // I want to get the Max Number Of Attendees or the Goal Of Attendees set by the
+        // Organizers.
+        // I'm not too sure how we're going to keep track or update the progressBar
+
+        //setProgressOfEvent(progressBar, //int of current number of attendees, int of MaxAttendeesOrGoal);
+
+        // Confirm button can be removed once we're able to access the number of attendees
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,5 +105,16 @@ public class ProgressBarActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    private void setProgressOfEvent(ProgressBar progressBar, int currentAttendees, int goalOrMax){
+        int maximum = progressBar.getMax();
+
+        // (number of participants / Max or Goal) * maximum
+        int percentageOfProgress = (currentAttendees / goalOrMax) * maximum;
+
+        progressBar.setProgress(percentageOfProgress);
     }
 }

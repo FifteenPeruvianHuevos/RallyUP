@@ -19,6 +19,19 @@
         app:strokeColor="@color/accentColorGreen"
         app:strokeWidth="10dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ProgressBarEditEventPosterButton"
+        style="@style/FAB_Shape_Round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="30dp"
+        android:clickable="true"
+        android:tint="@color/lightColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventNameTextView"
+        app:srcCompat="@drawable/edit_vector" />
+
     <ImageView
         android:id="@+id/backToMainButtonXML"
         android:layout_width="wrap_content"
@@ -54,16 +67,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ProgressBarEventInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/ProgressBarEventDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DATE HERE" />
+
+            <TextView
+                android:id="@+id/ProgressBarEventLocationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="15dp"
+                tools:layout_editor_absoluteY="64dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="193dp"
+                tools:layout_editor_absoluteY="83dp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="137dp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="145dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="236dp"
             android:layout_height="38dp"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="200dp"
             android:indeterminateOnly="false"
             android:max="100"
-            android:progressDrawable="@drawable/milestone_check"
-            android:progressTintMode="add"
+            android:progressDrawable="@drawable/progressbar_progressable"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,7 +146,7 @@
             android:id="@+id/confirmNumberButtonXML"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editProgressNumberXML" />
@@ -105,6 +165,7 @@
                 android:id="@+id/ProgressBarAnnouncementTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:text="ANNOUNCEMENTS"
                 android:textColor="@color/darkColor"
                 android:textSize="25sp"
@@ -116,7 +177,7 @@
                 android:id="@+id/ProgressBarAnnouncementContentLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="36dp"
                 android:background="@drawable/rounded_border"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +185,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnouncementTitle">
 
                 <EditText
-                    android:id="@+id/ProgressBarAnnoucenementTitle"
+                    android:id="@+id/ProgressBarAnnouncementEditTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -149,8 +210,8 @@
                     android:scaleX="0.50"
                     android:scaleY="0.50"
                     android:translationY="-10dp"
-                    app:layout_constraintEnd_toEndOf="@+id/ProgressBarAnnoucenementTitle"
-                    app:layout_constraintTop_toTopOf="@+id/ProgressBarAnnoucenementTitle"
+                    app:layout_constraintEnd_toEndOf="@+id/ProgressBarAnnouncementEditTitle"
+                    app:layout_constraintTop_toTopOf="@+id/ProgressBarAnnouncementEditTitle"
                     app:srcCompat="@drawable/edit_vector" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,7 +224,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/ProgressBarAnnouncementSendButton"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnoucenementTitle">
+                    app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnouncementEditTitle">
 
                     <EditText
                         android:id="@+id/ProgressBarAnnouncementBody"
@@ -192,6 +253,18 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:scaleX="0.50"
+                android:scaleY="0.50"
+                app:layout_constraintEnd_toStartOf="@+id/ProgressBarAnnouncementTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/edit_vector" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
