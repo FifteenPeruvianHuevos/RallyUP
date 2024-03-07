@@ -10,8 +10,8 @@ public class Event {
     private String eventName;
     private String eventLocation;
     private String eventDescription;
-    private int eventDate;
-    private int eventTime;
+    private String eventDate;
+    private String eventTime;
     private int signUpLimit;
     private Boolean signUpLimitBool;
     private Boolean geolocation;
@@ -29,7 +29,7 @@ public class Event {
      * @param eventLocation    The location of the event.
      * @param eventDescription The description of the event.
      */
-    public Event(String eventName, String eventLocation, String eventDescription, int eventDate, int eventTime,
+    public Event(String eventName, String eventLocation, String eventDescription, String eventDate, String eventTime,
                  int signUpLimit, Boolean signUpLimitBool, Boolean geolocation, Boolean reUseQR, Boolean newQR,
                  StorageReference posterRef, StorageReference shareQRRef, StorageReference checkInQRRef) {
         this.eventName = eventName;
@@ -46,6 +46,7 @@ public class Event {
         this.shareQRRef = shareQRRef;
         this.checkInQRRef = checkInQRRef;
     }
+    public Event() {}
 
     /**
      * Gets the name of the event.
@@ -101,19 +102,19 @@ public class Event {
         this.eventDescription = eventDescription;
     }
 
-    public int getEventDate() {
+    public String getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(int eventDate) {
+    public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
 
-    public int getEventTime() {
+    public String getEventTime() {
         return eventTime;
     }
 
-    public void setEventTime(int eventTime) {
+    public void setEventTime(String eventTime) {
         this.eventTime = eventTime;
     }
 

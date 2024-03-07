@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +36,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class AddEvent extends AppCompatActivity {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
@@ -63,11 +58,11 @@ public class AddEvent extends AppCompatActivity {
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
-    private Integer eventDate, eventTime;
+    private String eventDate, eventTime;
     private Integer signupLimit = 0;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
 
-    private ImageView qrView, posterImage;
+    private ImageView qrView, posterImage = null;
 
     private FirebaseStorage storage;
     // Create a storage reference from our app
@@ -77,7 +72,7 @@ public class AddEvent extends AppCompatActivity {
     // imagesRef now points to "images"
     private FirestoreController controller = new FirestoreController();
 
-    private Uri image;
+    private Uri image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +126,15 @@ public class AddEvent extends AppCompatActivity {
                 if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
                     //We get the different between oldValue and the new value
                     signupLimit = numberPicker.getValue();
+                }
+            }
+        });
+
+        attendeeLimitPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                if(oldVal != newVal) {
+                    signupLimit = attendeeLimitPicker.getValue();
                 }
             }
         });
@@ -236,7 +240,7 @@ public class AddEvent extends AppCompatActivity {
 
     /**
      * Prompts the user to set the start date of this event by
-     * utilizing the Calender widget. Saves the inputted date as an integer
+     * utilizing the Calender widget. Saves the inputted date as a String
      * that represents Year, Month, and Day concatenated together in that order for ease of sorting.
      * This method does not take in any parameters, or return any variables
      */
@@ -260,8 +264,9 @@ public class AddEvent extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // on below line we are setting date to our text view.
-                        eventDateInput.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                        eventDate = dateConcat(year, monthOfYear, dayOfMonth);
+                        monthOfYear = monthOfYear + 1;
+                        eventDateInput.setText(toStringCheckZero(dayOfMonth) + "-" + toStringCheckZero((monthOfYear)) + "-" + toStringCheckZero(year));
+                        eventDate = (toStringCheckZero(year) + toStringCheckZero((monthOfYear)) + toStringCheckZero(dayOfMonth));
 
                     }
                 },
@@ -276,7 +281,7 @@ public class AddEvent extends AppCompatActivity {
 
     /**
      * Prompts the user to set the start time of this event by
-     * utilizing the TimePicker widget. Saves the inputted time as an integer
+     * utilizing the TimePicker widget. Saves the inputted time as a String
      * that represents hour and minute concatenated together in that order for ease of sorting.
      * Set to the 24 Hour clock
      * This method does not take in any parameters, or return any variables
@@ -289,8 +294,8 @@ public class AddEvent extends AppCompatActivity {
         mTimePicker = new TimePickerDialog(AddEvent.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                eventTimeInput.setText(selectedHour + ":" + selectedMinute);
-                eventTime = timeConcat(selectedHour, selectedMinute);
+                eventTimeInput.setText("" + toStringCheckZero(selectedHour) + ":" + toStringCheckZero(selectedMinute));
+                eventTime = toStringCheckZero(selectedHour) + toStringCheckZero(selectedMinute);
             }
         }, hour, minute, true); //Setting it to 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -304,6 +309,7 @@ public class AddEvent extends AppCompatActivity {
     }
 
     public void resetAttendeeLimit() {
+        attendeeLimitPicker.setValue(1);
         attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
     }
 
@@ -314,55 +320,14 @@ public class AddEvent extends AppCompatActivity {
         startActivity(a);
     }
 
-    // could possibly combine these two functions by passing in a boolean value that would represent whether
-    // or not the third value would be included in the concatenation, and passing in 0 or something for the third value for time
-    /**
-     * Takes 3 integer values and concatenates them all together
-     * @param a the first integer value
-     * @param b the second integer value
-     * @param c the third integer value
-     * @return an integer value that represents all 3 integers concatenated together
-     */
-    static int dateConcat(int a, int b, int c) {
-
-        // Convert all the integers to string
-        String s1 = Integer.toString(a);
-        String s2 = Integer.toString(b);
-        String s3 = Integer.toString(c);
-
-        // Concatenate both strings
-        String s = s1 + s2 +s3;
-
-        // Convert the concatenated string
-        // to integer
-        int d = Integer.parseInt(s);
-
-        // return the formed integer
-        return d;
+    public String toStringCheckZero(int number){
+        if(number<=9) {
+            String fixedNum = "0" + String.valueOf(number);
+            return fixedNum;
+        }
+        return String.valueOf(number);
     }
 
-    /**
-     * Takes 2 integer values and concatenates them together
-     * @param a the first integer value
-     * @param b the second integer value
-     * @return an integer value that represents both integers concatenated together
-     */
-    static int timeConcat(int a, int b) {
-
-        // Convert all the integers to string
-        String s1 = Integer.toString(a);
-        String s2 = Integer.toString(b);
-
-        // Concatenate both strings
-        String s = s1 + s2;
-
-        // Convert the concatenated string
-        // to integer
-        int c = Integer.parseInt(s);
-
-        // return the formed integer
-        return c;
-    }
 
     /**
      * Generates a QR Code that contains the name of the event
@@ -390,6 +355,7 @@ public class AddEvent extends AppCompatActivity {
      * This method does not take in any parameters, or return any variables
      */
     public void resetQR(){
+        //qrView = null;
         qrView.setVisibility(qrView.GONE);
     }
 
@@ -403,7 +369,8 @@ public class AddEvent extends AppCompatActivity {
      */
     public Boolean validateInput() {
         if(eventName.isEmpty() || eventLocation.isEmpty() || (eventTimeInput.getText().toString().isEmpty())
-        || eventDateInput.getText().toString().isEmpty() || !newQRSelect.isChecked()) {
+        || eventDateInput.getText().toString().isEmpty() || !newQRSelect.isChecked() || posterImage.equals(null)
+        || qrView.equals(null) || image.equals(null)) {
             Toast.makeText(
                             this,
                             "Please ensure all fields are filled out!",
@@ -418,6 +385,7 @@ public class AddEvent extends AppCompatActivity {
 
     public void uploadPoster() {
         controller.uploadImage(image, posterRef);
+
     }
 
     public void uploadShareQR() {
@@ -462,12 +430,22 @@ public class AddEvent extends AppCompatActivity {
             newQRSelect.setChecked(false);
             attendeeSignUpLimitInput.setChecked(false);
             attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
+            //posterImage = null;
+            //qrView = null;
 
             // send values to fb
-            Event newEvent = new Event(eventName, eventLocation, eventDescription, eventDate, eventTime, signupLimit, signupLimitInput, geolocation, reUseQR, newQR,
+            Event newEvent = new Event(eventName, eventLocation, eventDescription,
+                    eventDate, eventTime, signupLimit, signupLimitInput,
+                    geolocation, reUseQR, newQR,
                     posterRef, shareQRRef, checkInQRRef);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
+
+            // SWITCHING THE PAGE TO THE IMAGE UPLOAD TUTORIAL PAGE
+            Intent a = new Intent(AddEvent.this, com.example.rallyup.qrGeneration.imageLoadTestActivity.class);
+            a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(a);
+
         }
     }
 }

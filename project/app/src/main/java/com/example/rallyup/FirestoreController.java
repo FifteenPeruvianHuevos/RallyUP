@@ -48,19 +48,22 @@ public class FirestoreController {
 
     public void addEvent(Event event) {
         // Add the event to the Firestore collection
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         data.put("title", event.getEventName());
         data.put("location", event.getEventLocation());
         data.put("description", event.getEventDescription());
-        data.put("date", String.valueOf(event.getEventDate()));
-        data.put("time", String.valueOf(event.getEventTime()));
-        data.put("sign-up limit", String.valueOf(event.getSignUpLimit()));
-        data.put("sign=up limit permission", String.valueOf(event.getSignUpLimitBool()));
-        data.put("geolocation permission", String.valueOf(event.getGeolocation()));
-        data.put("re-use QR code permission", String.valueOf(event.getReUseQR()));
-        data.put("new QR code permission", String.valueOf(event.getNewQR()));
+        data.put("date", event.getEventDate());
+        data.put("time", event.getEventTime());
+        data.put("sign-up limit", event.getSignUpLimit());
+        data.put("sign-up limit permission", event.getSignUpLimitBool());
+        data.put("geolocation permission", event.getGeolocation());
+        data.put("re-use QR code permission", event.getReUseQR());
+        data.put("new QR code permission", event.getNewQR());
+        data.put("poster", event.getPosterRef().getPath());
+        data.put("share QR", event.getShareQRRef().getPath());
+        data.put("check-in QR", event.getCheckInQRRef().getPath());
 
-        eventsRef.document("TEST EVENT NOT ALL PARAMETERS").set(data);
+        eventsRef.document(event.getEventName()).set(data);
     }
 
     // Create a new user in the Firestore and return its userID
