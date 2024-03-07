@@ -1,4 +1,4 @@
-package com.example.rallyup.uiReference;
+package com.example.rallyup.uiReference.organizers;
 
 import androidx.appcompat.app.AppCompatActivity;
 

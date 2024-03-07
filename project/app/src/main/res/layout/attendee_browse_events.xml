@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/attendee_gradient"
     android:focusable="auto"
-    tools:context=".uiReference.AttendeeBrowseEventsActivity">
+    tools:context=".uiReference.attendees.AttendeeBrowseEventsActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

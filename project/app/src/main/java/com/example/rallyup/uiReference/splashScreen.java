@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.rallyup.R;
+import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
+import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 
 public class splashScreen extends AppCompatActivity {
 

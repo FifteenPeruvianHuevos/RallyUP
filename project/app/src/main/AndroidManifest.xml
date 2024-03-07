@@ -13,28 +13,28 @@
         android:theme="@style/Theme.RallyUP"
         tools:targetApi="31">
         <activity
-            android:name=".uiReference.EventAttendeesInfoActivity"
+            android:name=".uiReference.organizers.EventAttendeesInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".uiReference.OrganizerEventDetailsActivity"
+            android:name=".uiReference.organizers.OrganizerEventDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".uiReference.OrganizerEventListActivity"
+            android:name=".uiReference.organizers.OrganizerEventListActivity"
             android:exported="false" />
         <activity
-            android:name=".uiReference.AttendeeRegisteredEvent"
+            android:name=".uiReference.attendees.AttendeeRegisteredEvent"
             android:exported="false" />
         <activity
-            android:name=".uiReference.AttendeeEventDetails"
+            android:name=".uiReference.attendees.AttendeeEventDetails"
             android:exported="false" />
         <activity
-            android:name=".uiReference.AttendeeHomepageActivity"
+            android:name=".uiReference.attendees.AttendeeHomepageActivity"
             android:exported="false" />
         <activity
-            android:name=".uiReference.AttendeeMyEventsActivity"
+            android:name=".uiReference.attendees.AttendeeMyEventsActivity"
             android:exported="false" />
         <activity
-            android:name=".uiReference.AttendeeBrowseEventsActivity"
+            android:name=".uiReference.attendees.AttendeeBrowseEventsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -52,7 +52,7 @@
         <activity android:name=".qrGeneration.AddEvent" />
         <activity android:name=".qrScanner.MainActivity" />
         <activity android:name=".qrScanner.QRCodeScannerActivity" />
-        <activity android:name=".uiReference.OrganizerEventList" />
+        <activity android:name=".uiReference.organizers.OrganizerEventList" />
         <activity android:name=".uiReference.MainEvent" />
         <activity android:name=".uiReference.splashScreen" />
     </application>
