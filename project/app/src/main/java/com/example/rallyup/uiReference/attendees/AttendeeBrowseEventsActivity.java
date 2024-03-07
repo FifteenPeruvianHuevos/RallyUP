@@ -26,6 +26,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
         setContentView(R.layout.attendee_browse_events);
 
         listView = findViewById(R.id.att_browse_events_list);
+        attBrowseEventsBackBtn = findViewById(R.id.browse_events_back_button);
 
         arrayList.add(R.drawable.poster1);
         arrayList.add(R.drawable.poster2);
@@ -37,8 +38,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
         ListAdapter listAdapter = new ListAdapter(AttendeeBrowseEventsActivity.this, arrayList);
         listView.setAdapter(listAdapter);
 
-        attBrowseEventsBackBtn = findViewById(R.id.browse_events_back_button);
-
+        // back button
         attBrowseEventsBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +46,8 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // list listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
