@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/attendee_gradient"
     android:focusable="auto"
-    tools:context=".MainActivity">
+    tools:context=".uiReference.AttendeeBrowseEventsActivity">
 
     <TextView
         android:layout_width="200dp"

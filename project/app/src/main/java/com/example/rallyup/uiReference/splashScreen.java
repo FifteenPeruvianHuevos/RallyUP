@@ -34,7 +34,7 @@ public class splashScreen extends AppCompatActivity {
         attendeeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OrganizerEventList.class);  // placeholder for attendee opener
+                Intent intent = new Intent(getBaseContext(), AttendeeHomepageActivity.class);  // placeholder for attendee opener
                 startActivity(intent);
             }
         });

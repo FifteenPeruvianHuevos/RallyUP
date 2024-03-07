@@ -6,170 +6,179 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/organizer_gradient"
-    tools:context=".uiReference.OrganizerEventList">>
+    tools:context=".uiReference.AttendeeHomepageActivity">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:paddingTop="20dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageButton
+                android:id="@+id/attendee_homepage_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:src="@drawable/back_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.051"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/roundedCornersTop" />
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:src="@drawable/back_arrow"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.051"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/attendee_icon_temp"></ImageView>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                </LinearLayout>
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/roundedCornersTop" />
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"></Space>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="20dp">
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="150dp"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:text="HELLO"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkColor"
+                        android:textSize="70px" />
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:background="@drawable/attendee_icon_temp"
-                            android:layout_gravity="center"
-                            ></ImageView>
-
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="\@Generated_User"
+                        android:textAlignment="center"
+                        android:textColor="@color/darkColor"
+                        android:textSize="40px" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/inter_bold"
+                        android:orientation="horizontal"
+                        android:textColor="@color/darkColor">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="HELLO"
-                            android:textAlignment="center"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/inter_bold"
-                            android:textColor="@color/darkColor"/>
+                            android:layout_weight="2"
+                            android:fontFamily="@font/inter_medium"
+                            android:text="First Name"
+                            android:textAlignment="center"
+                            android:textColor="@color/darkColor" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="\@Generated_User"
+                            android:layout_weight="2"
+                            android:fontFamily="@font/inter_medium"
+                            android:text="Last Name"
                             android:textAlignment="center"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/inter_bold"
-                            android:textColor="@color/darkColor"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/inter_bold"
-                            android:textColor="@color/darkColor">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="First Name"
-                                android:textAlignment="center"
-                                android:layout_gravity="center"
-                                android:fontFamily="@font/inter_bold"
-                                android:textColor="@color/darkColor"
-                                android:layout_weight="2"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Last Name"
-                                android:fontFamily="@font/inter_bold"
-                                android:textColor="@color/darkColor"
-                                android:layout_weight="2"
-                                android:textAlignment="center"/>
-                        </LinearLayout>
-
+                            android:textColor="@color/darkColor" />
                     </LinearLayout>
 
                 </LinearLayout>
-            </FrameLayout>
 
-            <FrameLayout
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/rectangle_back"
+                android:layout_width="wrap_content"
+                android:layout_height="645dp"
+                android:background="@color/lightColor" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <View
-                    android:id="@+id/rectangle_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="645dp"
-                    android:background="@color/lightColor" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="horizontal" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:orientation="horizontal"/>
+                <Button
+                    android:id="@+id/attendee_my_events_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:background="@drawable/attendee_gradient"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:text="My Registered Events"
+                    android:textColor="@color/lightColor"
+                    app:backgroundTint="@null"></Button>
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:backgroundTint="@null"
-                        android:background="@drawable/attendee_gradient"
-                        android:text="SCREAMING"></Button>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SCREAMING"
-                        app:backgroundTint="@null"
-                        android:background="@drawable/attendee_gradient">
-                    </Button>
+                <Button
+                    android:id="@+id/attendee_browse_events_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:background="@drawable/attendee_gradient"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:text="Browse Events"
+                    android:textColor="@color/lightColor"
+                    app:backgroundTint="@null"></Button>
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </FrameLayout>
+        </FrameLayout>
 
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
