@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.rallyup.FirestoreController;
@@ -27,24 +28,30 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.File;
+import java.io.IOException;
 
 
 public class imageLoadTestActivity extends AppCompatActivity {
     private ImageView poster;
     private Button back;
-    private FirestoreController controller = new FirestoreController();
-    private Event thisEvent;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference docRef;
-    FirebaseAuth mAuth;
 
-    String posterPath;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference posterRef;
+    StorageReference storageRef = storage.getReference();
+    private StorageReference posterRef;
+
+    private String posterPath;
 
 
 
@@ -55,28 +62,48 @@ public class imageLoadTestActivity extends AppCompatActivity {
         poster = findViewById(R.id.imageView2);
         back = findViewById(R.id.backButton);
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            // do your stuff
-        } else {
-            signInAnonymously();
-        }
-
-        docRef = db.collection("events").document("eventname");
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                thisEvent = documentSnapshot.toObject(Event.class);
-                getEventPoster();
+        DocumentReference docRef = db.collection("events").document("checkign logcat");
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            Event event = documentSnapshot.toObject(Event.class);
+            posterPath = event.getPosterRef();
+            try {
+                showPoster();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+
         });
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 switchPage();
+            }
+        });
+
+    }
+
+    private void showPoster() throws IOException {
+        //StorageReference posterRef = storageRef.child("images/island.jpg");
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(posterPath);
+        // [START download_to_local_file]
+
+        File localFile = File.createTempFile("images", "jpg");
+
+        storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                // Local temp file has been created
+                String path = localFile.getAbsolutePath();
+                poster.setImageBitmap(BitmapFactory.decodeFile(path));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
             }
         });
 
@@ -89,32 +116,6 @@ public class imageLoadTestActivity extends AppCompatActivity {
         startActivity(a);
     }
 
-    private void signInAnonymously() {
-        mAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        // do your stuff
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Log.e(TAG, "signInAnonymously:FAILURE", exception);
-                    }
-                });
-    }
 
-    private void getEventPoster() {
-        Context context = this;
-        posterRef = thisEvent.getPosterRef();
-        posterPath = posterRef.getPath();
 
-        // Reference to an image file in Cloud Storage
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        // ImageView in your Activity
-        // Download directly from StorageReference using Glide// (See MyAppGlideModule for Loader registration)
-        Glide.with(context)
-                .load(storageReference)
-                .into(poster);
-    }
 }

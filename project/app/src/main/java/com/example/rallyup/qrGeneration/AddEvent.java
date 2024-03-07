@@ -55,6 +55,7 @@ public class AddEvent extends AppCompatActivity {
 
     private String eventName, eventLocation, eventDescription, eventID;
     private StorageReference posterRef, shareQRRef, checkInQRRef;
+    private String posterPath, shareQRPath, checkInQRPath;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
@@ -415,8 +416,11 @@ public class AddEvent extends AppCompatActivity {
             storage = FirebaseStorage.getInstance();
             storageRef = storage.getReference();
             posterRef = storageRef.child("images/Posters/"+ eventName);
+            posterPath = posterRef.getPath();
             shareQRRef = storageRef.child("images/ShareQR/"+ eventName);
+            shareQRPath = shareQRRef.getPath();
             checkInQRRef = storageRef.child("images/CheckInQR/"+ eventName);
+            checkInQRPath = checkInQRRef.getPath();
 
             uploadPoster();
             uploadCheckInQR();
@@ -437,7 +441,7 @@ public class AddEvent extends AppCompatActivity {
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
                     eventDate, eventTime, signupLimit, signupLimitInput,
                     geolocation, reUseQR, newQR,
-                    posterRef, shareQRRef, checkInQRRef);
+                    posterPath, shareQRPath, checkInQRPath);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
 

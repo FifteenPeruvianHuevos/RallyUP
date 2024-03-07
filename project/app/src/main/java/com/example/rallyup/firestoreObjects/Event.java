@@ -17,9 +17,9 @@ public class Event {
     private Boolean geolocation;
     private Boolean reUseQR;
     private Boolean newQR;
-    private StorageReference posterRef;
-    private StorageReference shareQRRef;
-    private StorageReference checkInQRRef;
+    private String posterRef;
+    private String shareQRRef;
+    private String checkInQRRef;
 
 
     /**
@@ -31,7 +31,7 @@ public class Event {
      */
     public Event(String eventName, String eventLocation, String eventDescription, String eventDate, String eventTime,
                  int signUpLimit, Boolean signUpLimitBool, Boolean geolocation, Boolean reUseQR, Boolean newQR,
-                 StorageReference posterRef, StorageReference shareQRRef, StorageReference checkInQRRef) {
+                 String posterRef, String shareQRRef, String checkInQRRef) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
@@ -158,27 +158,27 @@ public class Event {
         this.newQR = newQR;
     }
 
-    public StorageReference getPosterRef() {
+    public String getPosterRef() {
         return posterRef;
     }
 
-    public void setPosterRef(StorageReference posterRef) {
+    public void setPosterRef(String posterRef) {
         this.posterRef = posterRef;
     }
 
-    public StorageReference getShareQRRef() {
+    public String getShareQRRef() {
         return shareQRRef;
     }
 
-    public void setShareQRRef(StorageReference shareQRRef) {
+    public void setShareQRRef(String shareQRRef) {
         this.shareQRRef = shareQRRef;
     }
 
-    public StorageReference getCheckInQRRef() {
+    public String getCheckInQRRef() {
         return checkInQRRef;
     }
 
-    public void setCheckInQRRef(StorageReference checkInQRRef) {
+    public void setCheckInQRRef(String checkInQRRef) {
         this.checkInQRRef = checkInQRRef;
     }
 }

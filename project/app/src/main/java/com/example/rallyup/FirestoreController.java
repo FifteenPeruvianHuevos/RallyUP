@@ -49,20 +49,21 @@ public class FirestoreController {
     public void addEvent(Event event) {
         // Add the event to the Firestore collection
         HashMap<String, Object> data = new HashMap<>();
-        data.put("title", event.getEventName());
-        data.put("location", event.getEventLocation());
-        data.put("description", event.getEventDescription());
-        data.put("date", event.getEventDate());
-        data.put("time", event.getEventTime());
-        data.put("sign-up limit", event.getSignUpLimit());
-        data.put("sign-up limit permission", event.getSignUpLimitBool());
-        data.put("geolocation permission", event.getGeolocation());
-        data.put("re-use QR code permission", event.getReUseQR());
-        data.put("new QR code permission", event.getNewQR());
-        data.put("poster", event.getPosterRef().getPath());
-        data.put("share QR", event.getShareQRRef().getPath());
-        data.put("check-in QR", event.getCheckInQRRef().getPath());
+        data.put("eventName", event.getEventName());
+        data.put("eventLocation", event.getEventLocation());
+        data.put("eventDescription", event.getEventDescription());
+        data.put("eventDate", event.getEventDate());
+        data.put("eventTime", event.getEventTime());
+        data.put("signUpLimit", event.getSignUpLimit());
+        data.put("signUpLimitBool", event.getSignUpLimitBool());
+        data.put("geolocation", event.getGeolocation());
+        data.put("reUseQR", event.getReUseQR());
+        data.put("newQR", event.getNewQR());
+        data.put("posterRef", event.getPosterRef());
+        data.put("shareQRRef", event.getShareQRRef());
+        data.put("checkInQRRef", event.getCheckInQRRef());
 
+        // event.getName should be replaced with unique event ID
         eventsRef.document(event.getEventName()).set(data);
     }
 

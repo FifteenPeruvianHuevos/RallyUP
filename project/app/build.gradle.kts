@@ -52,7 +52,7 @@ dependencies {
     // FirebaseUI Storage only
     implementation ("com.firebaseui:firebase-ui-storage:7.2.0")
 
-
+    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
