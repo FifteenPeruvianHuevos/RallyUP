@@ -25,7 +25,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".attendeeList.MainActivity"/>
-        <activity android:name=".progressBar.MainActivity"/>
         <activity android:name=".progressBar.ProgressBarActivity"/>
         <activity android:name=".qrGeneration.MainActivity"/>
         <activity android:name=".qrGeneration.AddEvent"/>

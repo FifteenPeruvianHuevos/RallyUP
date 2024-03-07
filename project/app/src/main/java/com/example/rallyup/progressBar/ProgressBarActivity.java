@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 // To access methods from different packages, need to import it like so
@@ -43,7 +44,7 @@ public class ProgressBarActivity extends AppCompatActivity {
         // Initialize your XML items here
         ProgressBar progressBar = findViewById(R.id.progressBar);
         EditText progressEditText = findViewById(R.id.editProgressNumberXML);
-        Button backToMain = findViewById(R.id.backToMainButtonXML);
+        ImageView backToMain = findViewById(R.id.backToMainButtonXML);
         Button confirmButton = findViewById(R.id.confirmNumberButtonXML);
 
         /*for (int i = 0; i < progressBar.getMax(); i++){

@@ -7,20 +7,29 @@
     android:layout_height="match_parent"
     android:background="@drawable/my_gradient">
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/eventPosterView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingStart="6dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="6dp"
-        android:paddingBottom="6dp"
-        android:background="@color/accentColorGreen"
+        android:layout_marginTop="65dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/poster1" />
+        app:srcCompat="@drawable/poster1"
+        app:strokeColor="@color/accentColorGreen"
+        app:strokeWidth="10dp" />
+
+    <ImageView
+        android:id="@+id/backToMainButtonXML"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_arrow"/>
 
     <TextView
         android:id="@+id/ProgressBarEventNameTextView"
@@ -82,15 +91,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editProgressNumberXML" />
 
-        <Button
-            android:id="@+id/backToMainButtonXML"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TO MAIN"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirmNumberButtonXML" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ProgressBarAnnouncementsLayout"
             android:layout_width="match_parent"
@@ -130,16 +130,28 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/rounded_border"
-                    android:ems="10"
+                    android:ems="12"
                     android:hint="@string/notification_edit_title"
                     android:inputType="text"
                     android:paddingStart="6dp"
                     android:paddingTop="6dp"
                     android:paddingEnd="6dp"
                     android:paddingBottom="6dp"
+                    android:textColor="@color/darkColor"
                     android:textColorHint="@color/accentColorGreen"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="0.50"
+                    android:scaleY="0.50"
+                    android:translationY="-10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/ProgressBarAnnoucenementTitle"
+                    app:layout_constraintTop_toTopOf="@+id/ProgressBarAnnoucenementTitle"
+                    app:srcCompat="@drawable/edit_vector" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -163,6 +175,7 @@
                         android:ems="15"
                         android:hint="@string/notification_edit_body"
                         android:inputType="text"
+                        android:textColor="@color/darkColor"
                         android:textColorHint="@color/accentColorGreen"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

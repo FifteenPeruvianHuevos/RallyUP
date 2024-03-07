@@ -7,4 +7,10 @@
         <item name="cornerSizeTopRight">20dp</item>
     </style>
 
+    <style name="roundedIamgeView">
+        <item name="cornerSizeTopLeft">40dp</item>
+        <item name="cornerSizeTopRight">40dp</item>
+        <item name="cornerSizeBottomLeft">40dp</item>
+        <item name="cornerSizeBottomRight">40dp</item>
+    </style>
 </resources>
