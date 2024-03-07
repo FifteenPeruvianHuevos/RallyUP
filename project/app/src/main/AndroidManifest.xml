@@ -28,7 +28,7 @@
         <activity android:name=".progressBar.ProgressBarActivity"/>
         <activity android:name=".qrGeneration.MainActivity"/>
         <activity android:name=".qrGeneration.AddEvent"/>
-        <activity android:name=".qrScanner.MainActivity"/>
+        <activity android:name=".qrScanner.QRBaseActivity"/>
         <activity android:name=".qrScanner.TestActivity"/>
         <activity android:name=".qrScanner.ScannerActivity"/>
         <activity android:name=".uiReference.MainActivity"/>

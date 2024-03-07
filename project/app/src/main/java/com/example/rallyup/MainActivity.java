@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.rallyup.progressBar.ProgressBarActivity;
+import com.example.rallyup.qrScanner.QRBaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.qrScanner.MainActivity.class);
+                                QRBaseActivity.class);
                 startActivity(intent);
             }
         });

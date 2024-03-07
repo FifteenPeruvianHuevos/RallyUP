@@ -7,10 +7,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rallyup.R;
-
+/**
+ * This class contains a test activity for QR scanning after it scans
+ * @author Reimark Ronabio
+ */
 public class TestActivity extends AppCompatActivity {
 
     TextView scannedText;
+
+    /**
+     * Initializes the test activity when it is launched
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
