@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 // To access methods from different packages, need to import it like so
 import com.example.rallyup.notification.NotificationObject;
@@ -43,17 +44,34 @@ public class ProgressBarActivity extends AppCompatActivity {
                 NotificationCompat.PRIORITY_DEFAULT);
 
         // Initialize your XML items here
-        // To delete once not needed anymore
-        EditText progressEditText = findViewById(R.id.editProgressNumberXML);
-        Button confirmButton = findViewById(R.id.confirmNumberButtonXML);
-
         // To stay for final product
-        ProgressBar progressBar = findViewById(R.id.progressBar);
+        // Top of ProgressBarActivity
         ImageView backToMain = findViewById(R.id.backToMainButtonXML);
         TextView eventView = findViewById(R.id.ProgressBarEventNameTextView);
+        ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
+        // Event Details
+        TextView eventTime = findViewById(R.id.ProgressBarEventDateView);
+        TextView eventLocation = findViewById(R.id.ProgressBarEventLocationView);
+        TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
+        TextView eventTotalAttendees = findViewById(R.id.ProgressBarEventTotalAttendeesView);
+        TextView eventDescription = findViewById(R.id.ProgressBarEventDescriptionView);
+        // Milestones
+        ImageView editMilestonesDialogButton = findViewById(R.id.ProgressBarMilestonesEditButton);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        // Announcements
         EditText editAnnouncementTitle = findViewById(R.id.ProgressBarAnnouncementEditTitle);
         EditText editAnnouncementBody = findViewById(R.id.ProgressBarAnnouncementBody);
         Button sendAnnouncementButton = findViewById(R.id.ProgressBarAnnouncementSendButton);
+
+        // I would need to access Firebase for the event details, such as its:
+        // Name, Date/Time of Event, Location, # of Verified Attendees, # of Total Attendees
+        // And these values should be Strings
+
+        eventTime.setText("Month (in letters) Day, Year @ hh:mm");
+        eventLocation.setText("Location");
+        eventVerifiedAttendeesView.setText("Number from Firebase" + " of Verified Attendees");
+        eventTotalAttendees.setText("Number from Firebase" + "of Total Attendees");
+        eventDescription.setText("Description");
 
 
         // Here we would get the Firebase controller to do the following:
@@ -65,36 +83,36 @@ public class ProgressBarActivity extends AppCompatActivity {
         //setProgressOfEvent(progressBar, //int of current number of attendees, int of MaxAttendeesOrGoal);
 
         // Confirm button can be removed once we're able to access the number of attendees
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int progress = Integer.parseInt(progressEditText.getText().toString());
-                progressBar.setProgress(progress);
-
-
-                String test_msg = String.format(
-                        Locale.getDefault(),
-                        "We have %d participants!",
-                        progressBar.getProgress());
-                // Locale.getDefault() allows us to set the string so that it converts the message
-                // properly into the user's local language settings
-                // for example: some languages i != I, since "capitalization" may actual
-                // have different grammatical/semantic meanings
-
-                notificationObject.createNotification(
-                        ProgressBarActivity.class,
-                        getString(R.string.notification_channel_ID_milestone),
-                        getString(R.string.notification_title_milestone),
-                        test_msg,
-                        R.drawable.ic_launcher_foreground,
-                        0,
-                        NotificationCompat.VISIBILITY_PUBLIC,
-                        NotificationCompat.PRIORITY_DEFAULT,
-                        true,
-                        false,
-                        null);
-            }
-        });
+//        confirmButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int progress = Integer.parseInt(progressEditText.getText().toString());
+//                progressBar.setProgress(progress);
+//
+//
+//                String test_msg = String.format(
+//                        Locale.getDefault(),
+//                        "We have %d participants!",
+//                        progressBar.getProgress());
+//                // Locale.getDefault() allows us to set the string so that it converts the message
+//                // properly into the user's local language settings
+//                // for example: some languages i != I, since "capitalization" may actual
+//                // have different grammatical/semantic meanings
+//
+//                notificationObject.createNotification(
+//                        ProgressBarActivity.class,
+//                        getString(R.string.notification_channel_ID_milestone),
+//                        getString(R.string.notification_title_milestone),
+//                        test_msg,
+//                        R.drawable.ic_launcher_foreground,
+//                        0,
+//                        NotificationCompat.VISIBILITY_PUBLIC,
+//                        NotificationCompat.PRIORITY_DEFAULT,
+//                        true,
+//                        false,
+//                        null);
+//            }
+//        });
 
         backToMain.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +123,27 @@ public class ProgressBarActivity extends AppCompatActivity {
             }
         });
 
+
+        editMilestonesDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        sendAnnouncementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!editAnnouncementBody.getText().toString().equals("") && !editAnnouncementTitle.getText().toString().equals("")){
+                    // Create a new notification/announcement in the Firebase
+                    // Which then if we go to Attendees side of the activities, they should be able
+                    // to detect a new notification create for their specific event
+                } else {
+                    Toast toasty = Toast.makeText(ProgressBarActivity.this, "Missing title and/or body text.", Toast.LENGTH_SHORT);
+                    toasty.show();
+                }
+            }
+        });
 
 
     }

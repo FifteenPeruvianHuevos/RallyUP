@@ -25,9 +25,13 @@
     <string name="delete_photo">DELETE PHOTO</string>
     <string name="generated_username">\@ GENERATED USERNAME</string>
 
+    <!-- Progress Bar String Resources -->
+    <string name="milestones_title"><u>MILESTONES</u></string>
+    <string name="announcements_title"><u>ANNOUNCEMENTS</u></string>
     <!-- Notification Edit Box -->
     <string name="notification_edit_title">TITLE OF NOTIFICATION</string>
     <string name="notification_edit_body">Send message to attendees...</string>
+
     <!-- Notification Titles in Notification Popups -->
     <string name="notification_title_milestone">Milestone</string>
     <string name="notification_title_announcement">Announcement</string>
