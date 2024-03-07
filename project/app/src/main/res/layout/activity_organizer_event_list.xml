@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/organizer_gradient"
-    tools:context=".uiReference.OrganizerEventListActivity">
+    tools:context=".uiReference.organizers.OrganizerEventListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

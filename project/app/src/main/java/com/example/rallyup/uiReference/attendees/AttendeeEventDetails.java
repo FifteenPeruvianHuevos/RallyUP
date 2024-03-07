@@ -1,4 +1,4 @@
-package com.example.rallyup.uiReference;
+package com.example.rallyup.uiReference.attendees;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,13 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.example.rallyup.R;
-import com.example.rallyup.attendeeList.AttListArrayAdapter;
-import com.example.rallyup.attendeeList.AttendeeStatsClass;
-
-import java.util.ArrayList;
 
 public class AttendeeEventDetails extends AppCompatActivity {
 
