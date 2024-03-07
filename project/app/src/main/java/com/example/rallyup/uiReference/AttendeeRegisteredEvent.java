@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.rallyup.R;
 
-public class MainEvent extends AppCompatActivity {
-    // previous ui trial
+public class AttendeeRegisteredEvent extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_event);
+        setContentView(R.layout.activity_attendee_registered_event);
     }
 }

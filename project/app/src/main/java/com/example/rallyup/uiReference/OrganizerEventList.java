@@ -12,7 +12,9 @@ import com.example.rallyup.R;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class OrganizerEventList extends AppCompatActivity {
+
+    // previous ui trial
     ListView listView;
     ArrayList<Integer> arrayList = new ArrayList<>();
 
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add(R.drawable.poster2);
 
 
-        ListAdapter listAdapter = new ListAdapter(com.example.rallyup.uiReference.MainActivity.this, arrayList);
+        ListAdapter listAdapter = new ListAdapter(OrganizerEventList.this, arrayList);
         listView.setAdapter(listAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -39,12 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
                 Integer poster = (Integer) adapterView.getItemAtPosition(i);
 
-                Intent appInfo = new Intent(getBaseContext(), MainEvent.class);
+                Intent appInfo = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
 //                appInfo.putExtra("poster", poster);
                 startActivity(appInfo);
             }
         });
-
-
     }
 }

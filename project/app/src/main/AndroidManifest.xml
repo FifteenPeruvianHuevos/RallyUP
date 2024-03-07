@@ -15,6 +15,30 @@
         android:theme="@style/Theme.RallyUP"
         tools:targetApi="31">
         <activity
+            android:name=".uiReference.EventAttendeesInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.OrganizerEventDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.OrganizerEventListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.AttendeeRegisteredEvent"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.AttendeeEventDetails"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.AttendeeHomepageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.AttendeeMyEventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.AttendeeBrowseEventsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -31,9 +55,9 @@
         <activity android:name=".qrScanner.QRBaseActivity"/>
         <activity android:name=".qrScanner.TestActivity"/>
         <activity android:name=".qrScanner.ScannerActivity"/>
-        <activity android:name=".uiReference.MainActivity"/>
+        <activity android:name=".uiReference.OrganizerEventList" />
         <activity android:name=".uiReference.MainEvent"/>
+        <activity android:name=".uiReference.splashScreen" />
 
     </application>
-
 </manifest>

@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/organizer_gradient"
-    android:focusable="auto"
-    tools:context=".MainActivity">
-
+    tools:context=".uiReference.OrganizerEventListActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +25,7 @@
             android:layout_gravity="center">
 
             <ImageButton
-                android:id="@+id/back_button"
+                android:id="@+id/organizer_events_back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
@@ -40,9 +38,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_black"
-                android:text="EVENTS"
+                android:text="Organizer EVENTS"
                 android:textAllCaps="true"
                 android:textColor="@color/darkColor"
+                android:lineHeight="35dp"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 android:layout_gravity="center"
@@ -52,45 +51,26 @@
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/events_list"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusableInTouchMode="true"
-            android:paddingHorizontal="40dp" />
+            android:layout_marginBottom="40dp">
+            ">
+            <ListView
+                android:id="@+id/events_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:paddingHorizontal="40dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:clickable="true">
-            </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="40px"
+                android:clickable="true"
+                ></com.google.android.material.floatingactionbutton.FloatingActionButton>
         </RelativeLayout>
     </LinearLayout>
 
-
-
-
-
-
-
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView3"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="8dp"-->
-<!--        android:fontFamily="@font/inter_extrabold"-->
-<!--        android:text="USERNAME"-->
-<!--        android:textColor="@color/darkColor"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/textView2"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.817"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
