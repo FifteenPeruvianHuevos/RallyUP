@@ -56,7 +56,7 @@
         <activity android:name=".qrScanner.ScannerActivity"/>
         <activity android:name=".uiReference.organizers.OrganizerEventList" />
         <activity android:name=".uiReference.MainEvent"/>
+        <activity android:name=".qrGeneration.ImageLoadTestActivity"/>
         <activity android:name=".uiReference.splashScreen" />
-
     </application>
 </manifest>
