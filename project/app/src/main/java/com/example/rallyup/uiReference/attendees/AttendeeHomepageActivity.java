@@ -5,12 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.User;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -20,13 +26,24 @@ import com.journeyapps.barcodescanner.ScanOptions;
  * This class contains the home page activity for attendees
  * @author Kaye Maranan
  */
-public class AttendeeHomepageActivity extends AppCompatActivity {
+public class AttendeeHomepageActivity extends AppCompatActivity implements FirestoreCallbackListener {
 
     Button attMyEventsBtn;
     Button attBrowseEventsBtn;
     FloatingActionButton editProfileBtn;
     ImageButton attHomepageBackBtn;
 
+    TextView firstNameView;
+    TextView lastNameView;
+    TextView usernameView;
+
+    @Override
+    public void onGetUser(User user) {
+//        Log.d("HomepageActivity", user.getFirstName());
+        firstNameView.setText(user.getFirstName());
+        lastNameView.setText(user.getLastName());
+        usernameView.setText(user.getId());
+    }
 
     // String attFirstName = findViewById(R.id.att_first_name)
     // String attLastName = findViewById(R.id.att_last_name)
@@ -57,6 +74,15 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_homepage);
+
+        FirestoreController fc = FirestoreController.getInstance();
+        LocalStorageController ls = LocalStorageController.getInstance();
+        fc.getUserByID(ls.getUserID(this), this);
+
+        // Text views
+        firstNameView = findViewById(R.id.att_first_name);
+        lastNameView = findViewById(R.id.att_last_name);
+        usernameView = findViewById(R.id.att_homepage_user);
 
         // buttons
         attMyEventsBtn = findViewById(R.id.attendee_my_events_button);

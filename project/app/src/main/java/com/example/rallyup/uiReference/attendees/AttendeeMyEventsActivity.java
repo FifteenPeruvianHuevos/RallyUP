@@ -12,13 +12,20 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 
 
+import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.uiReference.ListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // import java.util.ArrayList;
 
@@ -26,7 +33,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
  * This class contains the activity for the attendee's registered events
  * @author Kaye Maranan
  */
-public class AttendeeMyEventsActivity extends AppCompatActivity {
+public class AttendeeMyEventsActivity extends AppCompatActivity implements FirestoreCallbackListener {
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
@@ -47,6 +54,16 @@ public class AttendeeMyEventsActivity extends AppCompatActivity {
     ListView listView;
 //     ArrayList<Integer> arrayList = new ArrayList<>();
 
+    @Override
+    public void onGetEvents(List<Event> eventList) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(R.drawable.poster1);
+        arrayList.add(R.drawable.poster2);
+
+        ListAdapter listAdapter = new ListAdapter(AttendeeMyEventsActivity.this, arrayList);
+        listView.setAdapter(listAdapter);
+    }
+
     /**
      * Initializes the attendee's registered event list activity when it is first launched
      * @param savedInstanceState If the activity is being re-initialized after
@@ -54,7 +71,6 @@ public class AttendeeMyEventsActivity extends AppCompatActivity {
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +81,11 @@ public class AttendeeMyEventsActivity extends AppCompatActivity {
       
         listView = findViewById(R.id.att_my_events_list);
 
-        //temporary list for testing - isla
+        FirestoreController fc = FirestoreController.getInstance();
+        LocalStorageController ls = LocalStorageController.getInstance();
+        fc.getEventsByOwnerID(ls.getUserID(this), this);
 
+        //temporary list for testing - isla
         
 
 //         arrayList.add(R.drawable.poster1);
