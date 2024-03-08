@@ -60,6 +60,7 @@ public class ProgressBarActivity extends AppCompatActivity {
         TextView eventDescription = findViewById(R.id.ProgressBarEventDescriptionView);
         TextView eventViewAttendees = findViewById(R.id.ProgressBarEventViewAttendeesView);
         ImageView shareEventImageView = findViewById(R.id.ProgressBarEventShareEventImage);
+        Button checkInQRCodeButton = findViewById(R.id.ProgressBarEventCheckInQRCodeButton);
         // Milestones
         ImageView editMilestonesDialogButton = findViewById(R.id.ProgressBarMilestonesEditButton);
         ProgressBar progressBar = findViewById(R.id.progressBar);
@@ -90,6 +91,14 @@ public class ProgressBarActivity extends AppCompatActivity {
 
             }
         });
+
+        checkInQRCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Takes us to the Event Check-In QR Code Dialog/Fragment
+            }
+        });
+
 
         // Here we would get the Firebase controller to do the following:
         // I want to receive the current number of attendees of this event
