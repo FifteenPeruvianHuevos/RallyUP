@@ -1,6 +1,7 @@
 package com.example.rallyup;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
@@ -8,29 +9,34 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import com.example.rallyup.firestoreObjects.User;
-import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicMarkableReference;
+import java.util.List;
 
 public class FirestoreController {
     private static final FirestoreController instance = new FirestoreController();
@@ -39,6 +45,7 @@ public class FirestoreController {
     private final CollectionReference usersRef;
     private final CollectionReference eventsRef;
     private final CollectionReference eventAttendanceRef;
+    private final CollectionReference qrRef;
 
 
     public FirestoreController() {
@@ -46,10 +53,86 @@ public class FirestoreController {
         usersRef = dbRef.collection("users");
         eventsRef = dbRef.collection("events");
         eventAttendanceRef = dbRef.collection("eventAttendance");
+        qrRef = dbRef.collection("qrCodes");
     }
 
     public static FirestoreController getInstance() {
         return instance;
+    }
+
+
+    public void getPosterByEvent(Event event, FirestoreCallbackListener callbackListener) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(event.getPosterRef());
+
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("images", "jpg");
+        } catch(Exception e) {
+            Log.e("FirestoreController", "Error getting picture:" + e);
+        }
+        File finalLocalFile = localFile;
+        storageReference.getFile(finalLocalFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                String path = finalLocalFile.getAbsolutePath();
+                callbackListener.onGetImage(BitmapFactory.decodeFile(path));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting picture: " + e);
+            }
+        });
+    }
+
+    public void getEventAttendantsByEventID(String eventID, FirestoreCallbackListener callbackListener) {
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<Attendance> attendanceList = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    attendanceList.add(new Attendance(documentSnapshot));
+                }
+                callbackListener.onGetAttendants(attendanceList);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
+    }
+
+    public void getEventByID(String eventID, FirestoreCallbackListener callbackListener) {
+
+        DocumentReference docRef = eventsRef.document(eventID);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Event event = new Event();
+                event.setEventName(documentSnapshot.getString("eventName"));
+                event.setEventLocation(documentSnapshot.getString("eventLocation"));
+                event.setEventDescription(documentSnapshot.getString("eventDescription"));
+                event.setEventDate(documentSnapshot.getString("eventDate"));
+                event.setEventTime(documentSnapshot.getString("eventTime"));
+                event.setSignUpLimit(Math.toIntExact(documentSnapshot.getLong("signUpLimit")));
+                event.setSignUpLimitBool(documentSnapshot.getBoolean("signUpLimitBool"));
+                event.setGeolocation(documentSnapshot.getBoolean("geolocation"));
+                event.setReUseQR(documentSnapshot.getBoolean("reUseQR"));
+                event.setNewQR(documentSnapshot.getBoolean("newQR"));
+                event.setPosterRef(documentSnapshot.getString("posterRef"));
+//                event.setShareQRRef(documentSnapshot.getString("shareQRRef"));
+//                event.setCheckInQRRef(documentSnapshot.getString("checkInQRRef"));
+
+                callbackListener.onGetEvent(event);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting document: " + e);
+            }
+        });
     }
 
     /**
@@ -87,25 +170,6 @@ public class FirestoreController {
     public void createUserID(final OnCompleteListener<DocumentReference> onCompleteListener) {
         usersRef.add(new User())
                 .addOnCompleteListener(onCompleteListener);
-    }
-
-    /**
-     *
-     */
-    public void examplePrintAllAttendance() {
-        dbRef.collection("eventAttendance").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                for (DocumentSnapshot document : task.getResult()) {
-                    // Access document data
-                    String eventID = document.getString("eventID");
-                    String userID = document.getString("userID");
-                    Boolean verified = document.getBoolean("attendeeVerified");
-                    Log.d("FirestoreController", eventID + ' ' + userID);
-                }
-            } else {
-                Log.d("FirestoreController", "Error getting documents: " + task.getException());
-            }
-        });
     }
 
     /**
@@ -159,6 +223,46 @@ public class FirestoreController {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
+            }
+        });
+    }
+
+    @Deprecated
+    public void getEventAttendantsByEventID(String eventID, final OnSuccessListener<QuerySnapshot> onSuccessListener) {
+        Query query = eventAttendanceRef.whereEqualTo("eventID", eventID);
+        query.get().addOnSuccessListener(onSuccessListener).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
+    }
+
+    @Deprecated
+    public void getEventByID(String eventID, final OnSuccessListener<DocumentSnapshot> onSuccessListener) {
+        DocumentReference docRef = eventsRef.document(eventID);
+        docRef.get().addOnSuccessListener(onSuccessListener).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting document: " + e);
+            }
+        });
+    }
+
+    @Deprecated
+    public void getPosterByEventID(String eventID, final OnSuccessListener<FileDownloadTask.TaskSnapshot> onSuccessListener) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("");
+
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("images", "jpg");
+        } catch(Exception e) {
+            Log.e("FirestoreController", "Error getting picture:" + e);
+        }
+        storageReference.getFile(localFile).addOnSuccessListener(onSuccessListener).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting picture: " + e);
             }
         });
     }

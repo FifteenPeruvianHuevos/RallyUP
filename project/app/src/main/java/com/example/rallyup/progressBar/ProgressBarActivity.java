@@ -1,7 +1,7 @@
 package com.example.rallyup.progressBar;
 
 import android.content.Intent;
-import android.media.Image;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 // To access methods from different packages, need to import it like so
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.MainActivity;
+import com.example.rallyup.firestoreObjects.Attendance;
+import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.notification.NotificationObject;
 
 import androidx.annotation.Nullable;
@@ -19,18 +24,60 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.example.rallyup.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Locale;
+import java.util.List;
 
 /**
  * Class that is an Activity to show your ProgressBar
  * @author Chih-Hung Wu
  * @version 1.0.0
  * */
-public class ProgressBarActivity extends AppCompatActivity {
+public class ProgressBarActivity extends AppCompatActivity implements FirestoreCallbackListener {
 
     NotificationObject notificationObject = new NotificationObject(this);
+
+    @Override
+    public void onGetEvent(Event event) {
+        TextView eventView = findViewById(R.id.ProgressBarEventNameTextView);
+        TextView eventTime = findViewById(R.id.ProgressBarEventDateView);
+        TextView eventLocation = findViewById(R.id.ProgressBarEventLocationView);
+        TextView eventDescription = findViewById(R.id.ProgressBarEventDescriptionView);
+
+        eventView.setText(event.getEventName());
+        eventTime.setText(event.getEventTime());
+        eventLocation.setText(event.getEventLocation());
+        eventDescription.setText(event.getEventDescription());
+
+         // Load in poster for this event
+         FirestoreController fc = FirestoreController.getInstance();
+         fc.getPosterByEvent(event, this);
+    }
+
+    @Override
+    public void onGetAttendants(List<Attendance> attendantList) {
+        TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
+        TextView eventTotalAttendees = findViewById(R.id.ProgressBarEventTotalAttendeesView);
+
+        eventTotalAttendees.setText(attendantList.size() + " total attendees");
+
+        int count = 0;
+        for (Attendance attendance : attendantList) {
+            if (attendance.isAttendeeVerified()) count++;
+        }
+        eventVerifiedAttendeesView.setText(count + " verified attendees");
+    }
+
+    @Override
+    public void onGetImage(Bitmap bm) {
+        ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
+        eventPoster.setImageBitmap(bm);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,20 +116,9 @@ public class ProgressBarActivity extends AppCompatActivity {
         EditText editAnnouncementBody = findViewById(R.id.ProgressBarAnnouncementBody);
         Button sendAnnouncementButton = findViewById(R.id.ProgressBarAnnouncementSendButton);
 
-        // I would need to access Firebase for the event details, such as its:
-        // Name, Date/Time of Event, Location, # of Verified Attendees, # of Total Attendees
-        // And these values should be Strings
-        // I would also need to access the Event's Poster Image
-
-        eventView.setText("EVENT NAME");
-
-        eventTime.setText("Month (in letters) Day, Year @ hh:mm");
-        eventLocation.setText("Location");
-        eventVerifiedAttendeesView.setText("Number from Firebase" + " of Verified Attendees");
-        eventTotalAttendees.setText("Number from Firebase" + "of Total Attendees");
-        eventDescription.setText("Description");
-        // Somehow set the bitmap image of the
-        // eventPoster.setImageBitmap();
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.getEventByID("Actual last test before pushing lol", this);
+        fc.getEventAttendantsByEventID("Actual last test before pushing lol", this);
 
         eventViewAttendees.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +180,7 @@ public class ProgressBarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent backToMainIntent =
-                        new Intent(ProgressBarActivity.this, com.example.rallyup.MainActivity.class);
+                        new Intent(ProgressBarActivity.this, MainActivity.class);
                 startActivity(backToMainIntent);
             }
         });
