@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/lightColor">
 
     <TextView
         android:id="@+id/username"
@@ -14,6 +15,8 @@
         android:padding="10dp"
         android:text="Username"
         android:textSize="20dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/darkColor"
         >
     </TextView>
     <TextView
@@ -22,9 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:padding="10dp"
-        android:text="# of Times Checked In"
+        android:text="#"
         android:textAlignment="textEnd"
-        android:textSize="20dp">
+        android:textSize="20dp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/darkColor">
 
     </TextView>
 </LinearLayout>

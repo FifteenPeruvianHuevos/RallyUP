@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="deploymentTargetDropDown">
-    <targetSelectedWithDropDown>
-      <Target>
-        <type value="QUICK_BOOT_TARGET" />
-        <deviceKey>
-          <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\marcu\.android\avd\Pixel_6_Pro_API_28.avd" />
-          </Key>
-        </deviceKey>
-      </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2024-02-27T23:07:12.756987400Z" />
+    <value>
+      <entry key="Tests in 'com.example.rallyup'">
+        <State />
+      </entry>
+      <entry key="app">
+        <State />
+      </entry>
+      <entry key="attendeeHomepageTest">
+        <State />
+      </entry>
+      <entry key="organizerEventListTest">
+        <State />
+      </entry>
+      <entry key="testMyEventsQRScanner()">
+        <State />
+      </entry>
+      <entry key="testReturnFromEventDetails()">
+        <State />
+      </entry>
+    </value>
   </component>
 </project>

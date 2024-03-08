@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activityOrganizerEventList"
+    android:background="@drawable/organizer_gradient"
+    tools:context=".uiReference.organizers.OrganizerEventListActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/organizer_events_back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                app:srcCompat="@drawable/back_arrow"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/org_attendee_details_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_black"
+                android:text="@string/organizer_events_title"
+                android:textAllCaps="true"
+                android:textColor="@color/darkColor"
+                android:lineHeight="35dp"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:textAlignment="textEnd"
+                tools:ignore="RtlCompat" />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp">
+            ">
+            <ListView
+                android:id="@+id/org_events_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:paddingHorizontal="40dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/createEventButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin= "40px"
+                android:backgroundTint="@color/accentColorGreen"
+                android:src="@drawable/add_vector"
+                android:clickable="true"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

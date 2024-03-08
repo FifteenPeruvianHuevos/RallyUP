@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.rallyup.attendeeUpdateInfo.AttendeeUpdateActivity;
 import com.example.rallyup.progressBar.ProgressBarActivity;
+import com.example.rallyup.uiReference.attendees.QRBaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,46 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button qrScannerButton = findViewById(R.id.QRScannerButton);
-        Button qrGeneratorButton = findViewById(R.id.QRGeneratorButton);
-        Button attendeeListButton = findViewById(R.id.AttListButton);
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
         Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
-        qrScannerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.qrScanner.MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        qrGeneratorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.qrGeneration.MainActivity.class);
-                startActivity(intent);
-            }
-        });
-        attendeeListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.attendeeList.MainActivity.class);
-                startActivity(intent);
-            }
-        });
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.progressBar.MainActivity.class);
+                                ProgressBarActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.uiReference.MainActivity.class);
+                                com.example.rallyup.uiReference.splashScreen.class);
                 startActivity(intent);
             }
         });

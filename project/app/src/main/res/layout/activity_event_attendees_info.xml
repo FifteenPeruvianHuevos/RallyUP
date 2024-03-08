@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activityEventAttendeesInfo"
+    tools:context=".uiReference.organizers.EventAttendeesInfoActivity"
+    android:background="@color/lightColor">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="40px">
+
+                <ImageButton
+                    android:id="@+id/event_attendees_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="#00000000"
+                    app:srcCompat="@drawable/back_arrow" />
+
+                <TextView
+                    android:id="@+id/org_attendee_details_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/inter_black"
+                    android:lineHeight="35dp"
+                    android:text="@string/attendee_details_title"
+                    android:textAlignment="textEnd"
+                    android:textAllCaps="true"
+                    android:textColor="@color/darkColor"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="100px"
+                android:paddingTop="100px"
+                android:paddingBottom="200px">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/attendee_details_list_top"
+                    android:fontFamily="@font/inter_black"
+                    android:paddingVertical="10dp"
+                    android:text="@string/registered_attendees_fixed"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/darkColor"
+                    android:textSize="25dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkColor"
+                    android:orientation="horizontal"
+                    android:padding="20px">
+
+                    <TextView
+                        android:layout_width="500px"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_black"
+                        android:text="@string/username_fixed"
+                        android:textColor="@color/lightColor"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_black"
+                        android:text="@string/num_of_times_checked_in_fixed"
+                        android:textColor="@color/lightColor"
+                        android:textSize="50px" />
+                </LinearLayout>
+
+
+                <ListView
+                    android:id="@+id/registeredAttnList"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_marginBottom="60dp"
+                    android:background="@drawable/attendee_details_list_bottom"></ListView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/attendee_details_list_top"
+                    android:fontFamily="@font/inter_black"
+                    android:paddingVertical="10dp"
+                    android:text="@string/verified_check_ins_fixed"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/darkColor"
+                    android:textSize="25dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkColor"
+                    android:orientation="horizontal"
+                    android:padding="20px">
+
+                    <TextView
+                        android:layout_width="500px"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_black"
+                        android:text="@string/username_fixed"
+                        android:textColor="@color/lightColor"
+                        android:textSize="50px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_black"
+                        android:text="@string/num_of_times_checked_in_fixed"
+                        android:textColor="@color/lightColor"
+                        android:textSize="50px" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/attnCheckInList"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_marginBottom="60dp"
+                    android:background="@drawable/attendee_details_list_bottom"></ListView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_black"
+                    android:text="@string/heat_map_of_attendees_fixed"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/darkColor"
+                    android:textSize="25dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

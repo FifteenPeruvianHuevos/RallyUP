@@ -12,33 +12,6 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/QRScannerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:insetLeft="30dp"
-            android:insetTop="50dp"
-            android:insetRight="30dp"
-            android:text="QR Scanner" />
-
-        <Button
-            android:id="@+id/QRGeneratorButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:insetLeft="30dp"
-            android:insetTop="50dp"
-            android:insetRight="30dp"
-            android:text="QR Generator" />
-
-        <Button
-            android:id="@+id/AttListButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:insetLeft="30dp"
-            android:insetTop="50dp"
-            android:insetRight="30dp"
-            android:text="Attendee List" />
-
-        <Button
             android:id="@+id/ProgressBarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
