@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -49,8 +50,9 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
 
     private Button createButton;
 
-    // b2 is the back button
-    private FloatingActionButton eventImageInput, b2;
+    private FloatingActionButton eventImageInput;
+
+    private ImageButton backButton;
 
     private CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput, reUseQRSelect;
 
@@ -94,6 +96,14 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
 
         // initializing all the views from our .xml file
         initializeViews();
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), OrganizerEventListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // prompting the user to upload an image when they click on the upload box
         eventImageInput.setOnClickListener(new View.OnClickListener() {
@@ -195,11 +205,6 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
             }
         });
 
-        // switches activities when the back button is pressed
-        b2.setOnClickListener(v -> {
-            // for clicking the button to go back to the QR page
-            switchPage();
-        });
 
 
     }
@@ -208,8 +213,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
      * Initializes all the views that need to be accessed in this activity
      */
     public void initializeViews() {
-        b2 = findViewById(R.id.pageSwitcher2);
-
+        backButton = findViewById(R.id.backButton);
         eventNameInput = findViewById(R.id.eventNameInput);
         uploadPosterText = findViewById(R.id.uploadPosterText);
         eventLocationInput = findViewById(R.id.eventLocationInput);
