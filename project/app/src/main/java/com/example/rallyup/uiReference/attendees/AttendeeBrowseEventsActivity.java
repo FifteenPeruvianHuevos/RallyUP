@@ -29,16 +29,21 @@ import java.util.Locale;
  */
 public class AttendeeBrowseEventsActivity extends AppCompatActivity implements FirestoreCallbackListener {
     ListView listView;
-    ArrayList<Integer> arrayList = new ArrayList<>();
+    ArrayList<String> eventIDS = new ArrayList<>();
+
+    List<Event> events;
     ImageButton attBrowseEventsBackBtn;
     FirestoreController controller;
 
 
 
     @Override
-    public void onGetEvents(List<Event> events){
+    public void onGetEventsAndIDS(List<Event> events, ArrayList<String> eventIDs){
         EventAdapter eventAdapter = new EventAdapter(AttendeeBrowseEventsActivity.this, events);
         listView.setAdapter(eventAdapter);
+        this.events = events;
+        this.eventIDS = eventIDs;
+
     }
 
     /**
@@ -69,6 +74,8 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
         // real list
         LocalStorageController ls = LocalStorageController.getInstance();
         controller = FirestoreController.getInstance();
+
+        // getting the current date to use it to query the firebase to find all events that have not yet passed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
         int year = Integer.parseInt(currentDateandTime.substring(0,3));
@@ -91,10 +98,12 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Integer poster = (Integer) adapterView.getItemAtPosition(i);
+                //Event selectedEvent = eventIDS.get(i);
 
-                Intent appInfo = new Intent(getBaseContext(), AttendeeEventDetails.class);
-//                appInfo.putExtra("poster", poster);
-                startActivity(appInfo);
+                String eventID = eventIDS.get(i);
+                Intent intent = new Intent(AttendeeBrowseEventsActivity.this, AttendeeEventDetails.class);
+                intent.putExtra("key", eventID);
+                startActivity(intent);
             }
         });
     }

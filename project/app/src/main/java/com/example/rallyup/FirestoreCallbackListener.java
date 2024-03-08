@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface FirestoreCallbackListener {
@@ -21,5 +22,9 @@ public interface FirestoreCallbackListener {
     }
 
     default void onGetEvents(List<Event> eventList){
+    }
+
+    default void onGetEventsAndIDS(List<Event> eventList, ArrayList<String> eventIDS) {
+
     }
 }

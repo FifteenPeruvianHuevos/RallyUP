@@ -135,6 +135,7 @@ public class FirestoreController {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 List<Event> EventList = new ArrayList<>();
+                ArrayList<String> eventIDS = new ArrayList<String>();
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Event thisEvent;
                     thisEvent = documentSnapshot.toObject(Event.class);
@@ -143,9 +144,10 @@ public class FirestoreController {
                             (Integer.parseInt(eDate.substring(4, 5)) >= month) &&
                             (Integer.parseInt(eDate.substring(6, 7)) >= day)) {
                         EventList.add(thisEvent);
+                        eventIDS.remove(thisEvent.getEventID());
                     }
                 }
-                callbackListener.onGetEvents(EventList);
+                callbackListener.onGetEventsAndIDS(EventList, eventIDS);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
