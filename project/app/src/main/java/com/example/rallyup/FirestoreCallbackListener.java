@@ -25,10 +25,6 @@ public interface FirestoreCallbackListener {
     default void onGetAttendants(List<Attendance> attendantList) {
     }
 
-    default void onGetEvents(List<Event> eventList){
-    }
-
-
     default void onGetUser(User user) {
     };
 

@@ -66,12 +66,6 @@ public class Event {
         this.ownerID = ownerID;
         this.eventID = eventID;
     }
-    public Event(DocumentSnapshot documentSnapshot) {
-        setEventDate(documentSnapshot.getString("eventDate"));
-        setEventName(documentSnapshot.getString("eventName"));
-        setEventLocation(documentSnapshot.getString("eventLocation"));
-//        setPosterRef(Math.toIntExact(documentSnapshot.getLong("timesCheckedIn")));
-    }
 
     public Event() {}
 
@@ -340,7 +334,7 @@ public class Event {
      *
      * @return The unique event ID associated with the event.
      */
-    private String getEventID() {
+      public String getEventID() {
         return eventID;
     }
 
