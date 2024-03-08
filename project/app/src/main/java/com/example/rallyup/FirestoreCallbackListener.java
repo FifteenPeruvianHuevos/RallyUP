@@ -7,6 +7,7 @@ import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface FirestoreCallbackListener {

@@ -19,6 +19,8 @@ import com.example.rallyup.R;
 
 
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.uiReference.EventAdapter;
+
 import com.example.rallyup.uiReference.ListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -51,9 +53,20 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
     ImageButton attMyEventsBackBtn;
     FloatingActionButton QRCodeScannerBtn;
 
+    ArrayList<Event> eventArray;
+    FirestoreController controller;
+
+
     ListView listView;
 //     ArrayList<Integer> arrayList = new ArrayList<>();
 
+@Override
+public void onGetEvents(List<Event> events){
+    EventAdapter eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
+    listView.setAdapter(eventAdapter);
+}
+
+  /*
     @Override
     public void onGetEvents(List<Event> eventList) {
         ArrayList<Integer> arrayList = new ArrayList<>();
@@ -62,7 +75,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
         ListAdapter listAdapter = new ListAdapter(AttendeeMyEventsActivity.this, arrayList);
         listView.setAdapter(listAdapter);
-    }
+    }*/
 
     /**
      * Initializes the attendee's registered event list activity when it is first launched
@@ -71,6 +84,7 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,8 +111,12 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
 
 //         ListAdapter listAdapter = new ListAdapter(AttendeeMyEventsActivity.this, arrayList);
 //         listView.setAdapter(listAdapter);
-
         // end temporary list
+
+
+        // real list
+        controller = FirestoreController.getInstance();
+        controller.getEventsByOwnerID(ls.getUserID(this), this);
 
         attMyEventsBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override

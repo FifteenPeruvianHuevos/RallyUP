@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.QrCode;
@@ -43,6 +44,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.UUID;
 
 public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener, FirestoreCallbackListener {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
@@ -69,7 +71,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private String eventDate, eventTime, userID;
-    private Integer signupLimit = 0;
+    private Integer signupLimit = 1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
 
@@ -569,6 +571,15 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
 
+    public void generateEventID() {
+        eventID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+    }
+
+    public void getUserID(){
+        LocalStorageController lc = new LocalStorageController();
+        lc.initialization(this);
+        userID = lc.getUserID(this);
+    }
     /**
      * This method saves all the input fields in new variables, resets the views of all the input fields on the screen,
      * and passes the saved variables to firebase as an instance of the Event Class.
@@ -586,8 +597,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
+            generateEventID();
+            getUserID();
             if(newQR){
-
                 generateShareQR();
                 generateCheckInQR();
                 generateQRCode("share");
@@ -614,7 +626,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             }
             // Uploading the Poster to Firebase Icloud Storage
             uploadPoster();
-
             // Clearing the views of the form
             eventNameInput.getText().clear();
             eventLocationInput.getText().clear();
@@ -633,7 +644,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
                     eventDate, eventTime, signupLimit, signupLimitInput,
                     geolocation, reUseQR, newQR,
-                    posterPath, shareQRPath, checkInQRPath);
+                    posterPath, shareQRPath, checkInQRPath, userID, eventID);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
 
