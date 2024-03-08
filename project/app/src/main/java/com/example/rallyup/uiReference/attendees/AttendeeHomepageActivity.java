@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.rallyup.R;
+import com.example.rallyup.attendeeUpdateInfo.AttendeeUpdateActivity;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -24,6 +25,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
 
     Button attMyEventsBtn;
     Button attBrowseEventsBtn;
+    FloatingActionButton editProfileBtn;
     ImageButton attHomepageBackBtn;
 
 
@@ -60,8 +62,9 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
         // buttons
         attMyEventsBtn = findViewById(R.id.attendee_my_events_button);
         attBrowseEventsBtn = findViewById(R.id.attendee_browse_events_button);
-        attHomepageBackBtn = findViewById(R.id.attendee_homepage_back_button);
+        attHomepageBackBtn = findViewById(R.id.attendee_update_back_button);
         QRCodeScannerBtn = findViewById(R.id.QRScannerButton);
+        editProfileBtn = findViewById(R.id.edit_profile_button);
 
         // send to my events
         attMyEventsBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +93,8 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
             }
         });
 
+
+        // scan a qr code
         QRCodeScannerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +104,14 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
                 options.setBeepEnabled(false);
                 options.setCaptureActivity(ScannerActivity.class);
                 barcodeLauncher.launch(options);
+            }
+        });
+
+        editProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), AttendeeUpdateActivity.class);  // placeholder for attendee opener
+                startActivity(intent);
             }
         });
 

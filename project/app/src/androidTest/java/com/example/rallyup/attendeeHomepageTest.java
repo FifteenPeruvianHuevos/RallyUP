@@ -68,4 +68,17 @@ public class attendeeHomepageTest {
         onView(withId(R.id.QRScannerButton)).perform(click());
         onView(withId(R.id.scannerActivity)).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void testGoToEditProfile() {
+        onView(withId(R.id.edit_profile_button)).perform(click());
+        onView(withId(R.id.attendeeUpdateInfo)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testReturhFromEditProfile() {
+        onView(withId(R.id.edit_profile_button)).perform(click());
+        onView(withId(R.id.attendee_update_back_button)).perform(click());
+        onView(withId(R.id.attendeeHomepage)).check(matches(isDisplayed()));
+    }
 }
