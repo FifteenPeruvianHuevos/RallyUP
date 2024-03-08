@@ -30,15 +30,6 @@
             android:text="QR Generator" />
 
         <Button
-            android:id="@+id/AttListButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:insetLeft="30dp"
-            android:insetTop="50dp"
-            android:insetRight="30dp"
-            android:text="Attendee List" />
-
-        <Button
             android:id="@+id/ProgressBarButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +45,7 @@
             android:insetLeft="30dp"
             android:insetTop="50dp"
             android:insetRight="30dp"
-            android:text="UI Layout" />
+            android:text="App" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

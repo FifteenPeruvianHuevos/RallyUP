@@ -66,7 +66,11 @@
                 android:textColor="@color/darkColor"
                 android:fontFamily="@font/inter_black"
                 android:textSize="25dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:background="@drawable/attendee_details_list_top"
+                android:paddingVertical="10dp"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,12 +95,13 @@
                     android:fontFamily="@font/inter_black"/>
             </LinearLayout>
 
+
             <ListView
-                android:id="@+id/attnList"
+                android:id="@+id/registeredAttnList"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginBottom="50dp"
-                android:background="@color/white">
+                android:background="@drawable/attendee_details_list_bottom"
+                android:layout_marginBottom="60dp">
             </ListView>
 
             <TextView
@@ -107,7 +112,9 @@
                 android:textColor="@color/darkColor"
                 android:fontFamily="@font/inter_black"
                 android:textSize="25dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:background="@drawable/attendee_details_list_top"
+                android:paddingVertical="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,11 +140,12 @@
             </LinearLayout>
 
             <ListView
-                android:id="@+id/attnSignUpList"
+                android:id="@+id/attnCheckInList"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginBottom="50dp"
-                android:background="@color/white">
+                android:background="@drawable/attendee_details_list_bottom"
+                android:layout_marginBottom="60dp"
+                >
             </ListView>
 
             <TextView
