@@ -8,18 +8,6 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="attendeeHomepageTest">
-        <State />
-      </entry>
-      <entry key="organizerEventListTest">
-        <State />
-      </entry>
-      <entry key="testMyEventsQRScanner()">
-        <State />
-      </entry>
-      <entry key="testReturnFromEventDetails()">
-        <State />
-      </entry>
     </value>
   </component>
 </project>
