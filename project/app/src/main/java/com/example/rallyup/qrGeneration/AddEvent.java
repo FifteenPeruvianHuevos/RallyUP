@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,12 +46,13 @@ import java.util.Calendar;
 public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener{
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
-    private TextView eventDateInput, eventTimeInput, uploadPosterText;
+    private TextView eventDateInput, eventTimeInput, uploadPosterText, shareDisplayText, checkInDisplayText;
 
     private Button createButton;
 
-    // b2 is the back button
-    private FloatingActionButton eventImageInput, b2;
+    private FloatingActionButton eventImageInput;
+
+    private ImageButton backButton;
 
     private CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput, reUseQRSelect;
 
@@ -67,8 +70,9 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
     private String eventDate, eventTime, userID;
     private Integer signupLimit = 0;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
+    private Boolean posterUploaded = false;
 
-    private ImageView qrView, posterImage = null;
+    private ImageView shareImageView, checkInImageView, posterImage;
 
     private FirebaseStorage storage;
     // Create a storage reference from our app
@@ -92,6 +96,14 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
 
         // initializing all the views from our .xml file
         initializeViews();
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), OrganizerEventListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // prompting the user to upload an image when they click on the upload box
         eventImageInput.setOnClickListener(new View.OnClickListener() {
@@ -161,8 +173,6 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
                                          boolean isChecked) {
                 if (isChecked) {
                     new ChooseReUseEventFragment().show(getSupportFragmentManager(), "Add/Edit City");
-                } else {
-                    resetQR();
                 }
             }
         });
@@ -177,7 +187,9 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
                                          boolean isChecked) {
                 if (isChecked) {
                     generateShareQR();
-                } else {
+                    generateCheckInQR();
+                }
+                else {
                     resetQR();
                 }
             }
@@ -193,11 +205,6 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
             }
         });
 
-        // switches activities when the back button is pressed
-        b2.setOnClickListener(v -> {
-            // for clicking the button to go back to the QR page
-            switchPage();
-        });
 
 
     }
@@ -206,8 +213,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
      * Initializes all the views that need to be accessed in this activity
      */
     public void initializeViews() {
-        b2 = findViewById(R.id.pageSwitcher2);
-
+        backButton = findViewById(R.id.backButton);
         eventNameInput = findViewById(R.id.eventNameInput);
         uploadPosterText = findViewById(R.id.uploadPosterText);
         eventLocationInput = findViewById(R.id.eventLocationInput);
@@ -219,9 +225,12 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         geoInput = findViewById(R.id.geolocationInput);
         createButton = findViewById(R.id.createEventButton);
         eventImageInput = findViewById(R.id.posterUploadButton);
-        qrView = findViewById(R.id.qrCodeView);
         newQRSelect = findViewById(R.id.newQrCodeSelect);
         reUseQRSelect = findViewById(R.id.reuseQRCodeSelect);
+        shareImageView = findViewById(R.id.shareQRView);
+        checkInImageView = findViewById(R.id.checkInQRView);
+        shareDisplayText = findViewById(R.id.shareQRText);
+        checkInDisplayText = findViewById(R.id.checkInQRText);
         posterImage = findViewById(R.id.uploadPosterView);
 
     }
@@ -277,7 +286,9 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
                         }
                         posterImage.setImageBitmap(
                                 selectedImageBitmap);
-                        uploadPosterText.setVisibility(uploadPosterText.GONE);
+                        posterImage.setVisibility(View.VISIBLE);
+                        uploadPosterText.setVisibility(View.GONE);
+                        posterUploaded = true;
                     }
                 }
             });
@@ -404,7 +415,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
      * This method does not take in any parameters, or return any variables
      */
     private void generateShareQR() {
-        String text = eventNameInput.getText().toString();
+        String text = "s" + eventNameInput.getText().toString();
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix matrix;
         try {
@@ -414,8 +425,9 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         }
         BarcodeEncoder encoder = new BarcodeEncoder();
         Bitmap bitmap = encoder.createBitmap(matrix);
-        //qrView.setVisibility(qrView.VISIBLE);
-        //qrView.setImageBitmap(bitmap);
+        shareImageView.setImageBitmap(bitmap);
+        shareImageView.setVisibility(View.VISIBLE);
+        shareDisplayText.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -424,7 +436,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
      */
     private void generateCheckInQR() {
         // @ Marcus this text should be replaced with "c" + the unique event ID
-        String checkInText = eventNameInput.getText().toString();
+        String checkInText = "c" + eventNameInput.getText().toString();
 
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix matrix;
@@ -436,18 +448,16 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         BarcodeEncoder encoder = new BarcodeEncoder();
         Bitmap bitmap = encoder.createBitmap(matrix);
         // make a new view for the checkInQR to be displayed?
-        //qrView.setVisibility(qrView.VISIBLE);
-        //qrView.setImageBitmap(bitmap);
+        checkInImageView.setImageBitmap(bitmap);
+        checkInImageView.setVisibility(View.VISIBLE);
+        checkInDisplayText.setVisibility(View.VISIBLE);
     }
 
-
-
-    /**
-     * Resets the QR Code View to be hidden
-     * This method does not take in any parameters, or return any variables
-     */
-    public void resetQR(){
-        qrView.setVisibility(qrView.GONE);
+    public void resetQR() {
+        checkInImageView.setVisibility(View.GONE);
+        checkInDisplayText.setVisibility(View.GONE);
+        shareImageView.setVisibility(View.GONE);
+        shareDisplayText.setVisibility(View.GONE);
     }
 
 
@@ -462,7 +472,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         // checking to see if any of the required fields were left blank
         if(eventName.isEmpty() || eventLocation.isEmpty() || (eventTimeInput.getText().toString().isEmpty())
         || eventDateInput.getText().toString().isEmpty() || (!newQRSelect.isChecked() && !reUseQRSelect.isChecked())
-                || posterImage == null || qrView == null || image == null) {
+                || !posterUploaded) {
             Toast.makeText(
                             this,
                             "Please ensure all fields are filled out!",
@@ -499,14 +509,14 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
      * This method uploads the newly generated share QR Code image to firebase iCloud storage
      */
     public void uploadShareQR() {
-        controller.uploadImageBitmap(qrView, shareQRRef);
+        controller.uploadImageBitmap(shareImageView, shareQRRef);
     }
 
     /**
      * This method uploads the newly generated check-in QR Code image to firebase iCloud storage
      */
     public void uploadCheckInQR() {
-        controller.uploadImageBitmap(qrView, checkInQRRef);
+        controller.uploadImageBitmap(checkInImageView, checkInQRRef);
     }
 
 
@@ -528,6 +538,8 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
             if(newQR){
+                generateShareQR();
+                generateCheckInQR();
                 // if the user wants new QR Codes to be generated
                 storage = FirebaseStorage.getInstance();
                 storageRef = storage.getReference();
@@ -539,6 +551,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
                 checkInQRPath = checkInQRRef.getPath();
                 uploadCheckInQR();
                 uploadShareQR();
+                posterUploaded = false;
             }
             else {
                 // if the user selected to reUse a past Event QR Code
@@ -557,7 +570,9 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
             newQRSelect.setChecked(false);
             attendeeSignUpLimitInput.setChecked(false);
             attendeeLimitPicker.setVisibility(View.GONE);
-
+            posterImage.setImageDrawable(null);
+            resetQR();
+            uploadPosterText.setVisibility(View.VISIBLE);
 
             // send the event values to fb
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
@@ -567,10 +582,8 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
 
-            // CODE BELOW FOR SWITCHING THE PAGE TO THE IMAGE UPLOAD TUTORIAL PAGE
-            //Intent a = new Intent(AddEvent.this, ImageLoadTestActivity.class);
-            //a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            //startActivity(a);
+            Intent intent = new Intent(getBaseContext(), OrganizerEventListActivity.class);
+            startActivity(intent);
         }
     }
 }
