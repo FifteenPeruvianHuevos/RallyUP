@@ -2,7 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="Tests in 'com.example.rallyup'">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="attendeeHomepageTest">
+        <State />
+      </entry>
+      <entry key="organizerEventListTest">
+        <State />
+      </entry>
+      <entry key="testMyEventsQRScanner()">
+        <State />
+      </entry>
+      <entry key="testReturnFromEventDetails()">
         <State />
       </entry>
     </value>

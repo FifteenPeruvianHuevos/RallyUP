@@ -5,11 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activityAttendeeEventDetails"
     android:background="@drawable/attendee_gradient"
     tools:context=".uiReference.attendees.AttendeeEventDetails">>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/activityOrgEventDetails"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"

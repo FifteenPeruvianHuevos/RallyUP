@@ -16,6 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+/**
+ * This class contains the home page activity for attendees
+ * @author Kaye Maranan
+ */
 public class AttendeeHomepageActivity extends AppCompatActivity {
 
     Button attMyEventsBtn;
@@ -41,7 +45,13 @@ public class AttendeeHomepageActivity extends AppCompatActivity {
                 }
             });
 
-
+    /**
+     * Initializes the attendee homepage activity when it is first launched
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
