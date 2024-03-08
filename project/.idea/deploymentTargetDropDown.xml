@@ -11,7 +11,10 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="splashIntentTest">
+      <entry key="attendeeHomepageTest">
+        <State />
+      </entry>
+      <entry key="splashScreenTest">
         <State />
       </entry>
       <entry key="testAttendeeActivity()">
