@@ -46,6 +46,11 @@ public class FirestoreController {
         return instance;
     }
 
+    /**
+     * Adds a new Event to the event collection in firebase
+     *
+     * @param event The new event to be added.
+     */
     public void addEvent(Event event) {
         // Add the event to the Firestore collection
         HashMap<String, Object> data = new HashMap<>();
@@ -67,12 +72,20 @@ public class FirestoreController {
         eventsRef.document(event.getEventName()).set(data);
     }
 
+    /**
+     * Generates a new User ID in the Firestore.
+     *
+     * @@return the new User ID.
+     */
     // Create a new user in the Firestore and return its userID
     public String createUserID() {
         // TODO
         return "hulaballoo";
     }
 
+    /**
+     *
+     */
     public void examplePrintAllAttendance() {
         dbRef.collection("eventAttendance").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -89,6 +102,12 @@ public class FirestoreController {
         });
     }
 
+    /**
+     * Uploads a Uri image to the firebase icloud storage.
+     *
+     * @param image The Uri image to be uploaded.
+     * @param reference The storage reference in which the image will be stored
+     */
     public void uploadImage(Uri image, StorageReference reference) {
         //final StorageReference posters = reference.child("images/" + "eventPosters/" + reference);
 
@@ -108,6 +127,12 @@ public class FirestoreController {
                 });
     }
 
+    /**
+     * Uploads a bitmap image to the firebase icloud storage.
+     *
+     * @param image The bitmap image to be uploaded.
+     * @param sReference The storage reference in which the image will be stored
+     */
     public void uploadImageBitmap(ImageView image, StorageReference sReference) {
         // Get the data from an ImageView as bytes
         image.setDrawingCacheEnabled(true);
