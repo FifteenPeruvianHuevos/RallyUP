@@ -20,26 +20,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="20dp">
-
-            <ImageButton
-                android:id="@+id/attendee_update_back_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:src="@drawable/back_arrow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.051"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <ImageButton
+            android:id="@+id/attendee_update_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.051"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -177,7 +169,7 @@
                     android:text="My Registered Events"
                     android:textAllCaps="true"
                     android:textColor="@color/lightColor"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     app:backgroundTint="@null"></Button>
 
                 <Button
@@ -191,7 +183,7 @@
                     android:text="Browse Events"
                     android:textAllCaps="true"
                     android:textColor="@color/lightColor"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     app:backgroundTint="@null"></Button>
 
 
