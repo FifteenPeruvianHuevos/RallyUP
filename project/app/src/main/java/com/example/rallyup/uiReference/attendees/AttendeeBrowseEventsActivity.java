@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class AttendeeBrowseEventsActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<Integer> arrayList = new ArrayList<>();
-
     ImageButton attBrowseEventsBackBtn;
 
     @Override
