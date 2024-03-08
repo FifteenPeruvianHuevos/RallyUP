@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -97,7 +98,7 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Integer poster = (Integer) adapterView.getItemAtPosition(i);
+                //Integer poster = (Integer) adapterView.getItemAtPosition(i);
                 Event selectedEvent = eventAdapter.getItem(i);
 
                 String eventID = selectedEvent.getEventID();

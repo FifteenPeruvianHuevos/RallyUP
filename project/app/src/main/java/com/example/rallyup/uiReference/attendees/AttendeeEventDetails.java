@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,12 +14,15 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.uiReference.EventAdapter;
+
+import java.util.List;
 
 /**
  * This class contains the event activity for an attendee when they browse and click on an event
  * @author Kaye Maranan
  */
-public class AttendeeEventDetails extends AppCompatActivity {
+public class AttendeeEventDetails extends AppCompatActivity implements FirestoreCallbackListener {
 
     ImageButton attEventBackButton;
     ImageView poster;
@@ -26,18 +30,27 @@ public class AttendeeEventDetails extends AppCompatActivity {
 
     Event displayEvent;
 
+
     FirestoreController controller = new FirestoreController();
 
-    FirestoreCallbackListener listener = new FirestoreCallbackListener() {
+    //FirestoreCallbackListener listener = new FirestoreCallbackListener() {
         /**
          * @param event
          */
-        @Override
-        public void onGetEvent(Event event) {
-            FirestoreCallbackListener.super.onGetEvent(event);
-            displayEvent = event;
-        }
-    };
+        //@Override
+        //public void onGetEvent(Event event) {
+            //FirestoreCallbackListener.super.onGetEvent(event);
+            //displayEvent = event;
+            //setFields();
+        //}
+    //};
+
+    @Override
+    public void onGetEvent(Event event) {
+        displayEvent = event;
+        setFields();
+
+    }
 
     /**
      * Initializes the attendee event details activity when it is first launched
@@ -50,10 +63,13 @@ public class AttendeeEventDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendee_event_details);
-        Bundle extras = getIntent().getExtras();
-        String eventID = extras.getString("key");
+        //Bundle extras = getIntent().getExtras();
+        //String eventID = extras.getString("key");
+        Intent intent = getIntent();
+        String eventID = intent.getStringExtra("key");
 
-        controller.getEventByID(eventID, listener);
+        controller.getEventByID(eventID, this);
+
 
         attEventBackButton = findViewById(R.id.attendee_event_back_button);
         poster = findViewById(R.id.imageView);
@@ -62,6 +78,18 @@ public class AttendeeEventDetails extends AppCompatActivity {
         eventLocation = findViewById(R.id.att_register_event_location);
         eventDetails = findViewById(R.id.att_register_event_details);
 
+
+
+        attEventBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void setFields() {
         controller.getPosterByEventID(displayEvent.getPosterRef(), this, poster);
         eventName.setText(displayEvent.getEventName());
         String uneditedDate = displayEvent.getEventDate();
@@ -72,13 +100,5 @@ public class AttendeeEventDetails extends AppCompatActivity {
         eventDate.setText(fullDateText);
         eventLocation.setText(displayEvent.getEventLocation());
         eventDetails.setText(displayEvent.getEventDescription());
-
-        attEventBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

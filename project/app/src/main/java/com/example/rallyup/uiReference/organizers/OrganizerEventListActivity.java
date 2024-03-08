@@ -16,6 +16,8 @@ import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.uiReference.EventAdapter;
 import com.example.rallyup.uiReference.ListAdapter;
+import com.example.rallyup.uiReference.attendees.AttendeeBrowseEventsActivity;
+import com.example.rallyup.uiReference.attendees.AttendeeEventDetails;
 import com.example.rallyup.uiReference.attendees.AttendeeMyEventsActivity;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,6 +35,7 @@ public class OrganizerEventListActivity extends AppCompatActivity implements Fir
     ImageButton orgEventListBackBtn;
     FloatingActionButton createEventButton;
     FirestoreController controller;
+    EventAdapter eventAdapter;
 
 
     /**
@@ -44,7 +47,7 @@ public class OrganizerEventListActivity extends AppCompatActivity implements Fir
      */
     @Override
     public void onGetEvents(List<Event> events) {
-        EventAdapter eventAdapter = new EventAdapter(OrganizerEventListActivity.this, events);
+        eventAdapter = new EventAdapter(OrganizerEventListActivity.this, events);
         listView.setAdapter(eventAdapter);
     }
 
@@ -56,6 +59,7 @@ public class OrganizerEventListActivity extends AppCompatActivity implements Fir
         orgEventListBackBtn = findViewById(R.id.organizer_events_back_button);
         createEventButton = findViewById(R.id.createEventButton);
         listView = findViewById(R.id.org_events_list);
+        eventAdapter = new EventAdapter(this, new ArrayList<>());
 
         //arrayList.add(R.drawable.poster1);
         //arrayList.add(R.drawable.poster2);
@@ -93,11 +97,12 @@ public class OrganizerEventListActivity extends AppCompatActivity implements Fir
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Integer poster = (Integer) adapterView.getItemAtPosition(i);
+                Event selectedEvent = eventAdapter.getItem(i);
 
-                Intent appInfo = new Intent(getBaseContext(), OrganizerEventDetailsActivity.class);
-//                appInfo.putExtra("poster", poster);
-                startActivity(appInfo);
+                String eventID = selectedEvent.getEventID();
+                Intent intent = new Intent(OrganizerEventListActivity.this, OrganizerEventDetailsActivity.class);
+                intent.putExtra("key", eventID);
+                startActivity(intent);
             }
         });
     }
