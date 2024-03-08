@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/AttendeeUpdatePictureDialog"
+    android:id="@+id/AttendeeUpdatePhotoDialog"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_rounded"
     android:textAlignment="textStart">
 
     <Button
-        android:id="@+id/AttendeeUpdateEditPhotoButton"
+        android:id="@+id/AttendeeUpdatePhotoEditButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/AttendeeUpdateInfoDeletePhotoButton"
+        android:id="@+id/AttendeeUpdatePhotoDeleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toTopOf="@+id/AttendeeUpdatePhotoCloseButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AttendeeUpdateEditPhotoButton" />
+        app:layout_constraintTop_toBottomOf="@+id/AttendeeUpdatePhotoEditButton" />
 
     <Button
         android:id="@+id/AttendeeUpdatePhotoCloseButton"
@@ -52,16 +52,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:maxEms="15"
-        android:text="@string/edit_photo"
-        android:textColor="@color/darkColor"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

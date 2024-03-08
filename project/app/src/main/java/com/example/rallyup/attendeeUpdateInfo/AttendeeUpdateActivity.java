@@ -1,19 +1,34 @@
 package com.example.rallyup.attendeeUpdateInfo;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
+import java.util.Objects;
 
 public class AttendeeUpdateActivity extends AppCompatActivity {
     @Override
@@ -27,6 +42,9 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         ImageView profilePicture = findViewById(R.id.attendeeUpdateInfoImageViewXML);
         FloatingActionButton editImageButton = findViewById(R.id.attendeeUpdateInfoPictureFABXML);
 
+        // TextView of Username
+        TextView userName = findViewById(R.id.AttendeeUpdateGeneratedUsernameView);
+
         // Edit personal info section
         EditText editFirstName = findViewById(R.id.editFirstNameXML);
         EditText editLastName = findViewById(R.id.editLastNameXML);
@@ -39,41 +57,90 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         // the values from Firebase, once the confirmButton is clicked, it should send the values
         // for Firebase to update.
 
-        editFirstName.setOnClickListener(new View.OnClickListener() {
+        // This whole slob of launchSomeActivity HAS TO BE before the call for it
+        // Which is in editPhotoButton.setOnClickListener();
+        ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(), result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        // Continue with our Ops here
+
+                        if (data != null && data.getData() != null) {
+                            Uri selectedImageUri = data.getData();
+                            Bitmap selectedImageBitmap;
+                            try {
+                                selectedImageBitmap =
+                                        MediaStore.Images.Media.getBitmap(
+                                                AttendeeUpdateActivity.this.getContentResolver(),
+                                                selectedImageUri);
+                            } catch (IOException error) {
+                                error.printStackTrace();
+                                // Setting to null for now, just to remove the error in
+                                // profileImageView.setImageBitMap(selectedImageBitmap);
+                                selectedImageBitmap = null; // Or have this as the temporary picture place holder
+                                // in case that it returns an error
+                            }
+                            //profileImageView = requireActivity().findViewById(R.id.attendeeUpdateInfoImageViewXML);
+                            profilePicture.setImageBitmap(selectedImageBitmap);
+                        }
+                    }
+                }
+        );
+
+        // FIREBASE needed here as well? Or is it the local generated username?
+        userName.setText("@ " + "FIREBASE USERNAME");
+
+
+        editImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                return;
+
+                AlertDialog.Builder pfpBuilder = new AlertDialog.Builder(AttendeeUpdateActivity.this);
+                View editPhotoView = getLayoutInflater().inflate(R.layout.dialog_attendeeupdatepicture, null);
+                pfpBuilder.setView(editPhotoView);
+
+                Button editPhotoButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoEditButton);
+                Button deletePhotoButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoDeleteButton);
+                Button closeButton = editPhotoView.findViewById(R.id.AttendeeUpdatePhotoCloseButton);
+
+                // Comment out once we have access to user's username or firstName
+                String firstLetter = "T"; //This is where we will get either the first name or username
+                // username[0], or firstName[0]; assuming that they're Strings
+                TextDrawable textDrawable = new TextDrawable(getBaseContext(), firstLetter);
+
+                editPhotoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                        launchSomeActivity.launch(intent);
+                    }
+                });
+
+
+                // Create and Show the dialog
+                AlertDialog editPhotoDialog = pfpBuilder.create();
+                Objects.requireNonNull(editPhotoDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                editPhotoDialog.show();
+
+                deletePhotoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        profilePicture.setImageDrawable(textDrawable);
+                        editPhotoDialog.dismiss();
+                    }
+                });
+                closeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editPhotoDialog.dismiss();
+                    }
+                });
+
             }
         });
-
-        editLastName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                return;
-            }
-        });
-
-        editEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                return;
-            }
-        });
-
-        editPhoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                return;
-            }
-        });
-
-        geolocationCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                return;
-            }
-        });
-
 
         confirmEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +162,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 // "user.phoneNumber" = editPhoneNumber.getText().toString();
                 // "user.geolocationOn" = geolocationCheck.isChecked();
 
+
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 // In this case, we'll put MainActivity.class as the placeholder
                 Intent intent = new Intent(AttendeeUpdateActivity.this, MainActivity.class);
@@ -103,7 +171,5 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 }

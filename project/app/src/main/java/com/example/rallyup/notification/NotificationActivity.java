@@ -20,8 +20,8 @@ public class NotificationActivity extends AppCompatActivity {
 
         // create our Milestone notification channel, that will show up in the App Settings -> Notifications
         createNotificationChannel(getString(R.string.notification_channel_ID_milestone),
-                getString(R.string.notification_name_milestone),
-                getString(R.string.notification_description_milestone),
+                getString(R.string.notification_channel_ID_milestone),
+                getString(R.string.notification_channel_description_milestone),
                 NotificationManager.IMPORTANCE_DEFAULT);
     }
 
