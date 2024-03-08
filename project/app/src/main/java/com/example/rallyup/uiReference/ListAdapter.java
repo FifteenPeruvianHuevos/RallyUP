@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class ListAdapter extends BaseAdapter {
     Context context;
     ArrayList<Integer> arrayList;
-
     LayoutInflater layoutInflater;
     public ListAdapter(Context context, ArrayList<Integer> arrayList){
         this.context = context;

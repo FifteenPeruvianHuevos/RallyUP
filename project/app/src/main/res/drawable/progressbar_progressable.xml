@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/progress_Background"
+            android:drawable="@drawable/milestone_check"
+            />
+
+        <item android:id="@+id/progress_Foreground">
+            <clip>
+                <shape>
+                    <gradient
+                        android:startColor="@color/accentColorGreen"
+                        android:centerColor="@color/accentColorYellow"
+                        android:endColor="@color/accentColorRed">
+                    </gradient>
+                </shape>
+            </clip>
+        </item>
+
+</layer-list>

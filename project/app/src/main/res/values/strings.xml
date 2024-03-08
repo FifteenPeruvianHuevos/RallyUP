@@ -1,4 +1,62 @@
 <resources>
     <string name="app_name">RallyUP</string>
     <string name="event_name"><u>EVENT NAME</u></string>
+
+    <!-- Generic Strings -->
+    <string name="confirm">CONFIRM</string>
+    <string name="close">CLOSE</string>
+    <string name="send">SEND</string>
+
+    <!-- Firebase Firestore fields -->
+    <string name="user_field_firstName">firstName</string>
+    <string name="user_field_lastName">lastName</string>
+    <string name="user_field_email">email</string>
+    <string name="user_field_phone_number">phoneNumber</string>
+    <string name="user_field_geolocation">geolocation</string>
+    <string name="user_field_profilePicture">profilePicture</string>
+
+    <!-- String resources for Attendee Update Activity/Dialog/Fragment -->
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="enable_geolocation_string">Enable Geolocation</string>
+    <string name="edit_photo">EDIT PHOTO</string>
+    <string name="delete_photo">DELETE PHOTO</string>
+    <string name="generated_username">\@ GENERATED USERNAME</string>
+
+    <!-- Progress Bar String Resources -->
+    <string name="milestones_title"><u>MILESTONES</u></string>
+    <string name="announcements_title"><u>ANNOUNCEMENTS</u></string>
+    <!-- Notification Edit Box -->
+    <string name="notification_edit_title">TITLE OF NOTIFICATION</string>
+    <string name="notification_edit_body">Send message to attendees...</string>
+
+    <!-- Notification Titles in Notification Popups -->
+    <string name="notification_title_milestone">Milestone</string>
+    <string name="notification_title_announcement">Announcement</string>
+    <!-- Due to how variable the body texts are, I'm going to leave that up to the java code -->
+
+    <!-- Notification channel IDs -->
+    <string name="notification_channel_ID_milestone">notification_channel_ID_Milestone</string>
+    <string name="notification_channel_ID_announcements">
+        notification_channel_ID_announcements
+    </string>
+    <!-- Notification Name in Settings that's User Visible-->
+    <string name="notification_channel_name_milestone">Milestone Notifications</string>
+    <string name="notification_channel_name_announcements">Announcements Notifications</string>
+    <!-- Notification Description in Settings that's User Visible-->
+    <string name="notification_channel_description_milestone">
+        Notifications for Organizers when achieved certain milestones
+    </string>
+    <string name="notification_description_announcements">
+        Notifications that Organizers get to send out as announcements
+    </string>
+
+    <string name="qr_hint">SCAN QR CODE</string>
+    <string name="qr_hint_2">CHECK INTO EVENT</string>
+    <string name="qr_main_button">Scan</string>
+    <string name="qr_main_text">Temporary String Value</string>
+    <string name="qr_test_text">Hello!</string>
+
 </resources>
