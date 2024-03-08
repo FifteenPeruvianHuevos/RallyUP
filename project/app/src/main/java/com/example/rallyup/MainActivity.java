@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.progressBar.MainActivity.class);
+                                ProgressBarActivity.class);
                 startActivity(intent);
             }
         });
