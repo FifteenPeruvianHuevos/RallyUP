@@ -8,19 +8,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.Event;
 
 /**
  * This class contains the event activity for an attendee's registered events
  * @author Isla Medina
  */
-public class AttendeeRegisteredEvent extends AppCompatActivity {
+public class AttendeeRegisteredEvent extends AppCompatActivity implements FirestoreCallbackListener {
 
 
     private View backgroundOverlay;
     ListView announcementsList;
     ImageButton backBtn;
+
+    TextView dateTextView;
+    TextView locationTextView;
+    TextView descriptionTextView;
+    TextView nameTextView;
+
+    @Override
+    public void onGetEvent(Event event) {
+        dateTextView.setText(event.getEventDate());
+        locationTextView.setText(event.getEventLocation());
+        descriptionTextView.setText(event.getEventDescription());
+        nameTextView.setText(event.getEventName());
+    }
 
     /**
      * Initializes the registered event details activity when it is first launched
@@ -33,7 +50,14 @@ public class AttendeeRegisteredEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_attendee_registered_event);
+
+        dateTextView = findViewById(R.id.att_register_event_date);
+        locationTextView = findViewById(R.id.att_register_event_location);
+        descriptionTextView = findViewById(R.id.att_register_event_details);
+        nameTextView = findViewById(R.id.att_registered_event_name);
+
         backgroundOverlay = findViewById(R.id.backgroundOverlay);
         backBtn = findViewById(R.id.att_registered_back_btn);
         announcementsList = findViewById(R.id.announcements_list);
@@ -46,6 +70,8 @@ public class AttendeeRegisteredEvent extends AppCompatActivity {
             }
         });
 
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.getEventByID("Actual last test before pushing lol", this);
     }
     public void showPopupFragment() {
         AnnouncementPopupFragment popupFragment = new AnnouncementPopupFragment();

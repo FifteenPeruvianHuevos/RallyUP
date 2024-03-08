@@ -60,6 +60,44 @@ public class FirestoreController {
         return instance;
     }
 
+    public void getEventsByOwnerID(String userID, FirestoreCallbackListener callbackListener) {
+        Query query = eventsRef.whereEqualTo("owner", userID);
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                List<Event> eventList = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    eventList.add(new Event(documentSnapshot));
+                }
+                callbackListener.onGetEvents(eventList);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
+    }
+    public void getUserByID(String userID, FirestoreCallbackListener callbackListener) {
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = new User();
+                user.setId(documentSnapshot.getId());
+                user.setEmail(documentSnapshot.getString("email"));
+                user.setFirstName(documentSnapshot.getString("firstName"));
+                user.setLastName(documentSnapshot.getString("lastName"));
+
+                callbackListener.onGetUser(user);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting document: " + e);
+            }
+        });
+    }
 
     public void getPosterByEvent(Event event, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(event.getPosterRef());

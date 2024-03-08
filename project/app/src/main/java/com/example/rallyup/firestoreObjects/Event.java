@@ -1,5 +1,6 @@
 package com.example.rallyup.firestoreObjects;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -20,6 +21,7 @@ public class Event {
     private String posterRef;
     private String shareQRRef;
     private String checkInQRRef;
+    private String eventID;
 
 
     /**
@@ -60,6 +62,14 @@ public class Event {
         this.checkInQRRef = checkInQRRef;
     }
     public Event() {}
+
+    public Event(DocumentSnapshot documentSnapshot) {
+        setEventID(documentSnapshot.getString("eventID"));
+        setEventName(documentSnapshot.getString("eventName"));
+        setEventDate(documentSnapshot.getString("eventDate"));
+        setEventLocation(documentSnapshot.getString("eventLocation"));
+        setEventDescription(documentSnapshot.getString("eventDescription"));
+    }
 
     /**
      * Gets the name of the event.
@@ -293,6 +303,14 @@ public class Event {
      */
     public void setCheckInQRRef(String checkInQRRef) {
         this.checkInQRRef = checkInQRRef;
+    }
+
+    private String getEventID() {
+        return eventID;
+    }
+
+    private void setEventID(String eventID) {
+        this.eventID = eventID;
     }
 }
 
