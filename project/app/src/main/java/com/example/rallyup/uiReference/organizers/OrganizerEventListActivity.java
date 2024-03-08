@@ -27,7 +27,7 @@ public class OrganizerEventListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizer_event_list);
 
-        listView = findViewById(R.id.events_list);
+        listView = findViewById(R.id.org_events_list);
 
         arrayList.add(R.drawable.poster1);
         arrayList.add(R.drawable.poster2);

@@ -24,6 +24,7 @@ public class AttendeeRegisteredEvent extends AppCompatActivity {
         setContentView(R.layout.activity_attendee_registered_event);
         backgroundOverlay = findViewById(R.id.backgroundOverlay);
         backBtn = findViewById(R.id.att_registered_back_btn);
+        announcementsList = findViewById(R.id.announcements_list);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

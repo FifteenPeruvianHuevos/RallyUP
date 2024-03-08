@@ -9,5 +9,7 @@ android:shape="rectangle">
         android:startColor="@color/accentColorRed"
         android:endColor="@color/accentColorYellow"
         android:gradientRadius="250%p"
-        android:angle="280"/>
+        android:angle="280"
+        />
+    <corners android:radius="20dp"/>
 </shape>
