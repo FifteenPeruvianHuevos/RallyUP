@@ -96,6 +96,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizer_event_details);
+        Intent intent = getIntent();
+        String eventID = intent.getStringExtra("key");
 
         String notification_channel_ID_milestone =
                 getString(R.string.notification_channel_ID_milestone);
@@ -125,8 +127,8 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
 
         // FirestoreController here
         FirestoreController fc = FirestoreController.getInstance();
-        fc.getEventByID("Actual last test before pushing lol", this);
-        fc.getEventAttendantsByEventID("Actual last test before pushing lol", this);
+        fc.getEventByID(eventID, this);
+        fc.getEventAttendantsByEventID(eventID, this);
 
         // Need to implement firebase to get the proper count of attendees here
         //setProgressOfEvent(progressBar,70, 100);
