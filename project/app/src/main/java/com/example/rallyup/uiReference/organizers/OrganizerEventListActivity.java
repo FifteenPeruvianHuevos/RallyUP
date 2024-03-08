@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.rallyup.R;
-import com.example.rallyup.qrGeneration.AddEvent;
 import com.example.rallyup.uiReference.ListAdapter;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +52,7 @@ public class OrganizerEventListActivity extends AppCompatActivity {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AddEvent.class);
+                Intent intent = new Intent(getBaseContext(), AddEventActivity.class);
                 startActivity(intent);
             }
         });

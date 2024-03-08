@@ -11,14 +11,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.rallyup.R;
-import com.example.rallyup.qrScanner.ScannerActivity;
-import com.example.rallyup.qrScanner.TestActivity;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
-import kotlin.ranges.ClosedFloatingPointRange;
 
 public class AttendeeHomepageActivity extends AppCompatActivity {
 

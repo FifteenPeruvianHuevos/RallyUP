@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.rallyup.progressBar.ProgressBarActivity;
-import com.example.rallyup.qrScanner.QRBaseActivity;
+import com.example.rallyup.uiReference.attendees.QRBaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,29 +17,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button qrScannerButton = findViewById(R.id.QRScannerButton);
-        Button qrGeneratorButton = findViewById(R.id.QRGeneratorButton);
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
-
-        qrScannerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                QRBaseActivity.class);
-                startActivity(intent);
-            }
-        });
-        qrGeneratorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =
-                        new Intent(com.example.rallyup.MainActivity.this,
-                                com.example.rallyup.qrGeneration.MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
