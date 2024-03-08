@@ -89,7 +89,11 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
 
         // FIREBASE needed here as well? Or is it the local generated username?
         userName.setText("@ " + "FIREBASE USERNAME");
-
+        editFirstName.setText("Firebase data");
+        editLastName.setText("Firebase data here");
+        editEmail.setText("Firebase data again");
+        editPhoneNumber.setText("Firebase data once more");
+        geolocationCheck.setChecked(false); // False for now but should retrieve true/false from Firebase
 
         editImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
