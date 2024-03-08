@@ -27,12 +27,35 @@ import org.junit.runner.RunWith;
 public class attendeeHomepageTest {
     @Rule
     public ActivityScenarioRule<AttendeeHomepageActivity> scenario = new ActivityScenarioRule<>(AttendeeHomepageActivity.class);
-
     @Test
-    public void testGoToAttendeeHomePage() {
+    public void testGoToMyEvents() {
         onView(withId(R.id.attendee_my_events_button)).perform(click());
         onView(withId(R.id.attendeeMyEvents)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void testGoToBrowseEvents() {
+        onView(withId(R.id.attendee_browse_events_button)).perform(click());
+        onView(withId(R.id.attendeeBrowseEvents)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testReturnFromMyEvents() {
+        onView(withId(R.id.attendee_my_events_button)).perform(click());
+        onView(withId(R.id.browse_events_back_button)).perform(click());
+        onView(withId(R.id.attendeeHomepage)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testReturnFromBrowseEvents() {
+        onView(withId(R.id.attendee_browse_events_button)).perform(click());
+        onView(withId(R.id.browse_events_back_button)).perform(click());
+        onView(withId(R.id.attendeeHomepage)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testQRScanner() {
+        onView(withId(R.id.QRScannerButton)).perform(click());
+    }
 
 }

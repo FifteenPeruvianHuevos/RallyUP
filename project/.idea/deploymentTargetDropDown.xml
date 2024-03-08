@@ -2,9 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleInstrumentedTest">
-        <State />
-      </entry>
       <entry key="Tests in 'com.example.rallyup'">
         <State />
       </entry>
@@ -14,10 +11,13 @@
       <entry key="attendeeHomepageTest">
         <State />
       </entry>
+      <entry key="organizerEventListTest">
+        <State />
+      </entry>
       <entry key="splashScreenTest">
         <State />
       </entry>
-      <entry key="testAttendeeActivity()">
+      <entry key="testQRScanner()">
         <State />
       </entry>
     </value>
