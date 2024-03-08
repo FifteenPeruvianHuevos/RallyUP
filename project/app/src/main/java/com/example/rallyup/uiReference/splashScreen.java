@@ -11,6 +11,10 @@ import com.example.rallyup.R;
 import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 
+/**
+ * This class contains the activity for the main menu splash screen
+ * @author Isla Medina
+ */
 public class splashScreen extends AppCompatActivity {
 
 

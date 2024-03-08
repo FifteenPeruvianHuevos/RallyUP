@@ -14,6 +14,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+/**
+ * This class contains the activity for the attendee's registered events
+ * @author Kaye Maranan
+ */
 public class AttendeeMyEventsActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
@@ -31,6 +35,14 @@ public class AttendeeMyEventsActivity extends AppCompatActivity {
             });
     ImageButton attMyEventsBackBtn;
     FloatingActionButton QRCodeScannerBtn;
+
+    /**
+     * Initializes the attendee's registered event list activity when it is first launched
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
