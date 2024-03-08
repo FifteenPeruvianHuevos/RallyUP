@@ -115,7 +115,6 @@ public void onGetEvents(List<Event> events){
 
 
         // real list
-        LocalStorageController ls = LocalStorageController.getInstance();
         controller = FirestoreController.getInstance();
         controller.getEventsByOwnerID(ls.getUserID(this), this);
 

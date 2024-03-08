@@ -39,11 +39,10 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
 
 
     @Override
-    public void onGetEventsAndIDS(List<Event> events, ArrayList<String> eventIDs){
+    public void onGetEvents(List<Event> events){
         eventAdapter = new EventAdapter(AttendeeBrowseEventsActivity.this, events);
         listView.setAdapter(eventAdapter);
         this.events = events;
-        this.eventIDS = eventIDs;
 
     }
 

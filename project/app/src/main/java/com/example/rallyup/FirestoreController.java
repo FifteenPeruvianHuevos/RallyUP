@@ -68,7 +68,7 @@ public class FirestoreController {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-                List<Event> EventList = new ArrayList<>();
+                List<Event> eventList = new ArrayList<>();
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Event thisEvent;
                     thisEvent = documentSnapshot.toObject(Event.class);
@@ -168,7 +168,7 @@ public class FirestoreController {
                         eventIDS.remove(thisEvent.getEventID());
                     }
                 }
-                callbackListener.onGetEventsAndIDS(EventList, eventIDS);
+                callbackListener.onGetEvents(EventList);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
