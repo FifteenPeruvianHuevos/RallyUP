@@ -41,7 +41,18 @@ public class organizerEventListTest {
         onView(withId(R.id.organizer_details_back_button)).perform(click());
         onView(withId(R.id.activityOrganizerEventList)).check(matches(isDisplayed()));
     }
+    @Test
+    public void testGoToAddEvent() {
+        onView(withId(R.id.createEventButton)).perform(click());
+        onView(withId(R.id.addEvent)).check(matches(isDisplayed()));
+    }
 
+    @Test
+    public void testReturnAddEvent() {
+        onView(withId(R.id.createEventButton)).perform(click());
+        onView(withId(R.id.backButton)).perform(click());
+        onView(withId(R.id.activityOrganizerEventList)).check(matches(isDisplayed()));
+    }
     @Test
     public void testGoToEventViewAttendees() {
         onData(anything()).inAdapterView(withId(R.id.events_list)).atPosition(0).perform(click());
