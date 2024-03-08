@@ -1,4 +1,4 @@
-package com.example.rallyup.attendeeUpdateInfo;
+package com.example.rallyup.uiReference.attendees;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -8,10 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.rallyup.attendeeUpdateInfo.AttendeeUpdateActivity;
+import com.example.rallyup.uiReference.attendees.AttendeeUpdateActivity;
 import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ProgressBarActivity;
-import com.example.rallyup.uiReference.attendees.QRBaseActivity;
 
 public class MainActivity extends AppCompatActivity {
 
