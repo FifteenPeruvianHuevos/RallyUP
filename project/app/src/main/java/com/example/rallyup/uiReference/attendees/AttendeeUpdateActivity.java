@@ -1,4 +1,4 @@
-package com.example.rallyup.attendeeUpdateInfo;
+package com.example.rallyup.uiReference.attendees;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
-import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -169,7 +168,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
 
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 // In this case, we'll put MainActivity.class as the placeholder
-                Intent intent = new Intent(AttendeeUpdateActivity.this, MainActivity.class);
+                Intent intent = new Intent(AttendeeUpdateActivity.this, AttendeeHomepageActivity.class);
                 startActivity(intent);
             }
         });

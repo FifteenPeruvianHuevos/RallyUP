@@ -44,12 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                app:shapeAppearanceOverlay="@style/roundedCornersTop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -71,18 +65,6 @@
                         android:layout_height="150dp"
                         android:layout_gravity="center"
                         android:background="@drawable/attendee_icon_temp"></ImageView>
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/edit_profile_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_gravity="right"
-                        android:layout_marginEnd="40px"
-                        android:layout_marginBottom="15dp"
-                        android:backgroundTint="@color/lightColor"
-                        android:clickable="true"
-                        android:src="@drawable/edit_vector"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
                 </LinearLayout>
 
@@ -153,6 +135,18 @@
 
             </LinearLayout>
         </FrameLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit_profile_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginEnd="40px"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@color/lightColor"
+            android:clickable="true"
+            android:src="@drawable/edit_vector"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         <FrameLayout
             android:layout_width="match_parent"

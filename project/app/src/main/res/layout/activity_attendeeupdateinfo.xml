@@ -5,7 +5,7 @@
     android:id="@+id/attendeeUpdateInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/accentColorGreen">
+    android:background="@drawable/attendee_gradient">
 
     <ImageButton
         android:id="@+id/attendee_update_back_button"
@@ -42,7 +42,7 @@
             android:paddingTop="6dp"
             android:paddingEnd="6dp"
             android:paddingBottom="6dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:src="@drawable/poster1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +56,7 @@
             android:layout_marginTop="116dp"
             android:clickable="true"
             android:tint="@color/darkColor"
+            app:backgroundTint="@color/lightColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/attendeeUpdateInfoImageViewXML"
             app:layout_constraintTop_toTopOf="parent"
@@ -168,6 +169,8 @@
         android:id="@+id/AttendeeUpdateGeneratedUsernameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_extrabold"
+        android:gravity="center"
         android:text="@string/generated_username"
         android:textColor="@color/darkColor"
         android:textSize="30sp"
