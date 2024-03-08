@@ -104,7 +104,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
                     android:layout_marginBottom="60dp"
-                    android:background="@drawable/attendee_details_list_bottom"></ListView>
+                    android:background="@drawable/attendee_details_list_bottom"
+                    android:paddingHorizontal="10dp"
+                    ></ListView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -147,7 +149,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
                     android:layout_marginBottom="60dp"
-                    android:background="@drawable/attendee_details_list_bottom"></ListView>
+                    android:background="@drawable/attendee_details_list_bottom"
+                    android:paddingHorizontal="10dp"></ListView>
 
                 <TextView
                     android:layout_width="match_parent"

@@ -59,6 +59,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <FrameLayout
@@ -193,18 +194,21 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:background="@color/transparent"
+                        android:clickable="true"
                         android:contentDescription="Milestone button"
                         android:paddingStart="10dp"
                         app:srcCompat="@drawable/milestones" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:srcCompat="@drawable/milestone_check" />
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="237dp"
+                    android:layout_height="38.5dp"
+                    android:max="100"
+                    android:maxWidth="48dip"
+                    android:progressDrawable="@drawable/progressbar_progressable" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
