@@ -149,7 +149,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             @Override
             public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
                 if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
-                    //We get the different between oldValue and the new value
                     signupLimit = numberPicker.getValue();
                 }
             }
@@ -238,6 +237,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * Retrieving the user input from the ChooseReUseEventFragment
      * @param input a String variable that represents the list option the user selected in the fragment dialogue
      */
+    // Code sourced from:
+    // Reference: https://www.geeksforgeeks.org/how-to-pass-data-from-dialog-fragment-to-activity-in-android/
     @Override
     public void sendInput(String input)
     {
@@ -251,6 +252,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This method does not take in any parameters, or return any variables
      */
     private void imageChooser()
+    // Code for the image chooser sourced and adapted from:
+    // Source: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
     {
         Intent i = new Intent();
         i.setType("image/*");
@@ -268,7 +271,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                 if (result.getResultCode()
                         == Activity.RESULT_OK) {
                     Intent data = result.getData();
-                    // do your operation from here....
                     if (data != null
                             && data.getData() != null) {
                         Uri selectedImageUri = data.getData();
@@ -279,15 +281,15 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                                     = MediaStore.Images.Media.getBitmap(
                                     this.getContentResolver(),
                                     selectedImageUri);
+                            posterImage.setImageBitmap(
+                                    selectedImageBitmap);
+                            posterImage.setVisibility(View.VISIBLE);
+                            uploadPosterText.setVisibility(View.GONE);
+                            posterUploaded = true;
                         }
                         catch (IOException e) {
                             e.printStackTrace();
                         }
-                        posterImage.setImageBitmap(
-                                selectedImageBitmap);
-                        posterImage.setVisibility(View.VISIBLE);
-                        uploadPosterText.setVisibility(View.GONE);
-                        posterUploaded = true;
                     }
                 }
             });
@@ -299,6 +301,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This method does not take in any parameters, or return any variables
      */
     public void getEventDate(){
+        // Code sourced and adapted from:
+        // Reference: https://www.geeksforgeeks.org/datepicker-in-android/
         // on below line we are getting
         // the instance of our calendar.
         final Calendar c = Calendar.getInstance();
@@ -321,7 +325,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
                         monthOfYear = monthOfYear + 1;
                         eventDateInput.setText(toStringCheckZero(dayOfMonth) + "-" + toStringCheckZero((monthOfYear)) + "-" + toStringCheckZero(year));
                         eventDate = (toStringCheckZero(year) + toStringCheckZero((monthOfYear)) + toStringCheckZero(dayOfMonth));
-
                     }
                 },
                 // on below line we are passing year,
@@ -341,6 +344,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This method does not take in any parameters, or return any variables
      */
     public void getEventTime(){
+        // Code sourced and adapted from:
+        // Reference: https://abhiandroid.com/ui/timepicker#gsc.tab=0
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
@@ -382,8 +387,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      */
     public String toStringCheckZero(int number){
         if(number<=9) {
-            String fixedNum = "0" + String.valueOf(number);
-            return fixedNum;
+            return "0" + String.valueOf(number);
         }
         return String.valueOf(number);
     }
@@ -404,6 +408,10 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This method does not take in any parameters, or return any variables
      */
     private void generateShareQR() {
+        // Code sourced and adapted from:
+        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
+        // Library: https://github.com/journeyapps/zxing-android-embedded
+
         String text = "s" + eventNameInput.getText().toString();
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix matrix;
@@ -424,6 +432,10 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This method does not take in any parameters, or return any variables
      */
     private void generateCheckInQR() {
+        // Code sourced and adapted from:
+        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
+        // Library: https://github.com/journeyapps/zxing-android-embedded
+
         // @ Marcus this text should be replaced with "c" + the unique event ID
         String checkInText = "c" + eventNameInput.getText().toString();
 
@@ -490,6 +502,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * This method uploads the image the user selected as the event poster to firebase iCloud storage
      */
     public void uploadPoster() {
+
         controller.uploadImage(image, posterRef);
 
     }
@@ -527,9 +540,12 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
             if(newQR){
+
                 generateShareQR();
                 generateCheckInQR();
                 // if the user wants new QR Codes to be generated
+                // Code for uploading these images to firebase icloud storage sourced from
+                // Reference: https://firebase.google.com/docs/storage/android/upload-files
                 storage = FirebaseStorage.getInstance();
                 storageRef = storage.getReference();
                 posterRef = storageRef.child("images/Posters/"+ eventName);
