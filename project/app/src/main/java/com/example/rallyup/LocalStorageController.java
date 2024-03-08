@@ -10,6 +10,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.UUID;
+
 public class LocalStorageController {
     private static final LocalStorageController instance = new LocalStorageController();
 

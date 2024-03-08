@@ -21,6 +21,7 @@ public class Event {
     private String posterRef;
     private String shareQRRef;
     private String checkInQRRef;
+    private String ownerID;
     private String eventID;
 
 
@@ -43,10 +44,12 @@ public class Event {
      * @param posterRef        The String path to where the Event poster is stored in firebase icloud storage.
      * @param shareQRRef       The String path to where the share QR code image is stored in firebase icloud storage.
      * @param checkInQRRef     The String path to where the check in QR code image is stored in firebase icloud storage.
+     * @param ownerID          A String that represents the unique userID of the event owner.
+     * @param eventID          A String that represents the unique event ID.
      */
     public Event(String eventName, String eventLocation, String eventDescription, String eventDate, String eventTime,
                  int signUpLimit, Boolean signUpLimitBool, Boolean geolocation, Boolean reUseQR, Boolean newQR,
-                 String posterRef, String shareQRRef, String checkInQRRef) {
+                 String posterRef, String shareQRRef, String checkInQRRef, String ownerID, String eventID) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventDescription = eventDescription;
@@ -60,7 +63,16 @@ public class Event {
         this.posterRef = posterRef;
         this.shareQRRef = shareQRRef;
         this.checkInQRRef = checkInQRRef;
+        this.ownerID = ownerID;
+        this.eventID = eventID;
     }
+    public Event(DocumentSnapshot documentSnapshot) {
+        setEventDate(documentSnapshot.getString("eventDate"));
+        setEventName(documentSnapshot.getString("eventName"));
+        setEventLocation(documentSnapshot.getString("eventLocation"));
+//        setPosterRef(Math.toIntExact(documentSnapshot.getLong("timesCheckedIn")));
+    }
+
     public Event() {}
 
     public Event(DocumentSnapshot documentSnapshot) {
@@ -305,10 +317,38 @@ public class Event {
         this.checkInQRRef = checkInQRRef;
     }
 
+    /**
+     * Returns the user ID of the event organizer.
+     *
+     * @return The user ID of the event organizer.
+     */
+    public String getOwnerID() {
+        return ownerID;
+    }
+
+    /**
+     * Sets the owner ID of the event.
+     *
+     * @param ownerID The user ID associated with the event organizer.
+     */
+    private void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
+    }
+
+      /**
+     * Returns the unique event ID.
+     *
+     * @return The unique event ID associated with the event.
+     */
     private String getEventID() {
         return eventID;
     }
 
+      /**
+     * Sets the event ID of the event.
+     *
+     * @param eventID The unique event ID associated with the event.
+     */
     private void setEventID(String eventID) {
         this.eventID = eventID;
     }

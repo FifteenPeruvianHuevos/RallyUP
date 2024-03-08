@@ -9,49 +9,70 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.example.rallyup.FirestoreCallbackListener;
+import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.uiReference.EventAdapter;
 import com.example.rallyup.uiReference.ListAdapter;
+import com.example.rallyup.uiReference.attendees.AttendeeMyEventsActivity;
 import com.example.rallyup.uiReference.splashScreen;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains the activity for an organizer's event list, allowing them to manage their events
  * @author Kaye Maranan
  */
-public class OrganizerEventListActivity extends AppCompatActivity {
+public class OrganizerEventListActivity extends AppCompatActivity implements FirestoreCallbackListener {
     ListView listView;
     ArrayList<Integer> arrayList = new ArrayList<>();
     ImageButton orgEventListBackBtn;
     FloatingActionButton createEventButton;
+    FirestoreController controller;
+
 
     /**
      * Initializes the organizer's event list activity when it is first launched
-     * @param savedInstanceState If the activity is being re-initialized after
+     *       If the activity is being re-initialized after
      *     previously being shut down then this Bundle contains the data it most
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
     @Override
+    public void onGetEvents(List<Event> events) {
+        EventAdapter eventAdapter = new EventAdapter(OrganizerEventListActivity.this, events);
+        listView.setAdapter(eventAdapter);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organizer_event_list);
 
-        listView = findViewById(R.id.org_events_list);
-
-        arrayList.add(R.drawable.poster1);
-        arrayList.add(R.drawable.poster2);
-        arrayList.add(R.drawable.poster1);
-        arrayList.add(R.drawable.poster2);
-        arrayList.add(R.drawable.poster1);
-        arrayList.add(R.drawable.poster2);
-
-        ListAdapter listAdapter = new ListAdapter(OrganizerEventListActivity.this, arrayList);
-        listView.setAdapter(listAdapter);
-
         orgEventListBackBtn = findViewById(R.id.organizer_events_back_button);
         createEventButton = findViewById(R.id.createEventButton);
+        listView = findViewById(R.id.org_events_list);
+
+        //arrayList.add(R.drawable.poster1);
+        //arrayList.add(R.drawable.poster2);
+        //arrayList.add(R.drawable.poster1);
+        //arrayList.add(R.drawable.poster2);
+        //arrayList.add(R.drawable.poster1);
+        //arrayList.add(R.drawable.poster2);
+
+        //ListAdapter listAdapter = new ListAdapter(OrganizerEventListActivity.this, arrayList);
+        //listView.setAdapter(listAdapter);
+        // real list
+
+        LocalStorageController ls = LocalStorageController.getInstance();
+        controller = FirestoreController.getInstance();
+        controller.getEventsByOwnerID(ls.getUserID(this), this);
+
+
         orgEventListBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,8 +88,6 @@ public class OrganizerEventListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
