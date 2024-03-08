@@ -52,5 +52,8 @@
         <activity android:name=".uiReference.attendees.QRBaseActivity"/>
         <activity android:name=".uiReference.attendees.ScannerActivity"/>
         <activity android:name=".uiReference.splashScreen" />
+        <activity android:name=".attendeeUpdateInfo.AttendeeUpdateActivity"/>
+    
     </application>
+
 </manifest>
