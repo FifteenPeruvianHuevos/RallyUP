@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
-        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
+        //Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        /*
         attendeeUpdateInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,5 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }*/
     }
 }

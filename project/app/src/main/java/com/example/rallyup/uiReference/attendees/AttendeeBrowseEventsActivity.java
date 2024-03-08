@@ -34,12 +34,13 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
     List<Event> events;
     ImageButton attBrowseEventsBackBtn;
     FirestoreController controller;
+    EventAdapter eventAdapter;
 
 
 
     @Override
     public void onGetEventsAndIDS(List<Event> events, ArrayList<String> eventIDs){
-        EventAdapter eventAdapter = new EventAdapter(AttendeeBrowseEventsActivity.this, events);
+        eventAdapter = new EventAdapter(AttendeeBrowseEventsActivity.this, events);
         listView.setAdapter(eventAdapter);
         this.events = events;
         this.eventIDS = eventIDs;
@@ -98,9 +99,9 @@ public class AttendeeBrowseEventsActivity extends AppCompatActivity implements F
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 Integer poster = (Integer) adapterView.getItemAtPosition(i);
-                //Event selectedEvent = eventIDS.get(i);
+                Event selectedEvent = eventAdapter.getItem(i);
 
-                String eventID = eventIDS.get(i);
+                String eventID = selectedEvent.getEventID();
                 Intent intent = new Intent(AttendeeBrowseEventsActivity.this, AttendeeEventDetails.class);
                 intent.putExtra("key", eventID);
                 startActivity(intent);

@@ -28,7 +28,7 @@ public class EventAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Event getItem(int position) {
         return eventList.get(position);
     }
 
@@ -51,6 +51,7 @@ public class EventAdapter extends BaseAdapter {
 
         nameTextView.setText(event.getEventName());
         locationTextView.setText(event.getEventLocation());
+        // locationTextView.setText(event.getEventLocation());
         // Set other TextViews as needed
 
         return convertView;
