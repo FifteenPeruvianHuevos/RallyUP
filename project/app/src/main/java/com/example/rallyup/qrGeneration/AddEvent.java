@@ -23,7 +23,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
+import com.example.rallyup.firestoreObjects.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -385,8 +387,11 @@ public class AddEvent extends AppCompatActivity {
             geoInput.setChecked(false);
             attendeeInfoInput.setChecked(false);
             newQRSelect.setChecked(false);
-            // send values to fb
 
+            // send values to fb
+            Event newEvent = new Event(eventName, eventLocation, eventDescription);
+            FirestoreController fc = FirestoreController.getInstance();
+            fc.addEvent(newEvent);
         }
     }
 }

@@ -2,19 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permission that need to be declared for app to use notifications -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-
     <application
+        android:name=".RallyUpApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
+        android:hardwareAccelerated="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RallyUP"
         tools:targetApi="31">
+        <activity
+            android:name=".uiReference.organizers.EventAttendeesInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.organizers.OrganizerEventDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.organizers.OrganizerEventListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.attendees.AttendeeRegisteredEvent"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.attendees.AttendeeEventDetails"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.attendees.AttendeeHomepageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.attendees.AttendeeMyEventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uiReference.attendees.AttendeeBrowseEventsActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -28,10 +51,12 @@
         <activity android:name=".progressBar.ProgressBarActivity"/>
         <activity android:name=".qrGeneration.MainActivity"/>
         <activity android:name=".qrGeneration.AddEvent"/>
-        <activity android:name=".qrScanner.MainActivity"/>
-        <activity android:name=".qrScanner.QRCodeScannerActivity"/>
-        <activity android:name=".uiReference.MainActivity"/>
+        <activity android:name=".qrScanner.QRBaseActivity"/>
+        <activity android:name=".qrScanner.TestActivity"/>
+        <activity android:name=".qrScanner.ScannerActivity"/>
+        <activity android:name=".uiReference.organizers.OrganizerEventList" />
         <activity android:name=".uiReference.MainEvent"/>
-    </application>
+        <activity android:name=".uiReference.splashScreen" />
 
+    </application>
 </manifest>

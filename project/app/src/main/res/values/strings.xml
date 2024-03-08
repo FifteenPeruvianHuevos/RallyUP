@@ -53,4 +53,10 @@
         Notifications that Organizers get to send out as announcements
     </string>
 
+    <string name="qr_hint">SCAN QR CODE</string>
+    <string name="qr_hint_2">CHECK INTO EVENT</string>
+    <string name="qr_main_button">Scan</string>
+    <string name="qr_main_text">Temporary String Value</string>
+    <string name="qr_test_text">Hello!</string>
+
 </resources>
