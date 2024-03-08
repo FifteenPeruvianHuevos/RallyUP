@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.rallyup.attendeeUpdateInfo.AttendeeUpdateActivity;
 import com.example.rallyup.progressBar.ProgressBarActivity;
 import com.example.rallyup.uiReference.attendees.QRBaseActivity;
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
+        Button attendeeUpdateInfoButton = findViewById(R.id.AttendeeUpdateInfoButton);
 
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent =
                         new Intent(com.example.rallyup.MainActivity.this,
                                 com.example.rallyup.uiReference.splashScreen.class);
+                startActivity(intent);
+            }
+        });
+        attendeeUpdateInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =
+                        new Intent(MainActivity.this, AttendeeUpdateActivity.class);
                 startActivity(intent);
             }
         });
