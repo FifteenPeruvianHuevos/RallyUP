@@ -72,9 +72,10 @@ public class FirestoreController {
                 for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                     Event thisEvent;
                     thisEvent = documentSnapshot.toObject(Event.class);
-                    EventList.add(thisEvent);
+                    eventList.add(thisEvent);
                 }
-                callbackListener.onGetEvents(EventList);
+                callbackListener.onGetEvents(eventList);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -83,6 +84,26 @@ public class FirestoreController {
             }
         });
 
+    }
+    public void getUserByID(String userID, FirestoreCallbackListener callbackListener) {
+        DocumentReference docRef = usersRef.document(userID);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = new User();
+                user.setId(documentSnapshot.getId());
+                user.setEmail(documentSnapshot.getString("email"));
+                user.setFirstName(documentSnapshot.getString("firstName"));
+                user.setLastName(documentSnapshot.getString("lastName"));
+
+                callbackListener.onGetUser(user);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting document: " + e);
+            }
+        });
     }
 
     public void getPosterByEvent(Event event, FirestoreCallbackListener callbackListener) {

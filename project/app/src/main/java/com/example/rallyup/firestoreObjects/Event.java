@@ -22,7 +22,6 @@ public class Event {
     private String shareQRRef;
     private String checkInQRRef;
     private String ownerID;
-
     private String eventID;
 
 
@@ -75,6 +74,14 @@ public class Event {
     }
 
     public Event() {}
+
+    public Event(DocumentSnapshot documentSnapshot) {
+        setEventID(documentSnapshot.getString("eventID"));
+        setEventName(documentSnapshot.getString("eventName"));
+        setEventDate(documentSnapshot.getString("eventDate"));
+        setEventLocation(documentSnapshot.getString("eventLocation"));
+        setEventDescription(documentSnapshot.getString("eventDescription"));
+    }
 
     /**
      * Gets the name of the event.
@@ -324,25 +331,25 @@ public class Event {
      *
      * @param ownerID The user ID associated with the event organizer.
      */
-    public void setOwnerID(String ownerID) {
+    private void setOwnerID(String ownerID) {
         this.ownerID = ownerID;
     }
 
-    /**
+      /**
      * Returns the unique event ID.
      *
      * @return The unique event ID associated with the event.
      */
-    public String getEventID() {
+    private String getEventID() {
         return eventID;
     }
 
-    /**
+      /**
      * Sets the event ID of the event.
      *
      * @param eventID The unique event ID associated with the event.
      */
-    public void setEventID(String eventID) {
+    private void setEventID(String eventID) {
         this.eventID = eventID;
     }
 }

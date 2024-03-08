@@ -4,12 +4,16 @@ import android.graphics.Bitmap;
 
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface FirestoreCallbackListener {
     default void onGetEvent(Event event) {
+    }
+
+    default void onGetEvents(List<Event> eventList) {
     }
 
     default void onGetImage(Bitmap bm) {
@@ -24,7 +28,8 @@ public interface FirestoreCallbackListener {
     default void onGetEvents(List<Event> eventList){
     }
 
-    default void onGetEventsAndIDS(List<Event> eventList, ArrayList<String> eventIDS) {
 
-    }
+    default void onGetUser(User user) {
+    };
+
 }

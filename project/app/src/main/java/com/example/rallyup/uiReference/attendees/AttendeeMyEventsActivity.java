@@ -20,6 +20,7 @@ import com.example.rallyup.R;
 
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.uiReference.EventAdapter;
+
 import com.example.rallyup.uiReference.ListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -64,6 +65,18 @@ public void onGetEvents(List<Event> events){
     EventAdapter eventAdapter = new EventAdapter(AttendeeMyEventsActivity.this, events);
     listView.setAdapter(eventAdapter);
 }
+
+  /*
+    @Override
+    public void onGetEvents(List<Event> eventList) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(R.drawable.poster1);
+        arrayList.add(R.drawable.poster2);
+
+        ListAdapter listAdapter = new ListAdapter(AttendeeMyEventsActivity.this, arrayList);
+        listView.setAdapter(listAdapter);
+    }*/
+
     /**
      * Initializes the attendee's registered event list activity when it is first launched
      * @param savedInstanceState If the activity is being re-initialized after
@@ -71,7 +84,6 @@ public void onGetEvents(List<Event> events){
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +95,11 @@ public void onGetEvents(List<Event> events){
       
         listView = findViewById(R.id.att_my_events_list);
 
-        //temporary list for testing - isla
+        FirestoreController fc = FirestoreController.getInstance();
+        LocalStorageController ls = LocalStorageController.getInstance();
+        fc.getEventsByOwnerID(ls.getUserID(this), this);
 
+        //temporary list for testing - isla
         
 
 //         arrayList.add(R.drawable.poster1);
