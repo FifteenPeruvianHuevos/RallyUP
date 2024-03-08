@@ -6,6 +6,11 @@ package com.example.rallyup.firestoreObjects;
 public class QrCode {
 
     /**
+     * The ID of the event associated with the QR code.
+     */
+    private String qrId;
+
+    /**
      * Indicates whether the QR code has been checked in.
      */
     private boolean checkIn;
@@ -72,6 +77,22 @@ public class QrCode {
      */
     public void setImage(String image) {
         this.image = image;
+    }
+
+    /**
+     * Gets the ID of the event associated with the QR code.
+     * @return The ID of the event.
+     */
+    public String getQrId() {
+        return qrId;
+    }
+
+    /**
+     * Sets the ID of the code associated with the QR code.
+     * @param qrId The ID of the code.
+     */
+    public void setQrId(String qrId) {
+        this.qrId = qrId;
     }
 }
 

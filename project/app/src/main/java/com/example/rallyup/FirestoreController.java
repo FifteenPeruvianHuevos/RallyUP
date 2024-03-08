@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
+import com.example.rallyup.firestoreObjects.QrCode;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,6 +59,31 @@ public class FirestoreController {
 
     public static FirestoreController getInstance() {
         return instance;
+    }
+
+    public void updateQrCode(QrCode qrCode, Bitmap bm) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("eventID", qrCode.getEventID());
+        data.put("image", qrCode.getImage());
+        data.put("checkIn", qrCode.isCheckIn());
+        qrRef.document(qrCode.getQrId()).set(data);
+    }
+
+    public void createQRCode(String jobId, FirestoreCallbackListener callbackListener) {
+
+        QrCode newQr = new QrCode();
+        qrRef.add(newQr).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                newQr.setQrId(documentReference.getId());
+                callbackListener.onGetQrCode(newQr, jobId);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
     }
 
     public void getEventsByOwnerID(String userID, FirestoreCallbackListener callbackListener) {
