@@ -2,61 +2,377 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ProgressBarMainLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/organizer_gradient">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="360dp"
-        android:layout_height="360dp"
-        android:layout_marginBottom="360dp"
-        android:indeterminateOnly="false"
-        android:max="250"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ProgressBarEventPosterView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/poster1"
+        app:strokeColor="@color/accentColorGreen"
+        app:strokeWidth="10dp" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ProgressBarEditEventPosterButton"
+        style="@style/FAB_Shape_Round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="30dp"
+        android:clickable="true"
+        android:tint="@color/lightColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventNameTextView"
+        app:srcCompat="@drawable/edit_vector" />
+
+    <ImageView
         android:id="@+id/backToMainButtonXML"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="160dp"
-        android:text="TO MAIN"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_arrow"/>
+
+    <TextView
+        android:id="@+id/ProgressBarEventNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
+        android:text="@string/event_name"
+        android:textColor="@color/darkColor"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ProgressBarContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:background="@color/lightColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmNumberButtonXML" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editProgressNumberXML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="100dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="36sp"
-        android:hint="Participants"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ProgressBarEventInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/confirmNumberButtonXML"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="160dp"
-        android:text="Confirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProgressNumberXML" />
+            <TextView
+                android:id="@+id/ProgressBarEventDateView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="16dp"
+                android:text="DATE HERE"
+                android:textColor="@color/darkColor"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarEventDateIcon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/ProgressBarEventLocationView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="20dp"
+                android:text="Event Location"
+                android:textColor="@color/darkColor"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarEventLocationIcon"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventDateView" />
+
+            <TextView
+                android:id="@+id/ProgressBarEventAttendeesNumberView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="20dp"
+                android:text="# of Verified Attendees"
+                android:textColor="@color/darkColor"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarEventAttendeesIcon"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventLocationView" />
+
+            <TextView
+                android:id="@+id/ProgressBarEventTotalAttendeesView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="# of Total Attendees"
+                android:textColor="@color/darkColor"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarEventAttendeesIcon"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventAttendeesNumberView" />
+
+            <TextView
+                android:id="@+id/ProgressBarEventDescriptionView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Event Description"
+                android:textColor="@color/darkColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/ProgressBarEventCheckInQRCodeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="84dp"
+                android:backgroundTint="@color/accentColorGreen"
+                android:text="VIEW CHECK-IN QR CODE"
+                android:textColor="@color/lightColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventViewAttendeesView" />
+
+            <ImageView
+                android:id="@+id/ProgressBarEventDateIcon"
+                android:layout_width="36dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+            <ImageView
+                android:id="@+id/ProgressBarEventLocationIcon"
+                android:layout_width="41dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventDateIcon"
+                app:srcCompat="@android:drawable/ic_dialog_map" />
+
+            <ImageView
+                android:id="@+id/ProgressBarEventAttendeesIcon"
+                android:layout_width="42dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventLocationIcon"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+            <ImageView
+                android:id="@+id/ProgressBarEventShareEventImage"
+                android:layout_width="44dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventAttendeesIcon"
+                app:srcCompat="@android:drawable/ic_menu_share" />
+
+            <TextView
+                android:id="@+id/ProgressBarEventViewAttendeesView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:text="VIEW ATTENDEES >"
+                android:textColor="@color/darkColor"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarEventShareEventImage"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventTotalAttendeesView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="409dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toTopOf="@+id/ProgressBarAnnouncementsLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventInfoLayout">
+
+            <TextView
+                android:id="@+id/ProgressBarMilestonesView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/milestones_title"
+                android:textColor="@color/darkColor"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="236dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="12dp"
+                android:indeterminateOnly="false"
+                android:max="100"
+                android:progressDrawable="@drawable/progressbar_progressable"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarMilestonesView" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/ProgressBarMilestonesView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/edit_vector" />
+
+            <ImageView
+                android:id="@+id/ProgressBarMilestonesEditButton"
+                android:layout_width="31dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="24dp"
+                android:clickable="true"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarMilestonesView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/milestones" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ProgressBarAnnouncementsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="350dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/ProgressBarAnnouncementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/announcements_title"
+                android:textColor="@color/darkColor"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ProgressBarAnnouncementContentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rounded_border"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnouncementTitle">
+
+                <EditText
+                    android:id="@+id/ProgressBarAnnouncementEditTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_border"
+                    android:ems="12"
+                    android:hint="@string/notification_edit_title"
+                    android:inputType="text"
+                    android:paddingStart="6dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="6dp"
+                    android:textColor="@color/darkColor"
+                    android:textColorHint="@color/accentColorGreen"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="0.50"
+                    android:scaleY="0.50"
+                    android:translationY="-10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/ProgressBarAnnouncementEditTitle"
+                    app:layout_constraintTop_toTopOf="@+id/ProgressBarAnnouncementEditTitle"
+                    app:srcCompat="@drawable/edit_vector" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_border"
+                    app:layout_constraintBottom_toTopOf="@+id/ProgressBarAnnouncementSendButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ProgressBarAnnouncementEditTitle">
+
+                    <EditText
+                        android:id="@+id/ProgressBarAnnouncementBody"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@null"
+                        android:ems="15"
+                        android:hint="@string/notification_edit_body"
+                        android:inputType="text"
+                        android:textColor="@color/darkColor"
+                        android:textColorHint="@color/accentColorGreen"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/ProgressBarAnnouncementSendButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/accentColorGreen"
+                    android:text="@string/send"
+                    android:textColor="@color/darkColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:scaleX="0.50"
+                android:scaleY="0.50"
+                app:layout_constraintEnd_toStartOf="@+id/ProgressBarAnnouncementTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/edit_vector" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

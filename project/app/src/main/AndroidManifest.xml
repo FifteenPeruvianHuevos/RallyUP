@@ -48,7 +48,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".attendeeList.MainActivity"/>
-        <activity android:name=".progressBar.MainActivity"/>
         <activity android:name=".progressBar.ProgressBarActivity"/>
         <activity android:name=".qrGeneration.MainActivity"/>
         <activity android:name=".qrGeneration.AddEvent"/>
@@ -57,7 +56,7 @@
         <activity android:name=".qrScanner.ScannerActivity"/>
         <activity android:name=".uiReference.organizers.OrganizerEventList" />
         <activity android:name=".uiReference.MainEvent"/>
+        <activity android:name=".qrGeneration.ImageLoadTestActivity"/>
         <activity android:name=".uiReference.splashScreen" />
-
     </application>
 </manifest>

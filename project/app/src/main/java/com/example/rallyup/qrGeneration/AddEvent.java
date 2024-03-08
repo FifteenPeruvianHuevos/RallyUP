@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,6 +28,10 @@ import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -36,40 +41,56 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class AddEvent extends AppCompatActivity {
-    EditText eventLocationInput, eventNameInput, eventDescriptionInput;
+public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener{
+    private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
-    TextView eventDateInput, eventTimeInput;
+    private TextView eventDateInput, eventTimeInput, uploadPosterText;
 
-    Button createButton;
+    private Button createButton;
 
-    FloatingActionButton eventImageInput;
+    // b2 is the back button
+    private FloatingActionButton eventImageInput, b2;
 
-    CheckBox attendeeInfoInput, geoInput, newQRSelect;
+    private CheckBox geoInput, newQRSelect, attendeeSignUpLimitInput, reUseQRSelect;
 
-    // Only for navigating between pages for now
-    Button b2;
+    private NumberPicker attendeeLimitPicker;
 
-    String eventName, eventLocation, eventDescription, eventID;
+    private String eventName, eventLocation, eventDescription, eventID;
+    private StorageReference posterRef, shareQRRef, checkInQRRef;
+
+    // @ MARCUS in the function for if the user selects to reuse a QR Code you
+    // would save the path to the QR images to these variables
+    private String posterPath, shareQRPath, checkInQRPath;
 
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
-    Integer eventDate, eventTime;
-    Boolean geolocation, attendeeInfo;
+    private String eventDate, eventTime, userID;
+    private Integer signupLimit = 0;
+    private Boolean geolocation, signupLimitInput, reUseQR, newQR;
 
-    ImageView qrView, posterImage;
+    private ImageView qrView, posterImage = null;
 
-    // constant to compare
-    // the activity result code
-    int SELECT_PICTURE = 200;
+    private FirebaseStorage storage;
+    // Create a storage reference from our app
+    private StorageReference storageRef;
+
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
 
 
+    // Create a child reference
+    // imagesRef now points to "images"
+    private FirestoreController controller = new FirestoreController();
+
+    private Uri image = null;
+
+    private String reUseQrID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
 
+        // initializing all the views from our .xml file
         initializeViews();
 
         // prompting the user to upload an image when they click on the upload box
@@ -80,10 +101,9 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
-        /**
-         * Setting the onClick Listener for picking the date, then setting the text of the pick date button
-         * (Clickable textView) To be that selected date
-         */
+
+        //Setting the onClick Listener for picking the date, then setting the text of the pick date button
+        //(Clickable textView) To be that selected date
         eventDateInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,14 +119,48 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
-        // Generating the new QR Code that is encoded with the event name when the user checks the
-        // "Generate new QR Code" box
-        newQRSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        // prompting the user to set an attendee signup limit when the checkbox is checked
+        attendeeSignUpLimitInput.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    generateQR();
+                    setAttendeeLimit();
+                } else {
+                    resetAttendeeLimit();
+                }
+            }
+        });
+
+        // setting the onScrollListner for the number picker that sets the attendee signup limit to update the limit when
+        // the numberpicker is scrolled
+        attendeeLimitPicker.setOnScrollListener(new NumberPicker.OnScrollListener() {
+            @Override
+            public void onScrollStateChange(NumberPicker numberPicker, int scrollState) {
+                if (scrollState == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE) {
+                    //We get the different between oldValue and the new value
+                    signupLimit = numberPicker.getValue();
+                }
+            }
+        });
+
+        // setting the onScrollListner for the number picker that sets the attendee signup limit to update the limit when
+        // the numberpicker is changed (So that when the user types the value in instead of scrolling it still updates)
+        attendeeLimitPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal){
+                signupLimit = attendeeLimitPicker.getValue();
+            }
+        });
+
+        // opening up the fragment that displays all the available old events that the user can choose to reuse a
+        // QR Code from
+        reUseQRSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    new ChooseReUseEventFragment().show(getSupportFragmentManager(), "Add/Edit City");
                 } else {
                     resetQR();
                 }
@@ -114,6 +168,24 @@ public class AddEvent extends AppCompatActivity {
         });
 
 
+
+        // Generating the new QR Code that is encoded with the event name when the user checks the
+        // "Generate new QR Code" box
+        newQRSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    generateShareQR();
+                } else {
+                    resetQR();
+                }
+            }
+        });
+
+
+        // sends all the information to firebase when the User clicks the "ADD" button
+        // (Does input validation first)
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +193,7 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
-
+        // switches activities when the back button is pressed
         b2.setOnClickListener(v -> {
             // for clicking the button to go back to the QR page
             switchPage();
@@ -130,21 +202,38 @@ public class AddEvent extends AppCompatActivity {
 
     }
 
+    /**
+     * Initializes all the views that need to be accessed in this activity
+     */
     public void initializeViews() {
         b2 = findViewById(R.id.pageSwitcher2);
 
         eventNameInput = findViewById(R.id.eventNameInput);
+        uploadPosterText = findViewById(R.id.uploadPosterText);
         eventLocationInput = findViewById(R.id.eventLocationInput);
         eventDateInput = findViewById(R.id.eventDateInput);
         eventTimeInput = findViewById(R.id.eventTimeInput);
         eventDescriptionInput = findViewById(R.id.eventDetailsInput);
-        attendeeInfoInput = findViewById(R.id.attendeeInfoInput);
+        attendeeSignUpLimitInput = findViewById(R.id.attendeeSignUpLimitInput);
+        attendeeLimitPicker = findViewById(R.id.attendeeLimitPicker);
         geoInput = findViewById(R.id.geolocationInput);
         createButton = findViewById(R.id.createEventButton);
         eventImageInput = findViewById(R.id.posterUploadButton);
         qrView = findViewById(R.id.qrCodeView);
         newQRSelect = findViewById(R.id.newQrCodeSelect);
+        reUseQRSelect = findViewById(R.id.reuseQRCodeSelect);
         posterImage = findViewById(R.id.uploadPosterView);
+
+    }
+
+    /**
+     * Retrieving the user input from the ChooseReUseEventFragment
+     * @param input a String variable that represents the list option the user selected in the fragment dialogue
+     */
+    @Override
+    public void sendInput(String input)
+    {
+        reUseQrID = input;
     }
 
 
@@ -175,6 +264,7 @@ public class AddEvent extends AppCompatActivity {
                     if (data != null
                             && data.getData() != null) {
                         Uri selectedImageUri = data.getData();
+                        image = selectedImageUri;
                         Bitmap selectedImageBitmap = null;
                         try {
                             selectedImageBitmap
@@ -187,13 +277,14 @@ public class AddEvent extends AppCompatActivity {
                         }
                         posterImage.setImageBitmap(
                                 selectedImageBitmap);
+                        uploadPosterText.setVisibility(uploadPosterText.GONE);
                     }
                 }
             });
 
     /**
      * Prompts the user to set the start date of this event by
-     * utilizing the Calender widget. Saves the inputted date as an integer
+     * utilizing the Calender widget. Saves the inputted date as a String
      * that represents Year, Month, and Day concatenated together in that order for ease of sorting.
      * This method does not take in any parameters, or return any variables
      */
@@ -217,8 +308,9 @@ public class AddEvent extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // on below line we are setting date to our text view.
-                        eventDateInput.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                        eventDate = dateConcat(year, monthOfYear, dayOfMonth);
+                        monthOfYear = monthOfYear + 1;
+                        eventDateInput.setText(toStringCheckZero(dayOfMonth) + "-" + toStringCheckZero((monthOfYear)) + "-" + toStringCheckZero(year));
+                        eventDate = (toStringCheckZero(year) + toStringCheckZero((monthOfYear)) + toStringCheckZero(dayOfMonth));
 
                     }
                 },
@@ -233,7 +325,7 @@ public class AddEvent extends AppCompatActivity {
 
     /**
      * Prompts the user to set the start time of this event by
-     * utilizing the TimePicker widget. Saves the inputted time as an integer
+     * utilizing the TimePicker widget. Saves the inputted time as a String
      * that represents hour and minute concatenated together in that order for ease of sorting.
      * Set to the 24 Hour clock
      * This method does not take in any parameters, or return any variables
@@ -246,79 +338,72 @@ public class AddEvent extends AppCompatActivity {
         mTimePicker = new TimePickerDialog(AddEvent.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                eventTimeInput.setText(selectedHour + ":" + selectedMinute);
-                eventTime = timeConcat(selectedHour, selectedMinute);
+                eventTimeInput.setText("" + toStringCheckZero(selectedHour) + ":" + toStringCheckZero(selectedMinute));
+                eventTime = toStringCheckZero(selectedHour) + toStringCheckZero(selectedMinute);
             }
         }, hour, minute, true); //Setting it to 24 hour time
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
 
+    /**
+     * Sets the numberPicker that is responsible for setting the attendee sign-up limit to visible
+     * This function is called if the user checks the "Set Sign Up Limit" checkbox
+     */
+    public void setAttendeeLimit() {
+        attendeeLimitPicker.setVisibility(attendeeLimitPicker.VISIBLE);
+        attendeeLimitPicker.setMaxValue(1000);
+        attendeeLimitPicker.setMinValue(1);
+    }
+
+    /**
+     * Resets the numberPicker that is responsible for setting the attendee sign-up limit to 0, and removes it from the page
+     * This function is called if the user unchecks the "Set Sign Up Limit" checkbox
+     */
+    public void resetAttendeeLimit() {
+        attendeeLimitPicker.setValue(1);
+        attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
+    }
+
+
+    /**
+     * Used to navigate between application pages
+     */
     public void switchPage() {
         Intent a = new Intent(AddEvent.this, com.example.rallyup.qrGeneration.MainActivity.class);
         a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(a);
     }
 
-    // could possibly combine these two functions by passing in a boolean value that would represent whether
-    // or not the third value would be included in the concatenation, and passing in 0 or something for the third value for time
     /**
-     * Takes 3 integer values and concatenates them all together
-     * @param a the first integer value
-     * @param b the second integer value
-     * @param c the third integer value
-     * @return an integer value that represents all 3 integers concatenated together
+     * Adds a leading 0 to the inputted int number if it is <10 and converts the number to a String
+     * @param number: the number to be converted
+     * @return the String representation of the inputted number with a leading 0 added to it if the number is < 10
      */
-    static int dateConcat(int a, int b, int c) {
-
-        // Convert all the integers to string
-        String s1 = Integer.toString(a);
-        String s2 = Integer.toString(b);
-        String s3 = Integer.toString(c);
-
-        // Concatenate both strings
-        String s = s1 + s2 +s3;
-
-        // Convert the concatenated string
-        // to integer
-        int d = Integer.parseInt(s);
-
-        // return the formed integer
-        return d;
+    public String toStringCheckZero(int number){
+        if(number<=9) {
+            String fixedNum = "0" + String.valueOf(number);
+            return fixedNum;
+        }
+        return String.valueOf(number);
     }
 
     /**
-     * Takes 2 integer values and concatenates them together
-     * @param a the first integer value
-     * @param b the second integer value
-     * @return an integer value that represents both integers concatenated together
+     * Uses the firebase to pull up the QR Codes from the event the user selected to reuse QR Codes from,
+     * // and sets those QR Codes to be associated with this event
      */
-    static int timeConcat(int a, int b) {
-
-        // Convert all the integers to string
-        String s1 = Integer.toString(a);
-        String s2 = Integer.toString(b);
-
-        // Concatenate both strings
-        String s = s1 + s2;
-
-        // Convert the concatenated string
-        // to integer
-        int c = Integer.parseInt(s);
-
-        // return the formed integer
-        return c;
+    public void generateReUseQRCode() {
+        // ** @ MARCUS here is the function where we should be switching the QR code to
+        // the QR code from the event the user selected to reuse. The event ID should be stored in the variable
+        // reUseQrID
     }
 
+
     /**
-     * Generates a QR Code that contains the name of the event
+     * Generates a QR Code that will be used to share event details
      * This method does not take in any parameters, or return any variables
      */
-    private void generateQR() {
-        // throws an error for now if the "Generate New QR Code" Checkbox is
-        // checked and there has not been an event name inputted yet. Isn't important for
-        // the actual app part 3 as we are setting the data stored in the QR Code to be the unique event ID,
-        // so Chidinma is not input validating to deal with that error right now
+    private void generateShareQR() {
         String text = eventNameInput.getText().toString();
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix matrix;
@@ -329,9 +414,32 @@ public class AddEvent extends AppCompatActivity {
         }
         BarcodeEncoder encoder = new BarcodeEncoder();
         Bitmap bitmap = encoder.createBitmap(matrix);
-        qrView.setVisibility(qrView.VISIBLE);
-        qrView.setImageBitmap(bitmap);
+        //qrView.setVisibility(qrView.VISIBLE);
+        //qrView.setImageBitmap(bitmap);
     }
+
+    /**
+     * Generates a QR Code that will be used to check users in to the event
+     * This method does not take in any parameters, or return any variables
+     */
+    private void generateCheckInQR() {
+        // @ Marcus this text should be replaced with "c" + the unique event ID
+        String checkInText = eventNameInput.getText().toString();
+
+        MultiFormatWriter writer = new MultiFormatWriter();
+        BitMatrix matrix;
+        try {
+            matrix = writer.encode(checkInText, BarcodeFormat.QR_CODE, 400, 400);
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
+        BarcodeEncoder encoder = new BarcodeEncoder();
+        Bitmap bitmap = encoder.createBitmap(matrix);
+        // make a new view for the checkInQR to be displayed?
+        //qrView.setVisibility(qrView.VISIBLE);
+        //qrView.setImageBitmap(bitmap);
+    }
+
 
 
     /**
@@ -344,15 +452,17 @@ public class AddEvent extends AppCompatActivity {
 
 
     /**
-     * Returns a Boolean object that represents whether or not all required fields have been filled in.
+     * Returns a Boolean object that represents whether or not all required fields of the Add Event form have been filled in.
      * <p>
      * This method ensures that all the inputs required for successful event creation have been filled in.
      *
      * @return      the Boolean value representing whether or not all required fields have been filled in.
      */
     public Boolean validateInput() {
+        // checking to see if any of the required fields were left blank
         if(eventName.isEmpty() || eventLocation.isEmpty() || (eventTimeInput.getText().toString().isEmpty())
-        || eventDateInput.getText().toString().isEmpty() || !newQRSelect.isChecked()) {
+        || eventDateInput.getText().toString().isEmpty() || (!newQRSelect.isChecked() && !reUseQRSelect.isChecked())
+                || posterImage == null || qrView == null || image == null) {
             Toast.makeText(
                             this,
                             "Please ensure all fields are filled out!",
@@ -360,10 +470,45 @@ public class AddEvent extends AppCompatActivity {
                     .show();
             return false;
         }
+
+        // checking to see if the user checked both boxes for the QR Option
+        else if(newQRSelect.isChecked() && reUseQRSelect.isChecked()) {
+            Toast.makeText(
+                            this,
+                            "Please ensure only one of the QR Generation Options is filled out!",
+                            Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+
         else {
+            // all the required fields are populated
             return true;
         }
     }
+
+    /**
+     * This method uploads the image the user selected as the event poster to firebase iCloud storage
+     */
+    public void uploadPoster() {
+        controller.uploadImage(image, posterRef);
+
+    }
+
+    /**
+     * This method uploads the newly generated share QR Code image to firebase iCloud storage
+     */
+    public void uploadShareQR() {
+        controller.uploadImageBitmap(qrView, shareQRRef);
+    }
+
+    /**
+     * This method uploads the newly generated check-in QR Code image to firebase iCloud storage
+     */
+    public void uploadCheckInQR() {
+        controller.uploadImageBitmap(qrView, checkInQRRef);
+    }
+
 
     /**
      * This method saves all the input fields in new variables, resets the views of all the input fields on the screen,
@@ -371,27 +516,61 @@ public class AddEvent extends AppCompatActivity {
      *
      */
     public void onCreateEventClick(){
+        // saving the data the user inputted into variables
         eventName = String.valueOf(eventNameInput.getText());
         eventLocation = String.valueOf(eventLocationInput.getText());
         geolocation = geoInput.isChecked();
-        attendeeInfo = attendeeInfoInput.isChecked();
         eventDescription = String.valueOf(eventDescriptionInput.getText());
+        signupLimitInput = attendeeSignUpLimitInput.isChecked();
+        newQR = newQRSelect.isChecked();
+        reUseQR = reUseQRSelect.isChecked();
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
+            if(newQR){
+                // if the user wants new QR Codes to be generated
+                storage = FirebaseStorage.getInstance();
+                storageRef = storage.getReference();
+                posterRef = storageRef.child("images/Posters/"+ eventName);
+                posterPath = posterRef.getPath();
+                shareQRRef = storageRef.child("images/ShareQR/"+ eventName);
+                shareQRPath = shareQRRef.getPath();
+                checkInQRRef = storageRef.child("images/CheckInQR/"+ eventName);
+                checkInQRPath = checkInQRRef.getPath();
+                uploadCheckInQR();
+                uploadShareQR();
+            }
+            else {
+                // if the user selected to reUse a past Event QR Code
+                generateReUseQRCode();
+            }
+            // Uploading the Poster to Firebase Icloud Storage
+            uploadPoster();
+
+            // Clearing the views of the form
             eventNameInput.getText().clear();
             eventLocationInput.getText().clear();
             eventDescriptionInput.getText().clear();
             eventDateInput.setText("");
             eventTimeInput.setText("");
             geoInput.setChecked(false);
-            attendeeInfoInput.setChecked(false);
             newQRSelect.setChecked(false);
+            attendeeSignUpLimitInput.setChecked(false);
+            attendeeLimitPicker.setVisibility(View.GONE);
 
-            // send values to fb
-            Event newEvent = new Event(eventName, eventLocation, eventDescription);
+
+            // send the event values to fb
+            Event newEvent = new Event(eventName, eventLocation, eventDescription,
+                    eventDate, eventTime, signupLimit, signupLimitInput,
+                    geolocation, reUseQR, newQR,
+                    posterPath, shareQRPath, checkInQRPath);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
+
+            // CODE BELOW FOR SWITCHING THE PAGE TO THE IMAGE UPLOAD TUTORIAL PAGE
+            //Intent a = new Intent(AddEvent.this, ImageLoadTestActivity.class);
+            //a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            //startActivity(a);
         }
     }
 }

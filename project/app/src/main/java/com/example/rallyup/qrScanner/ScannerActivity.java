@@ -10,6 +10,7 @@ import com.journeyapps.barcodescanner.ViewfinderView;
 /**
  * This class contains the scanner customization and functionality of the QR Scanner
  * @author Reimark Ronabio
+ * references: https://github.com/journeyapps/zxing-android-embedded
  */
 public class ScannerActivity extends Activity {
 
