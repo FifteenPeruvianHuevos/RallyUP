@@ -133,9 +133,17 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
     @Override
+    public void onCreateEvent(Event event) {
+        eventID = event.getEventID();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
+
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.createEvent(this);
 
         // initializing all the views from our .xml file
         initializeViews();
@@ -228,8 +236,10 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    generateShareQR();
-                    generateCheckInQR();
+//                    generateShareQR();
+//                    generateCheckInQR();
+                    generateQRCode("share");
+                    generateQRCode("checkIn");
                 }
                 else {
                     resetQR();
@@ -444,6 +454,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         // ** @ MARCUS here is the function where we should be switching the QR code to
         // the QR code from the event the user selected to reuse. The event ID should be stored in the variable
         // reUseQrID
+        String qrID = reUseQrID;
     }
 
     private void generateQRCode(String jobId) {
@@ -455,53 +466,53 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
      * Generates a QR Code that will be used to share event details
      * This method does not take in any parameters, or return any variables
      */
-    private void generateShareQR() {
-        // Code sourced and adapted from:
-        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
-        // Library: https://github.com/journeyapps/zxing-android-embedded
-
-        // @ Marcus this text should be replaced with "c" + the unique event ID
-        String text = "s" + eventNameInput.getText().toString();
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix matrix;
-        try {
-            matrix = writer.encode(text, BarcodeFormat.QR_CODE, 400, 400);
-        } catch (WriterException e) {
-            throw new RuntimeException(e);
-        }
-        BarcodeEncoder encoder = new BarcodeEncoder();
-        Bitmap bitmap = encoder.createBitmap(matrix);
-        shareImageView.setImageBitmap(bitmap);
-        shareImageView.setVisibility(View.VISIBLE);
-        shareDisplayText.setVisibility(View.VISIBLE);
-    }
+//    private void generateShareQR() {
+//        // Code sourced and adapted from:
+//        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
+//        // Library: https://github.com/journeyapps/zxing-android-embedded
+//
+//        // @ Marcus this text should be replaced with "c" + the unique event ID
+//        String text = "s" + eventNameInput.getText().toString();
+//        MultiFormatWriter writer = new MultiFormatWriter();
+//        BitMatrix matrix;
+//        try {
+//            matrix = writer.encode(text, BarcodeFormat.QR_CODE, 400, 400);
+//        } catch (WriterException e) {
+//            throw new RuntimeException(e);
+//        }
+//        BarcodeEncoder encoder = new BarcodeEncoder();
+//        Bitmap bitmap = encoder.createBitmap(matrix);
+//        shareImageView.setImageBitmap(bitmap);
+//        shareImageView.setVisibility(View.VISIBLE);
+//        shareDisplayText.setVisibility(View.VISIBLE);
+//    }
 
     /**
      * Generates a QR Code that will be used to check users in to the event
      * This method does not take in any parameters, or return any variables
      */
-    private void generateCheckInQR() {
-        // Code sourced and adapted from:
-        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
-        // Library: https://github.com/journeyapps/zxing-android-embedded
-
-        // @ Marcus this text should be replaced with "c" + the unique event ID
-        String checkInText = "c" + eventNameInput.getText().toString();
-
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix matrix;
-        try {
-            matrix = writer.encode(checkInText, BarcodeFormat.QR_CODE, 400, 400);
-        } catch (WriterException e) {
-            throw new RuntimeException(e);
-        }
-        BarcodeEncoder encoder = new BarcodeEncoder();
-        Bitmap bitmap = encoder.createBitmap(matrix);
-        // make a new view for the checkInQR to be displayed?
-        checkInImageView.setImageBitmap(bitmap);
-        checkInImageView.setVisibility(View.VISIBLE);
-        checkInDisplayText.setVisibility(View.VISIBLE);
-    }
+//    private void generateCheckInQR() {
+//        // Code sourced and adapted from:
+//        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
+//        // Library: https://github.com/journeyapps/zxing-android-embedded
+//
+//        // @ Marcus this text should be replaced with "c" + the unique event ID
+//        String checkInText = "c" + eventNameInput.getText().toString();
+//
+//        MultiFormatWriter writer = new MultiFormatWriter();
+//        BitMatrix matrix;
+//        try {
+//            matrix = writer.encode(checkInText, BarcodeFormat.QR_CODE, 400, 400);
+//        } catch (WriterException e) {
+//            throw new RuntimeException(e);
+//        }
+//        BarcodeEncoder encoder = new BarcodeEncoder();
+//        Bitmap bitmap = encoder.createBitmap(matrix);
+//        // make a new view for the checkInQR to be displayed?
+//        checkInImageView.setImageBitmap(bitmap);
+//        checkInImageView.setVisibility(View.VISIBLE);
+//        checkInDisplayText.setVisibility(View.VISIBLE);
+//    }
 
     public void resetQR() {
         checkInImageView.setVisibility(View.GONE);
@@ -600,8 +611,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             generateEventID();
             getUserID();
             if(newQR){
-                generateShareQR();
-                generateCheckInQR();
+//                generateShareQR();
+//                generateCheckInQR();
                 generateQRCode("share");
                 generateQRCode("checkIn");
 

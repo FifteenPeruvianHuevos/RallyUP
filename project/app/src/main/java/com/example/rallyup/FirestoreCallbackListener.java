@@ -31,4 +31,8 @@ public interface FirestoreCallbackListener {
 
     default void onGetQrCode(QrCode qrCode, String jobId) {
     };
+
+    default void onCreateEvent(Event event) {
+
+    }
 }
