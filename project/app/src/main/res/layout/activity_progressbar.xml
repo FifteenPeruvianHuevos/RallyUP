@@ -153,7 +153,7 @@
                 android:layout_marginTop="6dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@android:drawable/ic_menu_my_calendar" />
 
             <ImageView
                 android:id="@+id/ProgressBarEventLocationIcon"
@@ -162,7 +162,7 @@
                 android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventDateIcon"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@android:drawable/ic_dialog_map" />
 
             <ImageView
                 android:id="@+id/ProgressBarEventAttendeesIcon"
@@ -174,14 +174,15 @@
                 app:srcCompat="@drawable/ic_launcher_foreground" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/ProgressBarEventShareEventImage"
                 android:layout_width="44dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:clickable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventAttendeesIcon"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@android:drawable/ic_menu_share" />
 
             <TextView
                 android:id="@+id/ProgressBarEventViewAttendeesView"
@@ -193,7 +194,7 @@
                 android:text="VIEW ATTENDEES >"
                 android:textColor="@color/darkColor"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView8"
+                app:layout_constraintStart_toEndOf="@+id/ProgressBarEventShareEventImage"
                 app:layout_constraintTop_toBottomOf="@+id/ProgressBarEventTotalAttendeesView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

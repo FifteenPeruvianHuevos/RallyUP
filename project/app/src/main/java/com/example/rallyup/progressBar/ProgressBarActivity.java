@@ -1,6 +1,7 @@
 package com.example.rallyup.progressBar;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +58,8 @@ public class ProgressBarActivity extends AppCompatActivity {
         TextView eventVerifiedAttendeesView = findViewById(R.id.ProgressBarEventAttendeesNumberView);
         TextView eventTotalAttendees = findViewById(R.id.ProgressBarEventTotalAttendeesView);
         TextView eventDescription = findViewById(R.id.ProgressBarEventDescriptionView);
+        TextView eventViewAttendees = findViewById(R.id.ProgressBarEventViewAttendeesView);
+        ImageView shareEventImageView = findViewById(R.id.ProgressBarEventShareEventImage);
         // Milestones
         ImageView editMilestonesDialogButton = findViewById(R.id.ProgressBarMilestonesEditButton);
         ProgressBar progressBar = findViewById(R.id.progressBar);
@@ -70,6 +73,8 @@ public class ProgressBarActivity extends AppCompatActivity {
         // And these values should be Strings
         // I would also need to access the Event's Poster Image
 
+        eventView.setText("EVENT NAME");
+
         eventTime.setText("Month (in letters) Day, Year @ hh:mm");
         eventLocation.setText("Location");
         eventVerifiedAttendeesView.setText("Number from Firebase" + " of Verified Attendees");
@@ -77,6 +82,14 @@ public class ProgressBarActivity extends AppCompatActivity {
         eventDescription.setText("Description");
         // Somehow set the bitmap image of the
         // eventPoster.setImageBitmap();
+
+        eventViewAttendees.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Send the Organizer to U.S. 01.02.1/01.09.1/01.08.01
+
+            }
+        });
 
         // Here we would get the Firebase controller to do the following:
         // I want to receive the current number of attendees of this event
@@ -133,6 +146,15 @@ public class ProgressBarActivity extends AppCompatActivity {
                 // Something Something
             }
         });
+
+        shareEventImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start the share event QR code dialog U.S. - 01.06.01
+            }
+        });
+
+
 
         editMilestonesDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
