@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.User;
 
 import java.util.ArrayList;
@@ -28,4 +29,10 @@ public interface FirestoreCallbackListener {
     default void onGetUser(User user) {
     };
 
+    default void onGetQrCode(QrCode qrCode, String jobId) {
+    };
+
+    default void onCreateEvent(Event event) {
+
+    }
 }

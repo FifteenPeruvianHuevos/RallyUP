@@ -343,7 +343,7 @@ public class Event {
      *
      * @param eventID The unique event ID associated with the event.
      */
-    private void setEventID(String eventID) {
+    public void setEventID(String eventID) {
         this.eventID = eventID;
     }
 }

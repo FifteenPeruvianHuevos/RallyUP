@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.rallyup.firestoreObjects.Attendance;
 import com.example.rallyup.firestoreObjects.Event;
 
+import com.example.rallyup.firestoreObjects.QrCode;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,6 +61,60 @@ public class FirestoreController {
 
     public static FirestoreController getInstance() {
         return instance;
+    }
+
+    public void updateEvent(Event event, FirestoreCallbackListener callbackListener) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("ownerID", event.getOwnerID());
+        qrRef.document(event.getEventID()).set(data);
+    }
+
+    public void createEvent(FirestoreCallbackListener callbackListener) {
+
+        Event event = new Event();
+        eventsRef.add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                event.setEventID(documentReference.getId());
+                callbackListener.onCreateEvent(event);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
+    }
+
+    public void updateQrCode(QrCode qrCode, Bitmap bm) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("eventID", qrCode.getEventID());
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        StorageReference storageReference = storage.getReference();
+        StorageReference qrImgRef = storageReference.child("images/QR/"+ qrCode.getQrId());
+        uploadImageBitmap(bm, qrImgRef);
+
+        data.put("image", qrImgRef.getPath());
+        data.put("checkIn", qrCode.isCheckIn());
+        qrRef.document(qrCode.getQrId()).set(data);
+    }
+
+    public void createQRCode(String jobId, FirestoreCallbackListener callbackListener) {
+
+        QrCode newQr = new QrCode();
+        qrRef.add(newQr).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                newQr.setQrId(documentReference.getId());
+                callbackListener.onGetQrCode(newQr, jobId);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
     }
 
     public void getEventsByOwnerID(String userID, FirestoreCallbackListener callbackListener) {
@@ -286,6 +341,27 @@ public class FirestoreController {
         image.setDrawingCacheEnabled(true);
         image.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = sReference.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+    }
+
+    public void uploadImageBitmap(Bitmap bitmap, StorageReference sReference) {
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();

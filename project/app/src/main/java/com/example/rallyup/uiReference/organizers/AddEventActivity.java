@@ -25,10 +25,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
+import com.example.rallyup.firestoreObjects.QrCode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,7 +46,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.UUID;
 
-public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener {
+public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener, FirestoreCallbackListener {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
     private TextView eventDateInput, eventTimeInput, uploadPosterText, shareDisplayText, checkInDisplayText;
@@ -91,9 +93,57 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     private String reUseQrID;
 
     @Override
+    public void onGetQrCode(QrCode qrCode, String jobId) {
+        String encodedText;
+        if (jobId.equals("share")) {
+            // Share QR code
+            encodedText = "s" + qrCode.getQrId();
+        } else {
+            // Check-in QR code
+            encodedText = "c" + qrCode.getQrId();
+        }
+
+        MultiFormatWriter writer = new MultiFormatWriter();
+        BitMatrix matrix;
+        try {
+            matrix = writer.encode(encodedText, BarcodeFormat.QR_CODE, 400, 400);
+        } catch (WriterException e) {
+            throw new RuntimeException(e);
+        }
+        BarcodeEncoder encoder = new BarcodeEncoder();
+        Bitmap bitmap = encoder.createBitmap(matrix);
+
+        if (jobId.equals("share")) {
+            // Share QR code
+            shareImageView.setImageBitmap(bitmap);
+            shareImageView.setVisibility(View.VISIBLE);
+            shareDisplayText.setVisibility(View.VISIBLE);
+        } else {
+            // Check-in QR code
+            checkInImageView.setImageBitmap(bitmap);
+            checkInImageView.setVisibility(View.VISIBLE);
+            checkInDisplayText.setVisibility(View.VISIBLE);
+        }
+
+        // Create eventId
+        qrCode.setEventID(eventID);
+        qrCode.setCheckIn(!jobId.equals("share"));
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.updateQrCode(qrCode, bitmap);
+    }
+
+    @Override
+    public void onCreateEvent(Event event) {
+        eventID = event.getEventID();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
+
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.createEvent(this);
 
         // initializing all the views from our .xml file
         initializeViews();
@@ -186,8 +236,10 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    generateShareQR();
-                    generateCheckInQR();
+//                    generateShareQR();
+//                    generateCheckInQR();
+                    generateQRCode("share");
+                    generateQRCode("checkIn");
                 }
                 else {
                     resetQR();
@@ -402,59 +454,65 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
         // ** @ MARCUS here is the function where we should be switching the QR code to
         // the QR code from the event the user selected to reuse. The event ID should be stored in the variable
         // reUseQrID
+        String qrID = reUseQrID;
     }
 
+    private void generateQRCode(String jobId) {
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.createQRCode(jobId, this);
+    }
 
     /**
      * Generates a QR Code that will be used to share event details
      * This method does not take in any parameters, or return any variables
      */
-    private void generateShareQR() {
-        // Code sourced and adapted from:
-        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
-        // Library: https://github.com/journeyapps/zxing-android-embedded
-
-        String text = "s" + eventNameInput.getText().toString();
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix matrix;
-        try {
-            matrix = writer.encode(text, BarcodeFormat.QR_CODE, 400, 400);
-        } catch (WriterException e) {
-            throw new RuntimeException(e);
-        }
-        BarcodeEncoder encoder = new BarcodeEncoder();
-        Bitmap bitmap = encoder.createBitmap(matrix);
-        shareImageView.setImageBitmap(bitmap);
-        shareImageView.setVisibility(View.VISIBLE);
-        shareDisplayText.setVisibility(View.VISIBLE);
-    }
+//    private void generateShareQR() {
+//        // Code sourced and adapted from:
+//        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
+//        // Library: https://github.com/journeyapps/zxing-android-embedded
+//
+//        // @ Marcus this text should be replaced with "c" + the unique event ID
+//        String text = "s" + eventNameInput.getText().toString();
+//        MultiFormatWriter writer = new MultiFormatWriter();
+//        BitMatrix matrix;
+//        try {
+//            matrix = writer.encode(text, BarcodeFormat.QR_CODE, 400, 400);
+//        } catch (WriterException e) {
+//            throw new RuntimeException(e);
+//        }
+//        BarcodeEncoder encoder = new BarcodeEncoder();
+//        Bitmap bitmap = encoder.createBitmap(matrix);
+//        shareImageView.setImageBitmap(bitmap);
+//        shareImageView.setVisibility(View.VISIBLE);
+//        shareDisplayText.setVisibility(View.VISIBLE);
+//    }
 
     /**
      * Generates a QR Code that will be used to check users in to the event
      * This method does not take in any parameters, or return any variables
      */
-    private void generateCheckInQR() {
-        // Code sourced and adapted from:
-        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
-        // Library: https://github.com/journeyapps/zxing-android-embedded
-
-        // @ Marcus this text should be replaced with "c" + the unique event ID
-        String checkInText = "c" + eventNameInput.getText().toString();
-
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix matrix;
-        try {
-            matrix = writer.encode(checkInText, BarcodeFormat.QR_CODE, 400, 400);
-        } catch (WriterException e) {
-            throw new RuntimeException(e);
-        }
-        BarcodeEncoder encoder = new BarcodeEncoder();
-        Bitmap bitmap = encoder.createBitmap(matrix);
-        // make a new view for the checkInQR to be displayed?
-        checkInImageView.setImageBitmap(bitmap);
-        checkInImageView.setVisibility(View.VISIBLE);
-        checkInDisplayText.setVisibility(View.VISIBLE);
-    }
+//    private void generateCheckInQR() {
+//        // Code sourced and adapted from:
+//        // Reference: https://www.geeksforgeeks.org/how-to-generate-qr-code-in-android/
+//        // Library: https://github.com/journeyapps/zxing-android-embedded
+//
+//        // @ Marcus this text should be replaced with "c" + the unique event ID
+//        String checkInText = "c" + eventNameInput.getText().toString();
+//
+//        MultiFormatWriter writer = new MultiFormatWriter();
+//        BitMatrix matrix;
+//        try {
+//            matrix = writer.encode(checkInText, BarcodeFormat.QR_CODE, 400, 400);
+//        } catch (WriterException e) {
+//            throw new RuntimeException(e);
+//        }
+//        BarcodeEncoder encoder = new BarcodeEncoder();
+//        Bitmap bitmap = encoder.createBitmap(matrix);
+//        // make a new view for the checkInQR to be displayed?
+//        checkInImageView.setImageBitmap(bitmap);
+//        checkInImageView.setVisibility(View.VISIBLE);
+//        checkInDisplayText.setVisibility(View.VISIBLE);
+//    }
 
     public void resetQR() {
         checkInImageView.setVisibility(View.GONE);
@@ -553,8 +611,11 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             generateEventID();
             getUserID();
             if(newQR){
-                generateShareQR();
-                generateCheckInQR();
+//                generateShareQR();
+//                generateCheckInQR();
+                generateQRCode("share");
+                generateQRCode("checkIn");
+
                 // if the user wants new QR Codes to be generated
                 // Code for uploading these images to firebase icloud storage sourced from
                 // Reference: https://firebase.google.com/docs/storage/android/upload-files
