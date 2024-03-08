@@ -35,6 +35,10 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         CheckBox geolocationCheck = findViewById(R.id.checkBoxGeolocXML);
         Button confirmEditButton = findViewById(R.id.attendeeUpdateInfoConfirmXML);
 
+        // All of the following editTexts and checkBox values need to be reflected and update
+        // the values from Firebase, once the confirmButton is clicked, it should send the values
+        // for Firebase to update.
+
         editFirstName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
