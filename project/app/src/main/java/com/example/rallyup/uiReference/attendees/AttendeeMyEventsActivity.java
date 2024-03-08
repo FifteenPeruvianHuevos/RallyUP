@@ -20,8 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
+/**
+ * This class contains the activity for the attendee's registered events
+ * @author Kaye Maranan
+ */
 public class AttendeeMyEventsActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
@@ -41,7 +45,15 @@ public class AttendeeMyEventsActivity extends AppCompatActivity {
     FloatingActionButton QRCodeScannerBtn;
 
     ListView listView;
-    ArrayList<Integer> arrayList = new ArrayList<>();
+//     ArrayList<Integer> arrayList = new ArrayList<>();
+
+    /**
+     * Initializes the attendee's registered event list activity when it is first launched
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +62,22 @@ public class AttendeeMyEventsActivity extends AppCompatActivity {
 
         attMyEventsBackBtn = findViewById(R.id.browse_events_back_button);
         QRCodeScannerBtn = findViewById(R.id.QRScannerButton);
+      
+        listView = findViewById(R.id.att_my_events_list);
 
         //temporary list for testing - isla
 
-        listView = findViewById(R.id.att_my_events_list);
+        
 
-        arrayList.add(R.drawable.poster1);
-        arrayList.add(R.drawable.poster2);
-        arrayList.add(R.drawable.poster1);
-        arrayList.add(R.drawable.poster2);
-        arrayList.add(R.drawable.poster1);
-        arrayList.add(R.drawable.poster2);
+//         arrayList.add(R.drawable.poster1);
+//         arrayList.add(R.drawable.poster2);
+//         arrayList.add(R.drawable.poster1);
+//         arrayList.add(R.drawable.poster2);
+//         arrayList.add(R.drawable.poster1);
+//         arrayList.add(R.drawable.poster2);
 
-        ListAdapter listAdapter = new ListAdapter(AttendeeMyEventsActivity.this, arrayList);
-        listView.setAdapter(listAdapter);
+//         ListAdapter listAdapter = new ListAdapter(AttendeeMyEventsActivity.this, arrayList);
+//         listView.setAdapter(listAdapter);
 
         // end temporary list
 

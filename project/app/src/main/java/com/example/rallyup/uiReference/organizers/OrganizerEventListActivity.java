@@ -16,12 +16,23 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+/**
+ * This class contains the activity for an organizer's event list, allowing them to manage their events
+ * @author Kaye Maranan
+ */
 public class OrganizerEventListActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<Integer> arrayList = new ArrayList<>();
     ImageButton orgEventListBackBtn;
     FloatingActionButton createEventButton;
 
+    /**
+     * Initializes the organizer's event list activity when it is first launched
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

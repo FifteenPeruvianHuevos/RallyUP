@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activityOrganizerEventList"
     android:background="@drawable/organizer_gradient"
     tools:context=".uiReference.organizers.OrganizerEventListActivity">
 
