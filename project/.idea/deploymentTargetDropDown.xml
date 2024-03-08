@@ -14,10 +14,10 @@
       <entry key="organizerEventListTest">
         <State />
       </entry>
-      <entry key="splashScreenTest">
+      <entry key="testMyEventsQRScanner()">
         <State />
       </entry>
-      <entry key="testQRScanner()">
+      <entry key="testReturnFromEventDetails()">
         <State />
       </entry>
     </value>

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.rallyup.R;
 /**
  * This class contains a test activity for QR scanning after it scans
+ * Temporary and only exists for referencing purposes
  * @author Reimark Ronabio
  */
 public class TestActivity extends AppCompatActivity {

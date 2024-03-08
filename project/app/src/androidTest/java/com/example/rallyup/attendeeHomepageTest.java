@@ -13,6 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.rule.GrantPermissionRule;
 
 import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.example.rallyup.uiReference.splashScreen;
@@ -27,6 +28,8 @@ import org.junit.runner.RunWith;
 public class attendeeHomepageTest {
     @Rule
     public ActivityScenarioRule<AttendeeHomepageActivity> scenario = new ActivityScenarioRule<>(AttendeeHomepageActivity.class);
+    @Rule
+    public GrantPermissionRule permissionCamera = GrantPermissionRule.grant("android.permission.CAMERA");
     @Test
     public void testGoToMyEvents() {
         onView(withId(R.id.attendee_my_events_button)).perform(click());
@@ -56,6 +59,13 @@ public class attendeeHomepageTest {
     @Test
     public void testQRScanner() {
         onView(withId(R.id.QRScannerButton)).perform(click());
+        onView(withId(R.id.scannerActivity)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void testMyEventsQRScanner() {
+        onView(withId(R.id.attendee_my_events_button)).perform(click());
+        onView(withId(R.id.QRScannerButton)).perform(click());
+        onView(withId(R.id.scannerActivity)).check(matches(isDisplayed()));
+    }
 }
