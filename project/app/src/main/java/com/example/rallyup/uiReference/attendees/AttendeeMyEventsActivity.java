@@ -72,6 +72,7 @@ public void onGetEvents(List<Event> events){
      *
      */
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -52,10 +52,13 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         eventTime.setText(event.getEventTime());
         eventLocation.setText(event.getEventLocation());
         eventDescription.setText(event.getEventDescription());
+        ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
 
-         // Load in poster for this event
-         FirestoreController fc = FirestoreController.getInstance();
-         fc.getPosterByEvent(event, this);
+
+        // Load in poster for this event
+        // Load in poster for this event
+        FirestoreController fc = FirestoreController.getInstance();
+        fc.getPosterByEventID(event.getPosterRef(), this, eventPoster);
     }
 
     @Override
@@ -72,11 +75,12 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
         eventVerifiedAttendeesView.setText(count + " verified attendees");
     }
 
+    /*
     @Override
     public void onGetImage(Bitmap bm) {
         ImageView eventPoster = findViewById(R.id.ProgressBarEventPosterView);
         eventPoster.setImageBitmap(bm);
-    }
+    }*/
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

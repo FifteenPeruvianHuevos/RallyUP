@@ -69,7 +69,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     // Date in the format year, month, day concatenated together
     // time in the format hour, minute concatenated together in 24 hour time
     private String eventDate, eventTime, userID;
-    private Integer signupLimit = 0;
+    private Integer signupLimit = 1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
 
@@ -550,8 +550,9 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
         Boolean inputVal = validateInput();
         if(inputVal.equals(true)) {
+            generateEventID();
+            getUserID();
             if(newQR){
-
                 generateShareQR();
                 generateCheckInQR();
                 // if the user wants new QR Codes to be generated
@@ -575,8 +576,6 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             }
             // Uploading the Poster to Firebase Icloud Storage
             uploadPoster();
-            generateEventID();
-            getUserID();
             // Clearing the views of the form
             eventNameInput.getText().clear();
             eventLocationInput.getText().clear();
