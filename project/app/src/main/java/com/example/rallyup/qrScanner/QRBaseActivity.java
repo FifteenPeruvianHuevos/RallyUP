@@ -15,6 +15,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
 /**
  * This class contains the base activity of QR scanning
  * @author Reimark Ronabio
+ * references: https://github.com/journeyapps/zxing-android-embedded
  */
 public class QRBaseActivity extends AppCompatActivity {
 
