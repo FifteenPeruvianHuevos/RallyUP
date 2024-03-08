@@ -27,7 +27,8 @@
             android:insetLeft="30dp"
             android:insetTop="50dp"
             android:insetRight="30dp"
-            android:text="App" />
+            android:text="Current Working App" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

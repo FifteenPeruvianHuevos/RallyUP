@@ -41,7 +41,7 @@ public class splashScreenTest {
     @Test
     public void testReturnFromAttHomePage(){
         onView(withId(R.id.attendee_button)).perform(click());
-        onView(withId(R.id.attendee_homepage_back_button)).perform(click());;
+        onView(withId(R.id.attendee_update_back_button)).perform(click());;
         onView(withId(R.id.activitySplashScreen)).check(matches(isDisplayed()));
     }
 

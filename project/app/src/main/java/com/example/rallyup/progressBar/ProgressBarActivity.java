@@ -144,38 +144,6 @@ public class ProgressBarActivity extends AppCompatActivity implements FirestoreC
 
         //setProgressOfEvent(progressBar, //int of current number of attendees, int of MaxAttendeesOrGoal);
 
-        // Confirm button can be removed once we're able to access the number of attendees
-//        confirmButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int progress = Integer.parseInt(progressEditText.getText().toString());
-//                progressBar.setProgress(progress);
-//
-//
-//                String test_msg = String.format(
-//                        Locale.getDefault(),
-//                        "We have %d participants!",
-//                        progressBar.getProgress());
-//                // Locale.getDefault() allows us to set the string so that it converts the message
-//                // properly into the user's local language settings
-//                // for example: some languages i != I, since "capitalization" may actual
-//                // have different grammatical/semantic meanings
-//
-//                notificationObject.createNotification(
-//                        ProgressBarActivity.class,
-//                        getString(R.string.notification_channel_ID_milestone),
-//                        getString(R.string.notification_title_milestone),
-//                        test_msg,
-//                        R.drawable.ic_launcher_foreground,
-//                        0,
-//                        NotificationCompat.VISIBILITY_PUBLIC,
-//                        NotificationCompat.PRIORITY_DEFAULT,
-//                        true,
-//                        false,
-//                        null);
-//            }
-//        });
-
         backToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
