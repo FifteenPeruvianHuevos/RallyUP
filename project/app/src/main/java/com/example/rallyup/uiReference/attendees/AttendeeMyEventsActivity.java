@@ -10,9 +10,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.rallyup.R;
-import com.example.rallyup.qrScanner.QRBaseActivity;
-import com.example.rallyup.qrScanner.ScannerActivity;
-import com.example.rallyup.qrScanner.TestActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;

@@ -1,4 +1,4 @@
-package com.example.rallyup.qrScanner;
+package com.example.rallyup.uiReference.attendees;
 
 import android.app.Activity;
 import android.os.Bundle;

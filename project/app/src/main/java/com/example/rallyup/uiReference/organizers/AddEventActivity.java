@@ -1,4 +1,4 @@
-package com.example.rallyup.qrGeneration;
+package com.example.rallyup.uiReference.organizers;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -28,7 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
-import com.example.rallyup.uiReference.organizers.OrganizerEventListActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,7 +42,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener{
+public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
 
     private TextView eventDateInput, eventTimeInput, uploadPosterText, shareDisplayText, checkInDisplayText;
@@ -313,7 +312,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         // on below line we are creating a variable for date picker dialog.
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 // on below line we are passing context.
-                AddEvent.this,
+                AddEventActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year,
@@ -346,7 +345,7 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(AddEvent.this, new TimePickerDialog.OnTimeSetListener() {
+        mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 eventTimeInput.setText("" + toStringCheckZero(selectedHour) + ":" + toStringCheckZero(selectedMinute));
@@ -374,16 +373,6 @@ public class AddEvent extends AppCompatActivity implements ChooseReUseEventFragm
     public void resetAttendeeLimit() {
         attendeeLimitPicker.setValue(1);
         attendeeLimitPicker.setVisibility(attendeeLimitPicker.GONE);
-    }
-
-
-    /**
-     * Used to navigate between application pages
-     */
-    public void switchPage() {
-        Intent a = new Intent(AddEvent.this, com.example.rallyup.qrGeneration.MainActivity.class);
-        a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(a);
     }
 
     /**

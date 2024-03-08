@@ -1,4 +1,4 @@
-package com.example.rallyup.qrGeneration;
+package com.example.rallyup.uiReference.organizers;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

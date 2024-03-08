@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/scannerActivity"
-    tools:context="com.example.rallyup.qrScanner.ScannerActivity">
+    tools:context="com.example.rallyup.uiReference.attendees.ScannerActivity">
+
 
     <com.journeyapps.barcodescanner.DecoratedBarcodeView
         android:id="@+id/zxing_barcode_scanner"
