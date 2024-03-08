@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@drawable/attendee_gradient"
     android:id="@+id/attendeeHomepage"
-    android:background="@drawable/organizer_gradient"
+
     tools:context=".uiReference.attendees.AttendeeHomepageActivity">
 
 
@@ -64,6 +66,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/att_profile_picture"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:layout_gravity="center"
@@ -82,6 +85,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/att_hello"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -92,6 +96,7 @@
                         android:textSize="70px" />
 
                     <TextView
+                        android:id="@+id/att_homepage_user"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -121,6 +126,7 @@
                             android:textColor="@color/darkColor" />
 
                         <TextView
+                            android:id="@+id/att_last_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
@@ -149,29 +155,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:paddingTop="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:orientation="horizontal" />
 
                 <Button
                     android:id="@+id/attendee_my_events_button"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="60dp"
+                    android:layout_marginVertical="30dp"
                     android:background="@drawable/attendee_buttons_gradient"
                     android:fontFamily="@font/inter_extrabold"
+                    android:padding="20dp"
                     android:text="My Registered Events"
-                    android:textColor="@color/lightColor"
-                    app:backgroundTint="@null"
                     android:textAllCaps="true"
+                    android:textColor="@color/lightColor"
                     android:textSize="30dp"
-                    android:layout_marginVertical="30dp"
-                    android:padding="20dp"></Button>
+                    app:backgroundTint="@null"></Button>
 
                 <Button
                     android:id="@+id/attendee_browse_events_button"
@@ -182,30 +183,27 @@
                     android:background="@drawable/attendee_buttons_gradient"
                     android:fontFamily="@font/inter_extrabold"
                     android:text="Browse Events"
-                    android:textColor="@color/lightColor"
-                    app:backgroundTint="@null"
                     android:textAllCaps="true"
+                    android:textColor="@color/lightColor"
                     android:textSize="30dp"
-                    android:padding="15dp"></Button>
+                    app:backgroundTint="@null"></Button>
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="20dp">
+                    android:layout_height="wrap_content">
                     ">
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/QRScannerButton"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
                         android:layout_marginEnd="40px"
-                        android:layout_marginRight="23dp"
-                        android:layout_marginBottom="18dp"
+                        android:layout_marginBottom="15dp"
                         android:backgroundTint="@color/accentColorGreen"
-                        android:clickable="true"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+                        android:clickable="true"
+                        android:src="@drawable/qr_code_symbol"></com.google.android.material.floatingactionbutton.FloatingActionButton>
                 </RelativeLayout>
             </LinearLayout>
 

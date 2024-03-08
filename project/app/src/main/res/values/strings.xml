@@ -58,5 +58,25 @@
     <string name="qr_main_button">Scan</string>
     <string name="qr_main_text">Temporary String Value</string>
     <string name="qr_test_text">Hello!</string>
+    <string name="attendee_details_title">Attendee Details</string>
+    <string name="registered_attendees_fixed">registered attendees</string>
+    <string name="username_fixed">Username</string>
+    <string name="num_of_times_checked_in_fixed"># of Times Checked In</string>
+    <string name="verified_check_ins_fixed">Verified Check Ins</string>
+    <string name="heat_map_of_attendees_fixed">Heat Map of Attendees</string>
+    <string name="event_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</string>
+    <string name="announcements_fixed">ANNOUNCEMENTS</string>
+    <string name="event_location">LOCATION</string>
+    <string name="event_date">DATE</string>
+    <string name="register_for_event_button">REGISTER FOR EVENT</string>
+    <string name="num_of_verified_attendees"># of Verified Attendees</string>
+    <string name="num_of_total_attendees"># of Total Attendees</string>
+    <string name="view_attendees_button">VIEW ATTENDEES</string>
+    <string name="view_check_in_qr_code_button">VIEW CHECK-IN QR CODE</string>
+    <string name="title_of_notification">TITLE OF NOTIFICATION</string>
+    <string name="organizer_events_title">Organizer EVENTS</string>
+    <string name="attending_button">ATTENDING</string>
+    <string name="organizing_button">ORGANIZING</string>
+    <string name="upload_poster">UPLOAD POSTER</string>
 
 </resources>
