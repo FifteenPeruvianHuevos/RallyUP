@@ -21,8 +21,10 @@ public class ChooseReUseEventFragment extends DialogFragment {
 
     /**
      * Sends the String input that represents the Event ID that the user selected to reUse back to the Activities
-     * // that are listening to this Dialogue
+     * that are listening to this Dialogue
      */
+    // Code sourced from:
+    // Reference: https://www.geeksforgeeks.org/how-to-pass-data-from-dialog-fragment-to-activity-in-android/
     public interface OnInputListener {
         void sendInput(String input);
     }
