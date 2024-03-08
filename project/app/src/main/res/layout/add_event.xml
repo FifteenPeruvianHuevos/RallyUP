@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pageSwitcher2">
+        app:layout_constraintTop_toBottomOf="@+id/backButton">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -425,21 +425,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/pageSwitcher2"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="28dp"
-        android:background="@color/transparent"
-        android:clickable="true"
-        android:tint="@color/transparent"
-        app:backgroundTint="@color/transparent"
-        app:fabCustomSize="65dp"
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="29dp"
+        android:background="#00000000"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toStartOf="@+id/newEventText"
-        app:layout_constraintHorizontal_bias="0.41"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:maxImageSize="70dp"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/back_arrow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
