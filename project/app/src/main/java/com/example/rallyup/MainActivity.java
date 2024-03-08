@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button qrScannerButton = findViewById(R.id.QRScannerButton);
         Button qrGeneratorButton = findViewById(R.id.QRGeneratorButton);
-        Button attendeeListButton = findViewById(R.id.AttListButton);
         Button progressButton = findViewById(R.id.ProgressBarButton);
         Button uiLayoutButton = findViewById(R.id.UILayoutButton);
 
@@ -41,15 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        attendeeListButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent =
-//                        new Intent(com.example.rallyup.MainActivity.this,
-//                                com.example.rallyup.attendeeList.MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
         progressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
