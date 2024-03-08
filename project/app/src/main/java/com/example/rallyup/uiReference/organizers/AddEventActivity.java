@@ -26,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rallyup.FirestoreController;
+import com.example.rallyup.LocalStorageController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,6 +42,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.UUID;
 
 public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener {
     private EditText eventLocationInput, eventNameInput, eventDescriptionInput;
@@ -522,6 +524,15 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     }
 
 
+    public void generateEventID() {
+        eventID = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+    }
+
+    public void getUserID(){
+        LocalStorageController lc = new LocalStorageController();
+        lc.initialization(this);
+        userID = lc.getUserID(this);
+    }
     /**
      * This method saves all the input fields in new variables, resets the views of all the input fields on the screen,
      * and passes the saved variables to firebase as an instance of the Event Class.
@@ -564,7 +575,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             }
             // Uploading the Poster to Firebase Icloud Storage
             uploadPoster();
-
+            generateEventID();
+            getUserID();
             // Clearing the views of the form
             eventNameInput.getText().clear();
             eventLocationInput.getText().clear();
@@ -583,7 +595,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             Event newEvent = new Event(eventName, eventLocation, eventDescription,
                     eventDate, eventTime, signupLimit, signupLimitInput,
                     geolocation, reUseQR, newQR,
-                    posterPath, shareQRPath, checkInQRPath);
+                    posterPath, shareQRPath, checkInQRPath, userID, eventID);
             FirestoreController fc = FirestoreController.getInstance();
             fc.addEvent(newEvent);
 

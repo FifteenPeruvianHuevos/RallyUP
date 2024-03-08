@@ -61,7 +61,7 @@ public class FirestoreController {
     }
 
     public void getEventsByOwnerID(String userID, FirestoreCallbackListener callbackListener) {
-        Query query = eventsRef.whereEqualTo("owner", userID);
+        Query query = eventsRef.whereEqualTo("userID", userID);
         query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -178,9 +178,11 @@ public class FirestoreController {
         data.put("posterRef", event.getPosterRef());
         data.put("shareQRRef", event.getShareQRRef());
         data.put("checkInQRRef", event.getCheckInQRRef());
+        data.put("userID", event.getOwnerID());
+        data.put("eventID", event.getEventID());
 
         // event.getName should be replaced with unique event ID
-        eventsRef.document(event.getEventName()).set(data);
+        eventsRef.document(event.getEventID()).set(data);
     }
 
     /**
