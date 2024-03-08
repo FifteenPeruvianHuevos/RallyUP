@@ -41,12 +41,13 @@
                     android:layout_height="130dp"
                     android:layout_marginEnd="13dp"
                     android:scaleType="centerCrop"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/posterUploadButton"
@@ -62,10 +63,10 @@
                     app:fabCustomSize="70dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/uploadPosterView"
-                    app:layout_constraintHorizontal_bias="0.979"
+                    app:layout_constraintHorizontal_bias="0.954"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.737"
+                    app:layout_constraintVertical_bias="1.0"
                     app:maxImageSize="56dp"
                     app:rippleColor="@color/lightColor"
                     app:srcCompat="@android:drawable/stat_sys_upload" />
@@ -74,7 +75,7 @@
                     android:id="@+id/uploadPosterText"
                     android:layout_width="286dp"
                     android:layout_height="56dp"
-                    android:layout_marginEnd="84dp"
+                    android:layout_marginEnd="104dp"
                     android:fontFamily="@font/inter_bold"
                     android:text="UPLOAD POSTER"
                     android:textAlignment="center"
@@ -345,10 +346,36 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/shareQRText"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="QR Code for Sharing Event Details:"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
             <ImageView
-                android:id="@+id/qrCodeView"
+                android:id="@+id/shareQRView"
                 android:layout_width="match_parent"
                 android:layout_height="152dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/checkInQRText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="QR Code for Checking Event Attendees In:"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/checkInQRView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
