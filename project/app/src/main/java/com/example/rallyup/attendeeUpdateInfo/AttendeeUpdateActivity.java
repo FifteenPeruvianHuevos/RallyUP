@@ -2,12 +2,10 @@ package com.example.rallyup.attendeeUpdateInfo;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rallyup.MainActivity;
 import com.example.rallyup.R;
+import com.example.rallyup.uiReference.attendees.AttendeeHomepageActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
         EditText editPhoneNumber = findViewById(R.id.editPhoneNumberXML);
         CheckBox geolocationCheck = findViewById(R.id.checkBoxGeolocXML);
         Button confirmEditButton = findViewById(R.id.attendeeUpdateInfoConfirmXML);
-
+        ImageButton attHomepageBackBtn = findViewById(R.id.attendee_update_back_button);
         // All of the following editTexts and checkBox values need to be reflected and update
         // the values from Firebase, once the confirmButton is clicked, it should send the values
         // for Firebase to update.
@@ -170,6 +170,14 @@ public class AttendeeUpdateActivity extends AppCompatActivity {
                 // Since we clicked on confirm, it brings us back to the screen that was there before
                 // In this case, we'll put MainActivity.class as the placeholder
                 Intent intent = new Intent(AttendeeUpdateActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        attHomepageBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), AttendeeHomepageActivity.class);  // placeholder for attendee opener
                 startActivity(intent);
             }
         });

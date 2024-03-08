@@ -32,12 +32,12 @@ public class organizerEventListTest {
 
     @Test
     public void testGoToOrgEventDetails() {
-        onData(anything()).inAdapterView(withId(R.id.events_list)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.org_events_list)).atPosition(0).perform(click());
         onView(withId(R.id.activityOrgEventDetails)).check(matches(isDisplayed()));
     }
     @Test
     public void testReturnFromEventDetails() {
-        onData(anything()).inAdapterView(withId(R.id.events_list)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.org_events_list)).atPosition(0).perform(click());
         onView(withId(R.id.organizer_details_back_button)).perform(click());
         onView(withId(R.id.activityOrganizerEventList)).check(matches(isDisplayed()));
     }
@@ -55,14 +55,14 @@ public class organizerEventListTest {
     }
     @Test
     public void testGoToEventViewAttendees() {
-        onData(anything()).inAdapterView(withId(R.id.events_list)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.org_events_list)).atPosition(0).perform(click());
         onView(withId(R.id.event_attendees_button)).perform(click());
         onView(withId(R.id.activityEventAttendeesInfo)).check(matches(isDisplayed()));
     }
 
     @Test
     public void testReturnFromEventViewAttendees() {
-        onData(anything()).inAdapterView(withId(R.id.events_list)).atPosition(0).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.org_events_list)).atPosition(0).perform(click());
         onView(withId(R.id.event_attendees_button)).perform(click());
         onView(withId(R.id.event_attendees_back_button)).perform(click());
         onView(withId(R.id.activityOrgEventDetails)).check(matches(isDisplayed()));
