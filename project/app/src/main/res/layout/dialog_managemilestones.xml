@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Dialog_ManageMilestonesLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_rounded">
+
+    <TextView
+        android:id="@+id/ManageMilestonesDialogTItle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="MANAGE MILESTONES"
+        android:textColor="@color/darkColor"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/ManageMilestonesRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ManageMilestonesDialogTItle">
+
+        <RadioButton
+            android:id="@+id/ManageMilestonesRadioButtonOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="MILESTONE ONE"
+            android:textColor="@color/darkColor"
+            android:textSize="32sp" />
+
+        <RadioButton
+            android:id="@+id/ManageMilestonesRadioButtonTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:text="MILESTONE TWO"
+            android:textColor="@color/darkColor"
+            android:textSize="32sp" />
+
+        <RadioButton
+            android:id="@+id/ManageMilestonesRadioButtonThree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:text="MILESTONE THREE"
+            android:textColor="@color/darkColor"
+            android:textSize="32sp" />
+
+        <RadioButton
+            android:id="@+id/ManageMilestonesRadioButtonFour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:text="MILESTONE FOUR"
+            android:textColor="@color/darkColor"
+            android:textSize="32sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/ManageMilestonesCloseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accentColorRed"
+        android:text="@string/close"
+        android:textColor="@color/lightColor"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ManageMilestonesRadioGroup" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
