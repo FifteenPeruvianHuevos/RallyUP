@@ -60,6 +60,28 @@ public class FirestoreController {
         return instance;
     }
 
+    public void getEventsByOwnerID(String userID, FirestoreCallbackListener callbackListener) {
+        Query query = eventsRef.whereEqualTo("owner", userID);
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                List<Event> EventList = new ArrayList<>();
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    Event thisEvent;
+                    thisEvent = documentSnapshot.toObject(Event.class);
+                    EventList.add(thisEvent);
+                }
+                callbackListener.onGetEvents(EventList);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("FirestoreController", "Error getting documents: " + e);
+            }
+        });
+
+    }
 
     public void getPosterByEvent(Event event, FirestoreCallbackListener callbackListener) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference(event.getPosterRef());

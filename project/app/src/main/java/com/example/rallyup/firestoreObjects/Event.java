@@ -1,5 +1,6 @@
 package com.example.rallyup.firestoreObjects;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -59,6 +60,13 @@ public class Event {
         this.shareQRRef = shareQRRef;
         this.checkInQRRef = checkInQRRef;
     }
+    public Event(DocumentSnapshot documentSnapshot) {
+        setEventDate(documentSnapshot.getString("eventDate"));
+        setEventName(documentSnapshot.getString("eventName"));
+        setEventLocation(documentSnapshot.getString("eventLocation"));
+//        setPosterRef(Math.toIntExact(documentSnapshot.getLong("timesCheckedIn")));
+    }
+
     public Event() {}
 
     /**
