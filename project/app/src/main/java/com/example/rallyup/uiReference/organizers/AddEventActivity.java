@@ -43,7 +43,9 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 public class AddEventActivity extends AppCompatActivity implements ChooseReUseEventFragment.OnInputListener, FirestoreCallbackListener {
@@ -74,6 +76,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     private Integer signupLimit = 1;
     private Boolean geolocation, signupLimitInput, reUseQR, newQR;
     private Boolean posterUploaded = false;
+    private List<Event> usersPreviousEvents = new ArrayList<>();
 
     private ImageView shareImageView, checkInImageView, posterImage;
 
@@ -91,6 +94,11 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
     private Uri image = null;
 
     private String reUseQrID;
+
+    @Override
+    public void onGetEvents(List<Event> events) {
+        usersPreviousEvents.addAll(events);
+    }
 
     @Override
     public void onGetQrCode(QrCode qrCode, String jobId) {
@@ -144,6 +152,8 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
 
         FirestoreController fc = FirestoreController.getInstance();
         fc.createEvent(this);
+        getUserID();
+        fc.getEventsByOwnerID(userID, this);
 
         // initializing all the views from our .xml file
         initializeViews();
@@ -222,7 +232,7 @@ public class AddEventActivity extends AppCompatActivity implements ChooseReUseEv
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 if (isChecked) {
-                    new ChooseReUseEventFragment().show(getSupportFragmentManager(), "Add/Edit City");
+                    new ChooseReUseEventFragment(usersPreviousEvents).show(getSupportFragmentManager(), "Add/Edit City");
                 }
             }
         });
