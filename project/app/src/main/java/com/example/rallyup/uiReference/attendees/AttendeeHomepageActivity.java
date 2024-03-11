@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -36,6 +35,7 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
     TextView firstNameView;
     TextView lastNameView;
     TextView usernameView;
+    String scannedEvent;
 
     @Override
     public void onGetUser(User user) {
@@ -56,10 +56,31 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
                     Toast.makeText(AttendeeHomepageActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
                     // function calls for when an id has been scanned go here
-                    Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                    Intent eventAct = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class); // temporary activity, replace with event activity
-                    eventAct.putExtra("scannedText", result.getContents() ); // sending string
-                    startActivity(eventAct); // replace
+                    //Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    FirestoreController controller = new FirestoreController();
+                    FirestoreCallbackListener listener = new FirestoreCallbackListener() {
+                        /**
+                         * @param eventID the unique id of the event
+                         */
+                        @Override
+                        public void onGetEventID(String eventID) {
+                            FirestoreCallbackListener.super.onGetEventID(eventID);
+                            scannedEvent = eventID;
+                        }
+                    };
+
+                    String read = result.getContents();
+                    Boolean checkIn = false;
+                    if(read.charAt(0) == 'c'){
+                        checkIn = true;
+                    }
+                    String qrID = read.substring(1);
+                    controller.getEventByQRID(qrID, listener);
+
+                    Intent intent = new Intent(AttendeeHomepageActivity.this, AttendeeEventDetails.class);
+                    intent.putExtra("key", scannedEvent);
+                    intent.putExtra("checkIn", checkIn);
+                    startActivity(intent);
                 }
             });
 
@@ -92,52 +113,37 @@ public class AttendeeHomepageActivity extends AppCompatActivity implements Fires
         editProfileBtn = findViewById(R.id.edit_profile_button);
 
         // send to my events
-        attMyEventsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AttendeeMyEventsActivity.class);
-                startActivity(intent);
-            }
+        attMyEventsBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getBaseContext(), AttendeeMyEventsActivity.class);
+            startActivity(intent);
         });
 
         // send to browse events
-        attBrowseEventsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);  // placeholder for attendee opener
-                startActivity(intent);
-            }
+        attBrowseEventsBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);  // placeholder for attendee opener
+            startActivity(intent);
         });
 
         // back button to return to previous page
-        attHomepageBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), splashScreen.class);  // placeholder for attendee opener
-                startActivity(intent);
-            }
+        attHomepageBackBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getBaseContext(), splashScreen.class);  // placeholder for attendee opener
+            startActivity(intent);
         });
 
 
         // scan a qr code
-        QRCodeScannerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // options for the scanner
-                ScanOptions options = new ScanOptions();
-                options.setOrientationLocked(false);
-                options.setBeepEnabled(false);
-                options.setCaptureActivity(ScannerActivity.class);
-                barcodeLauncher.launch(options);
-            }
+        QRCodeScannerBtn.setOnClickListener(v -> {
+            // options for the scanner
+            ScanOptions options = new ScanOptions();
+            options.setOrientationLocked(false);
+            options.setBeepEnabled(false);
+            options.setCaptureActivity(ScannerActivity.class);
+            barcodeLauncher.launch(options);
         });
 
-        editProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), AttendeeUpdateActivity.class);  // placeholder for attendee opener
-                startActivity(intent);
-            }
+        editProfileBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getBaseContext(), AttendeeUpdateActivity.class);  // placeholder for attendee opener
+            startActivity(intent);
         });
 
     }

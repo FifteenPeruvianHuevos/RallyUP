@@ -7,11 +7,13 @@ import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.firestoreObjects.QrCode;
 import com.example.rallyup.firestoreObjects.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface FirestoreCallbackListener {
     default void onGetEvent(Event event) {
+    }
+
+    default void onGetEventID(String eventID) {
     }
 
     default void onGetEvents(List<Event> eventList) {
@@ -27,10 +29,10 @@ public interface FirestoreCallbackListener {
     }
 
     default void onGetUser(User user) {
-    };
+    }
 
     default void onGetQrCode(QrCode qrCode, String jobId) {
-    };
+    }
 
     default void onCreateEvent(Event event) {
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
 import com.example.rallyup.uiReference.EventAdapter;
 
-import com.example.rallyup.uiReference.ListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
@@ -36,6 +34,7 @@ import java.util.List;
  * @author Kaye Maranan
  */
 public class AttendeeMyEventsActivity extends AppCompatActivity implements FirestoreCallbackListener {
+    String scannedEvent;
 
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
@@ -44,16 +43,36 @@ public class AttendeeMyEventsActivity extends AppCompatActivity implements Fires
                     Toast.makeText(AttendeeMyEventsActivity.this, "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
                     // function calls for when an id has been scanned go here
-                    Toast.makeText(AttendeeMyEventsActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                    Intent eventAct = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class); // temporary activity, replace with event activity
-                    eventAct.putExtra("scannedText", result.getContents() ); // sending string
-                    startActivity(eventAct); // replace
+                    //Toast.makeText(AttendeeHomepageActivity.this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    FirestoreController controller = new FirestoreController();
+                    FirestoreCallbackListener listener = new FirestoreCallbackListener() {
+                        /**
+                         * @param eventID the unique id of the event
+                         */
+                        @Override
+                        public void onGetEventID(String eventID) {
+                            FirestoreCallbackListener.super.onGetEventID(eventID);
+                            scannedEvent = eventID;
+                        }
+                    };
+
+                    String read = result.getContents();
+                    Boolean checkIn = false;
+                    if(read.charAt(0) == 'c'){
+                        checkIn = true;
+                    }
+                    String qrID = read.substring(1);
+                    controller.getEventByQRID(qrID, listener);
+
+                    Intent intent = new Intent(AttendeeMyEventsActivity.this, AttendeeEventDetails.class);
+                    intent.putExtra("key", scannedEvent);
+                    intent.putExtra("checkIn", checkIn);
+                    startActivity(intent);
                 }
             });
     ImageButton attMyEventsBackBtn;
     FloatingActionButton QRCodeScannerBtn;
 
-    ArrayList<Event> eventArray;
     FirestoreController controller;
 
 
@@ -118,36 +137,27 @@ public void onGetEvents(List<Event> events){
         controller = FirestoreController.getInstance();
         controller.getEventsByOwnerID(ls.getUserID(this), this);
 
-        attMyEventsBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AttendeeHomepageActivity.class);
-                startActivity(intent);
-            }
+        attMyEventsBackBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(getBaseContext(), AttendeeHomepageActivity.class);
+            startActivity(intent);
         });
 
-        QRCodeScannerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // options for the scanner
-                ScanOptions options = new ScanOptions();
-                options.setOrientationLocked(false);
-                options.setBeepEnabled(false);
-                options.setCaptureActivity(ScannerActivity.class);
-                barcodeLauncher.launch(options);
-            }
+        QRCodeScannerBtn.setOnClickListener(v -> {
+            // options for the scanner
+            ScanOptions options = new ScanOptions();
+            options.setOrientationLocked(false);
+            options.setBeepEnabled(false);
+            options.setCaptureActivity(ScannerActivity.class);
+            barcodeLauncher.launch(options);
         });
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
 
-                Integer poster = (Integer) adapterView.getItemAtPosition(i);
+            Integer poster = (Integer) adapterView.getItemAtPosition(i);
 
-                Intent appInfo = new Intent(getBaseContext(), AttendeeRegisteredEvent.class);
+            Intent appInfo = new Intent(getBaseContext(), AttendeeRegisteredEvent.class);
 //                appInfo.putExtra("poster", poster);
-                startActivity(appInfo);
-            }
+            startActivity(appInfo);
         });
     }
 }

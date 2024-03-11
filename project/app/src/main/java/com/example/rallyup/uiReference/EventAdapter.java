@@ -66,7 +66,8 @@ public class EventAdapter extends BaseAdapter {
         String formattedDate = getProperDateFormatting(unformattedDate);
         String unformattedTime = event.getEventTime();
         String formattedTime = unformattedTime.substring(0,2) + ":" + unformattedTime.substring(2,4);
-        dateTextView.setText(formattedDate + " At " + formattedTime);
+        String completeDateTime = formattedDate + " At " + formattedTime;
+        dateTextView.setText(completeDateTime);
         fController.getPosterByEventID(event.getPosterRef(), context, posterImageView);
 
 
@@ -75,15 +76,13 @@ public class EventAdapter extends BaseAdapter {
 
     public String getProperDateFormatting(String date) {
         String year = date.substring(0,4);
-        String month = "";
+        String month;
         Calendar cal=Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-        int monthnum=Integer.parseInt(date.substring(4,6));
-        cal.set(Calendar.MONTH,monthnum);
+        int monthNum=Integer.parseInt(date.substring(4,6));
+        cal.set(Calendar.MONTH,monthNum);
         month = month_date.format(cal.getTime());
         String day = date.substring(6,8);
-        String complete = month + " " + day + ", " + year;
-        return complete;
+        return month + " " + day + ", " + year;
     }
-
 }
