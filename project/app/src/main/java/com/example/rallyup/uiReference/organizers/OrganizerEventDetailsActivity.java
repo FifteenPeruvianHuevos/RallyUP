@@ -25,6 +25,8 @@ import com.example.rallyup.notification.NotificationObject;
 import com.example.rallyup.progressBar.ManageMilestoneDialog;
 import com.example.rallyup.progressBar.ProgressBarActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,15 +57,21 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         TextView eventTime = findViewById(R.id.org_event_details_date);
         TextView eventLocation = findViewById(R.id.org_event_details_location);
         TextView eventDescription = findViewById(R.id.org_register_event_details);
+        ImageView eventPoster = findViewById(R.id.org_event_details_image);
 
         eventView.setText(event.getEventName());
-        eventTime.setText(event.getEventTime());
+        String unformattedDate = event.getEventDate();
+        String formattedDate = getProperDateFormatting(unformattedDate);
+        String unformattedTime = event.getEventTime();
+        String formattedTime = unformattedTime.substring(0,2) + ":" + unformattedTime.substring(2,4);
+        String joinedDateTime = formattedDate + " At " + formattedTime;
+        eventTime.setText(joinedDateTime);
         eventLocation.setText(event.getEventLocation());
         eventDescription.setText(event.getEventDescription());
 
         // Load in poster for this event
         FirestoreController fc = FirestoreController.getInstance();
-        fc.getPosterByEvent(event, this);
+        fc.getPosterByEventID(event.getPosterRef(), this, eventPoster);
     }
 
     @Override
@@ -135,57 +143,45 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         progressBar.setProgress(70);
 
         // Setting onClickListener for the back button to navigate back to the event list
-        orgEventDetailsBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), OrganizerEventListActivity.class);
-                startActivity(intent);
-            }
+        orgEventDetailsBackBtn.setOnClickListener(view -> {
+            Intent intent1 = new Intent(getBaseContext(), OrganizerEventListActivity.class);
+            startActivity(intent1);
         });
 
         // Setting onClickListener for the button to view attendees list
-        viewEventAttendeesList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
-                startActivity(intent);
-            }
+        viewEventAttendeesList.setOnClickListener(view -> {
+            Intent intent12 = new Intent(getBaseContext(), EventAttendeesInfoActivity.class);
+            startActivity(intent12);
         });
 
-        milestoneEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ManageMilestoneDialog manageMilestoneDialog = new ManageMilestoneDialog();
-                manageMilestoneDialog.show(getSupportFragmentManager(), "ManageMilestonesDialog");
-            }
+        milestoneEditButton.setOnClickListener(v -> {
+            ManageMilestoneDialog manageMilestoneDialog = new ManageMilestoneDialog();
+            manageMilestoneDialog.show(getSupportFragmentManager(), "ManageMilestonesDialog");
         });
 
-        sendNotificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!editNotificationBody.getText().toString().equals("") &&
-                        !editNotificationTitle.getText().toString().equals("")){
-                    // Create a new notification/announcement in the Firebase
-                    // Which then if we go to Attendees side of the activities, they should be able
-                    // to detect a new notification create for their specific event
-                    // Test notification
-                    notificationObject.createNotification(
-                            MainActivity.class,
-                            notification_channel_ID_milestone,
-                            editNotificationTitle.getText().toString(),
-                            editNotificationBody.getText().toString(),
-                            (R.drawable.poster1),
-                            0,
-                            NotificationCompat.VISIBILITY_PUBLIC,
-                            NotificationCompat.PRIORITY_DEFAULT,
-                            true,
-                            true,
-                            null);
-                } else {
-                    Toast toasty = Toast.makeText(OrganizerEventDetailsActivity.this,
-                            "Missing title and/or body text.", Toast.LENGTH_SHORT);
-                    toasty.show();
-                }
+        sendNotificationButton.setOnClickListener(v -> {
+            if (!editNotificationBody.getText().toString().equals("") &&
+                    !editNotificationTitle.getText().toString().equals("")){
+                // Create a new notification/announcement in the Firebase
+                // Which then if we go to Attendees side of the activities, they should be able
+                // to detect a new notification create for their specific event
+                // Test notification
+                notificationObject.createNotification(
+                        MainActivity.class,
+                        notification_channel_ID_milestone,
+                        editNotificationTitle.getText().toString(),
+                        editNotificationBody.getText().toString(),
+                        (R.drawable.poster1),
+                        0,
+                        NotificationCompat.VISIBILITY_PUBLIC,
+                        NotificationCompat.PRIORITY_DEFAULT,
+                        true,
+                        true,
+                        null);
+            } else {
+                Toast toasty = Toast.makeText(OrganizerEventDetailsActivity.this,
+                        "Missing title and/or body text.", Toast.LENGTH_SHORT);
+                toasty.show();
             }
         });
 
@@ -211,5 +207,18 @@ public class OrganizerEventDetailsActivity extends AppCompatActivity
         int percentageOfProgress = (currentAttendees / goalOrMax) * maximum;
 
         progressBar.setProgress(percentageOfProgress);
+    }
+
+    // For formatting the date stored in firebase into something more user friendly
+    public String getProperDateFormatting(String date) {
+        String year = date.substring(0,4);
+        String month;
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+        int monthNum=Integer.parseInt(date.substring(4,6));
+        cal.set(Calendar.MONTH,monthNum);
+        month = month_date.format(cal.getTime());
+        String day = date.substring(6,8);
+        return month + " " + day + ", " + year;
     }
 }

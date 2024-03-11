@@ -25,6 +25,7 @@ public class QrCode {
      */
     private String image;
 
+
     /**
      * Constructs a new QrCodes object.
      */
@@ -94,5 +95,6 @@ public class QrCode {
     public void setQrId(String qrId) {
         this.qrId = qrId;
     }
+
 }
 

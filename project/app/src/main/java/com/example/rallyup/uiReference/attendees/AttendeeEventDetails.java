@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,9 +13,9 @@ import com.example.rallyup.FirestoreCallbackListener;
 import com.example.rallyup.FirestoreController;
 import com.example.rallyup.R;
 import com.example.rallyup.firestoreObjects.Event;
-import com.example.rallyup.uiReference.EventAdapter;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * This class contains the event activity for an attendee when they browse and click on an event
@@ -28,22 +27,12 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
     ImageView poster;
     TextView eventName, eventDate, eventLocation, eventDetails;
 
+    Boolean checkIn;
+
     Event displayEvent;
 
 
     FirestoreController controller = new FirestoreController();
-
-    //FirestoreCallbackListener listener = new FirestoreCallbackListener() {
-        /**
-         * @param event
-         */
-        //@Override
-        //public void onGetEvent(Event event) {
-            //FirestoreCallbackListener.super.onGetEvent(event);
-            //displayEvent = event;
-            //setFields();
-        //}
-    //};
 
     @Override
     public void onGetEvent(Event event) {
@@ -63,10 +52,10 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendee_event_details);
-        //Bundle extras = getIntent().getExtras();
-        //String eventID = extras.getString("key");
+
         Intent intent = getIntent();
         String eventID = intent.getStringExtra("key");
+        checkIn = intent.getBooleanExtra("checkIn", false);
 
         controller.getEventByID(eventID, this);
 
@@ -80,12 +69,9 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
 
 
 
-        attEventBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);
-                startActivity(intent);
-            }
+        attEventBackButton.setOnClickListener(view -> {
+            Intent intent1 = new Intent(getBaseContext(), AttendeeBrowseEventsActivity.class);
+            startActivity(intent1);
         });
     }
 
@@ -93,12 +79,24 @@ public class AttendeeEventDetails extends AppCompatActivity implements Firestore
         controller.getPosterByEventID(displayEvent.getPosterRef(), this, poster);
         eventName.setText(displayEvent.getEventName());
         String uneditedDate = displayEvent.getEventDate();
-        String editedDate = uneditedDate.substring(0,3) + "-" + uneditedDate.substring(4,5) + "-" + uneditedDate.substring(6,7);
+        String editedDate = getProperDateFormatting(uneditedDate);
         String uneditedTime = displayEvent.getEventTime();
-        String editedTime = uneditedTime.substring(0,1) + ":" + uneditedDate.substring(2,3);
-        String fullDateText = editedDate + "At" + editedTime;
+        String editedTime = uneditedTime.substring(0,2) + ":" + uneditedDate.substring(2,4);
+        String fullDateText = editedDate + " At " + editedTime;
         eventDate.setText(fullDateText);
         eventLocation.setText(displayEvent.getEventLocation());
         eventDetails.setText(displayEvent.getEventDescription());
+    }
+
+    public String getProperDateFormatting(String date) {
+        String year = date.substring(0,4);
+        String month;
+        Calendar cal=Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+        int monthNum=Integer.parseInt(date.substring(4,6));
+        cal.set(Calendar.MONTH,monthNum);
+        month = month_date.format(cal.getTime());
+        String day = date.substring(6,8);
+        return month + " " + day + ", " + year;
     }
 }
