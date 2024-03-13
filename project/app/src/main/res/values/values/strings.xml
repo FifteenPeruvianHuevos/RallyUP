@@ -1,0 +1,82 @@
+<resources>
+    <string name="app_name">RallyUP</string>
+    <string name="event_name"><u>EVENT NAME</u></string>
+
+    <!-- Generic Strings -->
+    <string name="confirm">CONFIRM</string>
+    <string name="close">CLOSE</string>
+    <string name="send">SEND</string>
+
+    <!-- Firebase Firestore fields -->
+    <string name="user_field_firstName">firstName</string>
+    <string name="user_field_lastName">lastName</string>
+    <string name="user_field_email">email</string>
+    <string name="user_field_phone_number">phoneNumber</string>
+    <string name="user_field_geolocation">geolocation</string>
+    <string name="user_field_profilePicture">profilePicture</string>
+
+    <!-- String resources for Attendee Update Activity/Dialog/Fragment -->
+    <string name="hint_first_name">First Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="enable_geolocation_string">Enable Geolocation</string>
+    <string name="edit_photo">EDIT PHOTO</string>
+    <string name="delete_photo">DELETE PHOTO</string>
+    <string name="generated_username">\@ GENERATED USERNAME</string>
+
+    <!-- Progress Bar String Resources -->
+    <string name="milestones_title"><u>MILESTONES</u></string>
+    <string name="announcements_title"><u>ANNOUNCEMENTS</u></string>
+    <!-- Notification Edit Box -->
+    <string name="notification_edit_title">TITLE OF NOTIFICATION</string>
+    <string name="notification_edit_body">Send message to attendees...</string>
+
+    <!-- Notification Titles in Notification Popups -->
+    <string name="notification_title_milestone">Milestone</string>
+    <string name="notification_title_announcement">Announcement</string>
+    <!-- Due to how variable the body texts are, I'm going to leave that up to the java code -->
+
+    <!-- Notification channel IDs -->
+    <string name="notification_channel_ID_milestone">notification_channel_ID_Milestone</string>
+    <string name="notification_channel_ID_announcements">
+        notification_channel_ID_announcements
+    </string>
+    <!-- Notification Name in Settings that's User Visible-->
+    <string name="notification_channel_name_milestone">Milestone Notifications</string>
+    <string name="notification_channel_name_announcements">Announcements Notifications</string>
+    <!-- Notification Description in Settings that's User Visible-->
+    <string name="notification_channel_description_milestone">
+        Notifications for Organizers when achieved certain milestones
+    </string>
+    <string name="notification_description_announcements">
+        Notifications that Organizers get to send out as announcements
+    </string>
+
+    <string name="qr_hint">SCAN QR CODE</string>
+    <string name="qr_hint_2">CHECK INTO EVENT</string>
+    <string name="qr_main_button">Scan</string>
+    <string name="qr_main_text">Temporary String Value</string>
+    <string name="qr_test_text">Hello!</string>
+    <string name="attendee_details_title">Attendee Details</string>
+    <string name="registered_attendees_fixed">registered attendees</string>
+    <string name="username_fixed">Username</string>
+    <string name="num_of_times_checked_in_fixed"># of Times Checked In</string>
+    <string name="verified_check_ins_fixed">Verified Check Ins</string>
+    <string name="heat_map_of_attendees_fixed">Heat Map of Attendees</string>
+    <string name="event_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</string>
+    <string name="announcements_fixed">ANNOUNCEMENTS</string>
+    <string name="event_location">LOCATION</string>
+    <string name="event_date">DATE</string>
+    <string name="register_for_event_button">REGISTER FOR EVENT</string>
+    <string name="num_of_verified_attendees"># of Verified Attendees</string>
+    <string name="num_of_total_attendees"># of Total Attendees</string>
+    <string name="view_attendees_button">VIEW ATTENDEES</string>
+    <string name="view_check_in_qr_code_button">VIEW CHECK-IN QR CODE</string>
+    <string name="title_of_notification">TITLE OF NOTIFICATION</string>
+    <string name="organizer_events_title">Organizer EVENTS</string>
+    <string name="attending_button">ATTENDING</string>
+    <string name="organizing_button">ORGANIZING</string>
+    <string name="upload_poster">UPLOAD POSTER</string>
+
+</resources>

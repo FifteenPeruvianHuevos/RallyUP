@@ -61,6 +61,44 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976207794099:android:b156071a3ece7392f705c6",
+        "android_client_info": {
+          "package_name": "com.ualberta.rallyup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr75I-ex8-p4Xc9fc_IV8eBcK1kyqEINI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976207794099:android:56a4ced0ae9d4bb0f705c6",
+        "android_client_info": {
+          "package_name": "com.ualberta.rallyup_fixgradle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr75I-ex8-p4Xc9fc_IV8eBcK1kyqEINI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
